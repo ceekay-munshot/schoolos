@@ -7,6 +7,36 @@
 
 export type Persona = "teacher" | "coach" | "principal" | "parent" | "student";
 
+/* ---- shared interface signals (Design Brief §12) ---- */
+export type Confidence = "high" | "medium" | "low" | "provisional";
+
+/** Data freshness on any recommendation or placement. */
+export type FreshnessState = "today" | "recent" | "stale" | "sync-pending";
+
+/** AI decision status — evidence first, AI suggestion second, human decision always. */
+export type AIDecision =
+  | "suggested"
+  | "accepted"
+  | "edited"
+  | "rejected"
+  | "coach-contextualized"
+  | "human-review";
+
+export type EvidenceKind =
+  | "worksheet"
+  | "assessment"
+  | "teacher-note"
+  | "tutor-session"
+  | "path-artifact"
+  | "coach-note";
+
+export interface EvidenceItem {
+  kind: EvidenceKind;
+  label: string;
+  detail: string;
+  date: string;
+}
+
 export type Stage = "elementary" | "middle" | "high";
 
 /** MasteryState machine (PRD §4: Placement). */

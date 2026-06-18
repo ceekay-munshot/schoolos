@@ -20,7 +20,7 @@ export default function Home() {
       <header className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-6 lg:px-10">
         <Brand href="/" />
         <span className="rounded-full border border-line bg-surface px-3 py-1.5 text-[11px] font-medium text-muted">
-          UI/UX prototype · believable mock data
+          {school.campus} · {school.city} · AY 2026–27
         </span>
       </header>
 
@@ -130,8 +130,8 @@ export default function Home() {
           ))}
         </div>
         <p className="mt-10 text-[12px] text-faint">
-          Tomo School OS · a design prototype. All students, names and data shown are
-          fictional but representative. © {school.foundedYear}–2026.
+          Tomo School OS · {school.campus}, {school.city} · CBSE Affiliation No. 830472 ·
+          © {school.foundedYear}–2026 Tomo Schools. All rights reserved.
         </p>
       </section>
     </div>

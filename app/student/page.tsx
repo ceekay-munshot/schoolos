@@ -143,8 +143,8 @@ function TutorTab() {
   const flagged = sessions.find((t) => t.flaggedForTeacher);
   const topic = nodeById("MATH.FRAC.WORD.04")?.statement ?? "Fraction word problems";
 
-  // A believable multi-turn thread, grounded in ts-mahira-1 (bar-model unlock)
-  // and ts-mahira-3 (the tutor deferring the "does my ending land?" question).
+  // The tutor thread for today's topic: the bar-model unlock, then the tutor
+  // deferring the "does my ending land?" question to the teacher.
   const thread: Turn[] = [
     {
       from: "tutor",
