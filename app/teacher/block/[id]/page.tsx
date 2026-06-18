@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Clock, FileText, Repeat, Rocket, TrendingUp, LifeBuoy } from "lucide-react";
 import { AppShell } from "@/components/shell/AppShell";
-import { blockById } from "@/data/timetable";
+import { timetable, blockById } from "@/data/timetable";
 import { lessonPlanForBlock, worksheetById } from "@/data/lessonplans";
 import { heroClassStudents, studentById } from "@/data/students";
 import { nodeById } from "@/data/competency";
@@ -18,6 +18,11 @@ const SECTION_TONE: Record<string, string> = {
   Activity: "#C8802E",
 };
 const DIFF_TONE = { support: "practising", core: "indigo", stretch: "mastered" } as const;
+
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return timetable.map((b) => ({ id: b.id }));
+}
 
 export default async function BlockPrep({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

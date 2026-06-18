@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { ArrowLeft, CalendarClock, ListChecks } from "lucide-react";
 import { AppShell } from "@/components/shell/AppShell";
-import { studentById } from "@/data/students";
+import { students, studentById } from "@/data/students";
 import { insightsForStudent } from "@/data/insights";
 import { checkInFor } from "@/data/coach";
 import { Student360 } from "@/components/patterns/Student360";
 import { InsightCard } from "@/components/patterns/InsightCard";
 import { Card, Button, SectionLabel } from "@/components/ui/primitives";
 import { relativeDays } from "@/lib/utils";
+
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return students.map((s) => ({ id: s.id }));
+}
 
 export default async function CoachStudent({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
