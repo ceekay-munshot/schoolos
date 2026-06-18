@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/*
+  Tomo School OS — design system
+  "Calm Editorial / Premium Institutional"
+  Warm paper · ink · one indigo accent · a sparing saffron spark.
+*/
+
+@theme {
+  /* ---- surfaces ---- */
+  --color-canvas: #faf9f6; /* app background — warm paper */
+  --color-sand: #f4f2ec; /* alternate sections / rails */
+  --color-surface: #ffffff; /* cards */
+  --color-line: #eceae3; /* hairline border */
+  --color-line-strong: #e1ddd3;
+
+  /* ---- ink ---- */
+  --color-ink: #1c1b19; /* primary text, near-black */
+  --color-muted: #6b6862; /* secondary text */
+  --color-faint: #9c988e; /* tertiary / captions */
+
+  /* ---- primary accent: indigo (intellect / trust) ---- */
+  --color-indigo: #37357a;
+  --color-indigo-ink: #2a285f;
+  --color-indigo-soft: #ecebf4;
+
+  /* ---- secondary: saffron (the Mojo spark, used sparingly) ---- */
+  --color-saffron: #c8802e;
+  --color-saffron-deep: #a8651d;
+  --color-saffron-soft: #f8efe0;
+
+  /* ---- mastery-state palette (muted, never alarming) ---- */
+  --color-mastered: #5e7c6a; /* sage — mastered / retained */
+  --color-mastered-soft: #e7ede8;
+  --color-practising: #c0913a; /* amber — practising */
+  --color-practising-soft: #f5edd8;
+  --color-gap: #b25b43; /* terracotta — gap (honest, not red) */
+  --color-gap-soft: #f3e2db;
+  --color-dormant: #b3afa5; /* stone — not introduced */
+  --color-dormant-soft: #eeece7;
+
+  /* ---- fonts ---- */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* ---- soft layered shadows ---- */
+  --shadow-soft: 0 1px 2px rgba(28, 27, 25, 0.04),
+    0 4px 16px rgba(28, 27, 25, 0.05);
+  --shadow-lift: 0 2px 6px rgba(28, 27, 25, 0.06),
+    0 16px 40px rgba(28, 27, 25, 0.09);
+  --shadow-ring: 0 0 0 1px rgba(28, 27, 25, 0.05);
+
+  /* ---- motion ---- */
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05", "ss01";
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background: var(--color-indigo);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-indigo);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Quiet, thin scrollbars befitting a calm surface */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d9d5cc;
+    border: 3px solid var(--color-canvas);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c7c2b6;
+  }
+}
+
+@layer components {
+  /* Tabular, precise numerals for any metric readout */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* The display serif at headline optical size */
+  .font-display {
+    font-optical-sizing: auto;
+  }
+
+  .hairline {
+    border: 1px solid var(--color-line);
+  }
+}
+
+/* ---- gentle, non-flashy keyframes ---- */
+@keyframes tomo-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tomo-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+
+@keyframes tomo-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-rise {
+  animation: tomo-rise 0.5s var(--ease-calm) both;
+}
+.live-dot {
+  animation: tomo-pulse 2s var(--ease-calm) infinite;
+}
