@@ -2,83 +2,150 @@
 
 import * as React from "react";
 import {
-  Sparkles,
-  MessageCircle,
-  Compass,
-  Send,
+  Sun,
+  BookOpen,
+  Target,
+  Hammer,
+  NotebookPen,
   ShieldCheck,
   Flag,
   ArrowRight,
+  Lightbulb,
+  RefreshCw,
+  HelpCircle,
+  Check,
+  Sparkles,
+  Upload,
+  CornerDownRight,
+  type LucideIcon,
 } from "lucide-react";
 import { DeviceFrame, Screen, type MobileTab } from "@/components/shell/DeviceFrame";
-import { Card, Badge, SectionLabel } from "@/components/ui/primitives";
+import { Card, Badge, SectionLabel, Button } from "@/components/ui/primitives";
+import { Avatar } from "@/components/ui/avatar";
 import {
   studentById,
   tutorSessionsByStudent,
   pathDefs,
-  nodeById,
 } from "@/data";
-import { pct } from "@/lib/utils";
+import {
+  todayTopic,
+  learnModule,
+  practiceItems,
+  progressStateMeta,
+  project,
+  reflectionPrompts,
+} from "@/data/student-extra";
+import { pct, cn } from "@/lib/utils";
 
 const ACCENT = "#37357A";
 const STUDENT_ID = "stu-mahira";
 
 const TABS: MobileTab[] = [
-  { id: "today", label: "Today", icon: Sparkles },
-  { id: "tutor", label: "Tutor", icon: MessageCircle },
-  { id: "paths", label: "Paths", icon: Compass },
+  { id: "today", label: "Today", icon: Sun },
+  { id: "learn", label: "Learn", icon: BookOpen },
+  { id: "practice", label: "Practice", icon: Target },
+  { id: "projects", label: "Projects", icon: Hammer },
+  { id: "reflect", label: "Reflect", icon: NotebookPen },
 ];
 
-const PATH_ARC: { stage: string; label: string }[] = [
-  { stage: "sample", label: "Sample" },
-  { stage: "specialise", label: "Specialise" },
-  { stage: "master", label: "Master" },
-];
+/* A small, consistent eyebrow heading inside the phone. */
+function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <SectionLabel className={cn("mb-2.5 mt-6", className)}>{children}</SectionLabel>;
+}
 
-/* ---------------- Today ---------------- */
+/* The calm guard-rail chip that reminds the child what the tutor is for. */
+function GuardRail({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-4 flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-[11px] leading-tight text-muted shadow-soft">
+      <ShieldCheck size={13} className="shrink-0 text-mastered" />
+      {children}
+    </div>
+  );
+}
+
+/* A single chat bubble — tutor on the left, student on the right. */
+function Bubble({ from, children }: { from: "tutor" | "student"; children: React.ReactNode }) {
+  const isStudent = from === "student";
+  return (
+    <div className={isStudent ? "flex justify-end" : "flex justify-start"}>
+      <div
+        className={
+          isStudent
+            ? "max-w-[80%] rounded-2xl rounded-br-md bg-indigo-soft px-3.5 py-2.5 text-[13px] leading-relaxed text-indigo-ink"
+            : "max-w-[84%] rounded-2xl rounded-bl-md border border-line bg-surface px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-soft"
+        }
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* The tutor's name tag, used above its first message in a thread. */
+function TutorTag() {
+  return (
+    <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-faint">
+      <Sparkles size={12} className="text-indigo" /> Your tutor
+    </div>
+  );
+}
+
+/* =====================================================================
+   TODAY — what was just taught, today's move, the path highlight
+   ===================================================================== */
 function TodayTab() {
   const s = studentById(STUDENT_ID)!;
-  const sessions = tutorSessionsByStudent(STUDENT_ID);
-  const wordSession = sessions.find((t) => t.nodeId === "MATH.FRAC.WORD.04");
-  const topic = wordSession ? wordSession.topic : "Fraction word problems";
   const scholar = s.paths.find((p) => p.path === "scholar");
 
   return (
     <Screen>
       <div className="mb-1 mt-1 flex items-center justify-between">
-        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Today</p>
+        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">
+          Wednesday · 18 June
+        </p>
         <Badge tone="indigo">Class 6</Badge>
       </div>
       <h1 className="font-display text-[28px] leading-tight text-ink">Hi, Mahira</h1>
       <p className="mt-1 text-[13px] leading-relaxed text-muted">
-        Here&rsquo;s what you can sharpen on your own today.
+        One thing to sharpen today, on the topic you just learnt.
       </p>
 
-      <SectionLabel className="mb-2.5 mt-6">Today&rsquo;s focus</SectionLabel>
+      <Eyebrow>Just taught in class</Eyebrow>
       <Card className="border-indigo/15 p-5">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <span className="grid size-9 place-items-center rounded-xl bg-indigo-soft text-indigo">
-            <Sparkles size={17} />
+            <Sun size={17} />
           </span>
-          <p className="text-[15px] font-medium text-ink">{topic}</p>
+          <div className="min-w-0">
+            <p className="text-[15px] font-medium text-ink">{todayTopic.title}</p>
+            <p className="text-[12px] text-faint">
+              with {todayTopic.taughtBy} · {todayTopic.taughtWhen}
+            </p>
+          </div>
         </div>
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
-          Just taught in class. The trick is turning the words into a picture before you
-          touch any numbers &mdash; like &ldquo;three-quarters of 12 laddoos.&rdquo;
+          The trick is turning the words into a picture before you touch any numbers
+          &mdash; like &ldquo;three-quarters of 12 laddoos.&rdquo;
         </p>
       </Card>
 
-      <SectionLabel className="mb-2.5 mt-6">Practise this</SectionLabel>
+      <Eyebrow>What to do today</Eyebrow>
       <Card className="p-5">
-        <p className="text-[14px] leading-relaxed text-ink">
-          Try three more &ldquo;fraction-of-a-quantity&rdquo; problems, drawing the bar
-          model each time.
-        </p>
-        <p className="mt-2 text-[12px] text-faint">
-          Your tutor is warmed up and waiting on this exact topic.
-        </p>
-        <div className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-indigo">
-          Open the tutor <ArrowRight size={15} />
+        <p className="text-[14px] leading-relaxed text-ink">{todayTopic.todo}</p>
+        {todayTopic.selfWorkPlanned && (
+          <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-indigo-soft/60 p-3">
+            <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-surface text-indigo shadow-soft">
+              <Sparkles size={14} />
+            </span>
+            <p className="text-[12.5px] leading-snug text-muted">
+              A tutor-supported self-work session is planned &mdash;{" "}
+              <span className="font-medium text-ink">{todayTopic.selfWorkWindow}</span>. Your
+              tutor is warmed up on this exact topic.
+            </p>
+          </div>
+        )}
+        <div className="mt-3.5 inline-flex items-center gap-1.5 text-[13px] font-medium text-indigo">
+          Open Practice <ArrowRight size={15} />
         </div>
       </Card>
 
@@ -87,21 +154,17 @@ function TodayTab() {
           <p className="font-display text-[26px] leading-none text-ink tnum">
             {pct(s.independentWorkRatio)}
           </p>
-          <p className="mt-1.5 text-[12px] leading-snug text-muted">
-            worked on your own this week
-          </p>
+          <p className="mt-1.5 text-[12px] leading-snug text-muted">worked on your own this week</p>
         </Card>
         <Card className="p-4">
           <p className="font-display text-[26px] leading-none text-ink tnum">6</p>
-          <p className="mt-1.5 text-[12px] leading-snug text-muted">
-            day self-work streak
-          </p>
+          <p className="mt-1.5 text-[12px] leading-snug text-muted">day self-work streak</p>
         </Card>
       </div>
 
       {scholar && (
         <>
-          <SectionLabel className="mb-2.5 mt-6">Your path</SectionLabel>
+          <Eyebrow>Your path this week</Eyebrow>
           <Card className="p-5">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 text-[15px] font-medium text-ink">
@@ -111,6 +174,10 @@ function TodayTab() {
               <Badge tone="saffron">Olympiad track</Badge>
             </div>
             <p className="mt-2.5 text-[13px] leading-relaxed text-muted">{scholar.headline}</p>
+            <p className="mt-2 text-[12px] text-faint">
+              Today&rsquo;s fraction work feeds straight into your &ldquo;{project.title}&rdquo;
+              project.
+            </p>
           </Card>
         </>
       )}
@@ -118,249 +185,469 @@ function TodayTab() {
   );
 }
 
-/* ---------------- Tutor chat ---------------- */
-type Turn = { from: "tutor" | "student"; text: React.ReactNode };
-
-function Bubble({ from, children }: { from: "tutor" | "student"; children: React.ReactNode }) {
-  const isStudent = from === "student";
+/* =====================================================================
+   LEARN — the tutor explains the just-taught concept another way and
+   asks guiding questions. Calm, one concept, no answers handed over.
+   ===================================================================== */
+function GuidingQuestion({ q }: { q: string }) {
+  const [open, setOpen] = React.useState(false);
   return (
-    <div className={isStudent ? "flex justify-end" : "flex justify-start"}>
-      <div
-        className={
-          isStudent
-            ? "max-w-[80%] rounded-2xl rounded-br-md bg-indigo-soft px-3.5 py-2.5 text-[13px] leading-relaxed text-indigo-ink"
-            : "max-w-[82%] rounded-2xl rounded-bl-md border border-line bg-surface px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-soft"
-        }
-      >
-        {children}
-      </div>
-    </div>
+    <button
+      type="button"
+      onClick={() => setOpen((v) => !v)}
+      className="flex w-full items-start gap-2.5 rounded-xl border border-line bg-surface p-3.5 text-left transition-colors hover:bg-sand/60"
+    >
+      <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-lg bg-indigo-soft text-indigo">
+        <HelpCircle size={14} />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[13px] leading-relaxed text-ink">{q}</span>
+        <span className="mt-1 inline-flex items-center gap-1 text-[11px] text-faint">
+          {open ? "Take your time — there's no rush" : "Think it through"}
+        </span>
+      </span>
+    </button>
   );
 }
 
-function TutorTab() {
-  const sessions = tutorSessionsByStudent(STUDENT_ID);
-  const flagged = sessions.find((t) => t.flaggedForTeacher);
-  const topic = nodeById("MATH.FRAC.WORD.04")?.statement ?? "Fraction word problems";
-
-  // The tutor thread for today's topic: the bar-model unlock, then the tutor
-  // deferring the "does my ending land?" question to the teacher.
-  const thread: Turn[] = [
-    {
-      from: "tutor",
-      text: (
-        <>
-          Hey Mahira &mdash; we&rsquo;re on today&rsquo;s topic, <em>{topic.toLowerCase()}</em>.
-          What problem are you stuck on?
-        </>
-      ),
-    },
-    {
-      from: "student",
-      text: "“Three-quarters of 12 laddoos are gone. How many is that?” I don't know what to do with the 3/4.",
-    },
-    {
-      from: "tutor",
-      text: "Don't reach for the numbers yet. Can you draw a bar for all 12 laddoos first?",
-    },
-    { from: "student", text: "Okay, one long bar = 12." },
-    {
-      from: "tutor",
-      text: (
-        <>
-          Now the denominator, 4, tells you how many <em>equal</em> pieces to split that bar
-          into. Split your bar of 12 into 4 equal parts. How many in each part?
-        </>
-      ),
-    },
-    { from: "student", text: "12 ÷ 4… 3 in each part." },
-    {
-      from: "tutor",
-      text: (
-        <>
-          And the numerator, 3, says <em>take 3 of those parts</em>. So three-quarters of 12
-          is&hellip;?
-        </>
-      ),
-    },
-    { from: "student", text: "3 + 3 + 3 = 9! Nine laddoos. Ohh, the picture made it obvious." },
-    {
-      from: "tutor",
-      text: "That's the move every time: bar first, split by the bottom, take the top. Want another to lock it in?",
-    },
-    {
-      from: "student",
-      text: "In a sec. Different thing — is the ending of my story good? The one where the banyan tree finally speaks?",
-    },
-    {
-      from: "tutor",
-      text: (
-        <>
-          That&rsquo;s a question for Ms. Rao &mdash; whether your ending <em>lands</em> is her
-          call, not mine. I&rsquo;ve flagged it for her so she sees it. I can help with the
-          mechanical bits, but the heart of the story is hers to judge. Want to keep
-          sharpening the word problems meanwhile?
-        </>
-      ),
-    },
-    { from: "student", text: "Yeah, give me a harder one." },
-  ];
-
+function LearnTab() {
   return (
-    <Screen className="pb-2">
-      {/* guard-rail chip */}
-      <div className="sticky top-0 z-10 -mx-5 mb-3 bg-canvas/85 px-5 pb-2 pt-1 backdrop-blur-sm">
-        <div className="flex items-center justify-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-[11px] leading-tight text-muted shadow-soft">
-          <ShieldCheck size={13} className="shrink-0 text-mastered" />
-          Stays on today&rsquo;s topic · your teacher owns the bigger questions
-        </div>
-      </div>
+    <Screen>
+      <GuardRail>Stays on today&rsquo;s topic &middot; your teacher owns the bigger questions</GuardRail>
 
+      <div className="mb-1">
+        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Learn</p>
+      </div>
+      <h1 className="font-display text-[24px] leading-tight text-ink">{learnModule.topic}</h1>
+      <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{learnModule.recap}</p>
+
+      {/* The tutor's alternative explanation */}
+      <Card className="mt-5 p-5">
+        <TutorTag />
+        <p className="text-[14px] font-medium text-ink">{learnModule.retellTitle}</p>
+        <div className="mt-3 space-y-2.5">
+          {learnModule.retell.map((line, i) => (
+            <p key={i} className="text-[13px] leading-relaxed text-muted">
+              {line}
+            </p>
+          ))}
+        </div>
+      </Card>
+
+      {/* A simpler example to build footing */}
+      <Eyebrow>A smaller example first</Eyebrow>
+      <Card className="p-5">
+        <p className="flex items-start gap-2 text-[13.5px] font-medium leading-relaxed text-ink">
+          <Lightbulb size={15} className="mt-0.5 shrink-0 text-saffron-deep" />
+          {learnModule.simplerExample.prompt}
+        </p>
+        <ol className="mt-3 space-y-2">
+          {learnModule.simplerExample.walkthrough.map((step, i) => (
+            <li key={i} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-muted">
+              <span className="mt-px grid size-5 shrink-0 place-items-center rounded-full bg-sand text-[11px] font-semibold text-muted tnum">
+                {i + 1}
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+        <p className="mt-3 rounded-xl bg-mastered-soft/70 px-3.5 py-2.5 text-[12.5px] leading-relaxed text-mastered">
+          {learnModule.simplerExample.answer}
+        </p>
+      </Card>
+
+      {/* Guiding questions — the tutor asks, the student thinks */}
+      <Eyebrow>Questions to sit with</Eyebrow>
+      <p className="-mt-1 mb-3 text-[12px] leading-relaxed text-faint">
+        Your tutor won&rsquo;t hand you the answer &mdash; it&rsquo;ll nudge your thinking.
+      </p>
       <div className="space-y-2.5">
-        {thread.map((t, i) => {
-          const showFlag =
-            flagged &&
-            t.from === "tutor" &&
-            typeof t.text !== "string" &&
-            i === thread.length - 2;
-          return (
-            <React.Fragment key={i}>
-              <Bubble from={t.from}>{t.text}</Bubble>
-              {showFlag && (
-                <div className="flex justify-start">
-                  <div className="inline-flex items-center gap-1.5 rounded-lg bg-practising-soft px-2.5 py-1.5 text-[11px] font-medium text-practising">
-                    <Flag size={11} /> Flagged for Ms. Rao &mdash; never scored by the tutor
-                  </div>
-                </div>
-              )}
-            </React.Fragment>
-          );
-        })}
+        {learnModule.guidingQuestions.map((q, i) => (
+          <GuidingQuestion key={i} q={q} />
+        ))}
       </div>
 
-      {/* decorative, non-functional input bar */}
-      <div className="sticky bottom-0 -mx-5 mt-4 border-t border-line bg-canvas/90 px-5 py-3 backdrop-blur-sm">
-        <div className="flex items-center gap-2">
-          <div className="flex h-11 flex-1 items-center rounded-full border border-line bg-surface px-4 text-[13px] text-faint">
-            Ask about today&rsquo;s topic&hellip;
-          </div>
-          <button
-            type="button"
-            aria-label="Send"
-            className="grid size-11 shrink-0 place-items-center rounded-full text-white shadow-soft"
-            style={{ backgroundColor: ACCENT }}
-          >
-            <Send size={17} />
-          </button>
-        </div>
+      <Card className="mt-6 border-indigo/15 bg-indigo-soft/40 p-4">
+        <SectionLabel className="text-indigo/70">The move, in one line</SectionLabel>
+        <p className="mt-1.5 text-[13.5px] font-medium leading-relaxed text-indigo-ink">
+          {learnModule.theMove}
+        </p>
+      </Card>
+
+      <div className="mt-5 mb-1 inline-flex items-center gap-1.5 text-[13px] font-medium text-indigo">
+        Try it in Practice <ArrowRight size={15} />
       </div>
     </Screen>
   );
 }
 
-/* ---------------- Paths ---------------- */
-function ArcIndicator({ stage }: { stage: string }) {
-  const activeIndex = PATH_ARC.findIndex((a) => a.stage === stage);
+/* =====================================================================
+   PRACTICE — adaptive, one question at a time, hint history, support
+   controls, a progress state chip, and the escalation moment.
+   ===================================================================== */
+const SUPPORT_CONTROLS: { label: string; icon: LucideIcon }[] = [
+  { label: "Give me a hint", icon: Lightbulb },
+  { label: "Explain differently", icon: RefreshCw },
+  { label: "Show a simpler example", icon: BookOpen },
+  { label: "Let me try again", icon: CornerDownRight },
+  { label: "Ask my teacher", icon: HelpCircle },
+];
+
+function ProgressChip({ state }: { state: keyof typeof progressStateMeta }) {
+  const meta = progressStateMeta[state];
   return (
-    <div className="mt-3.5 flex items-center">
-      {PATH_ARC.map((a, i) => {
-        const reached = i <= activeIndex;
-        const isCurrent = i === activeIndex;
-        return (
-          <React.Fragment key={a.stage}>
-            <div className="flex flex-col items-center">
-              <span
-                className="size-2.5 rounded-full ring-2 ring-offset-2 ring-offset-surface"
-                style={{
-                  backgroundColor: reached ? ACCENT : "#ECEAE3",
-                  // @ts-expect-error -- CSS custom prop for ring colour
-                  "--tw-ring-color": isCurrent ? "rgba(55,53,122,0.25)" : "transparent",
-                }}
-              />
-              <span
-                className={
-                  isCurrent
-                    ? "mt-1.5 text-[10px] font-semibold text-indigo"
-                    : reached
-                      ? "mt-1.5 text-[10px] font-medium text-muted"
-                      : "mt-1.5 text-[10px] text-faint"
-                }
-              >
-                {a.label}
-              </span>
-            </div>
-            {i < PATH_ARC.length - 1 && (
-              <span
-                className="mb-4 h-0.5 flex-1 rounded-full"
-                style={{ backgroundColor: i < activeIndex ? ACCENT : "#ECEAE3" }}
-              />
-            )}
-          </React.Fragment>
-        );
-      })}
-    </div>
+    <Badge tone={meta.tone}>
+      {state === "mastered" && <Check size={12} />}
+      {state === "needs-teacher" && <Flag size={12} />}
+      {meta.label}
+    </Badge>
   );
 }
 
-function PathsTab() {
+function PracticeTab() {
+  // Adaptive practice walks one item at a time; she's reached the third.
+  const [index, setIndex] = React.useState(2);
+  const item = practiceItems[index];
+  const sessions = tutorSessionsByStudent(STUDENT_ID);
+  const unlock = sessions.find((t) => t.nodeId === "MATH.FRAC.WORD.04")?.unlockedBy;
+
+  return (
+    <Screen className="pb-2">
+      <GuardRail>One question at a time &middot; hints, never the answer</GuardRail>
+
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Practice</p>
+          <h1 className="mt-0.5 font-display text-[22px] leading-tight text-ink">
+            {todayTopic.title}
+          </h1>
+        </div>
+        <ProgressChip state={item.state} />
+      </div>
+
+      {/* Adaptive position — one at a time */}
+      <div className="mb-3 flex items-center gap-1.5">
+        {practiceItems.map((p, i) => (
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => setIndex(i)}
+            aria-label={`Question ${i + 1}`}
+            className={cn(
+              "h-1.5 flex-1 rounded-full transition-colors",
+              i < index
+                ? "bg-mastered"
+                : i === index
+                  ? "bg-indigo"
+                  : "bg-line",
+            )}
+          />
+        ))}
+      </div>
+
+      {/* The question */}
+      <Card className="p-5">
+        <SectionLabel>Question {index + 1} of {practiceItems.length}</SectionLabel>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink">{item.question}</p>
+      </Card>
+
+      {/* Hint history */}
+      <Eyebrow>Hints so far</Eyebrow>
+      <div className="space-y-2">
+        {item.hints.map((h, i) => (
+          <div key={i} className="flex items-start gap-2.5">
+            <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-lg bg-saffron-soft text-saffron-deep">
+              <Lightbulb size={13} />
+            </span>
+            <p className="rounded-xl border border-line bg-surface px-3 py-2 text-[12.5px] leading-relaxed text-muted shadow-soft">
+              {h}
+            </p>
+          </div>
+        ))}
+
+        {item.attempt && (
+          <div className="flex justify-end pt-1">
+            <div className="max-w-[82%] rounded-2xl rounded-br-md bg-indigo-soft px-3.5 py-2.5 text-[13px] leading-relaxed text-indigo-ink">
+              {item.attempt}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Escalation OR confirmation, depending on the item's state */}
+      {item.escalation ? (
+        <Card className="mt-4 border-gap/25 bg-gap-soft/50 p-4">
+          <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-gap">
+            <Flag size={12} /> Shared with your teacher
+          </div>
+          <p className="text-[13px] leading-relaxed text-ink">{item.escalation}</p>
+        </Card>
+      ) : (
+        <Card className="mt-4 border-mastered/20 bg-mastered-soft/50 p-4">
+          <p className="flex items-start gap-2 text-[13px] leading-relaxed text-ink">
+            <Check size={15} className="mt-0.5 shrink-0 text-mastered" />
+            {item.answer}
+          </p>
+        </Card>
+      )}
+
+      {/* Support controls */}
+      <Eyebrow>If you&rsquo;re stuck</Eyebrow>
+      <div className="flex flex-wrap gap-2">
+        {SUPPORT_CONTROLS.map((c) => {
+          const Icon = c.icon;
+          const isEscalate = c.label === "Ask my teacher";
+          return (
+            <button
+              key={c.label}
+              type="button"
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12.5px] font-medium transition-colors",
+                isEscalate
+                  ? "border-gap/30 bg-gap-soft/60 text-gap hover:bg-gap-soft"
+                  : "border-line bg-surface text-ink shadow-soft hover:bg-sand",
+              )}
+            >
+              <Icon size={13} className={isEscalate ? "text-gap" : "text-indigo"} />
+              {c.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* How the tutor reads her progress — the L2/L3 capture, in plain words */}
+      {unlock && (
+        <Card className="mt-6 p-4">
+          <SectionLabel>What unlocked progress</SectionLabel>
+          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{unlock}.</p>
+        </Card>
+      )}
+    </Screen>
+  );
+}
+
+/* =====================================================================
+   PROJECTS — brief, milestones, artifacts, rubric + exemplars, mentor
+   feedback, reflection, and a bounded tutor offer that defers judgment.
+   ===================================================================== */
+function ProjectsTab() {
+  const def = pathDefs[project.path];
+  const doneCount = project.milestones.filter((m) => m.done).length;
+
+  return (
+    <Screen>
+      <div className="mb-1 mt-1 flex items-center justify-between">
+        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Project</p>
+        <Badge tone="saffron">
+          <span className="text-[13px] leading-none">{def.glyph}</span> {project.pathLabel}
+        </Badge>
+      </div>
+      <h1 className="font-display text-[24px] leading-tight text-ink">{project.title}</h1>
+      <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{project.brief}</p>
+
+      <Card className="mt-4 border-saffron/20 bg-saffron-soft/30 p-4">
+        <SectionLabel className="text-saffron-deep/80">Driving question</SectionLabel>
+        <p className="mt-1.5 text-[14px] font-medium leading-relaxed text-ink">
+          {project.driving}
+        </p>
+      </Card>
+
+      {/* Mentor line */}
+      <Eyebrow>Your mentor</Eyebrow>
+      <Card className="p-4">
+        <div className="flex items-center gap-3">
+          <Avatar name={project.mentor.name} size={40} />
+          <div className="min-w-0 flex-1">
+            <p className="text-[14px] font-medium text-ink">{project.mentor.name}</p>
+            <p className="text-[12px] text-faint">
+              {project.mentor.title} · {project.group}
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      {/* Milestones */}
+      <Eyebrow className="flex items-center justify-between">
+        <span>Milestones</span>
+        <span className="font-normal tracking-normal text-faint tnum">
+          {doneCount}/{project.milestones.length}
+        </span>
+      </Eyebrow>
+      <Card className="p-2">
+        {project.milestones.map((m, i) => (
+          <div
+            key={i}
+            className={cn(
+              "flex items-start gap-3 p-3",
+              i < project.milestones.length - 1 && "border-b border-line",
+            )}
+          >
+            <span
+              className={cn(
+                "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full",
+                m.done ? "bg-mastered text-white" : "border border-line-strong bg-surface",
+              )}
+            >
+              {m.done && <Check size={12} strokeWidth={3} />}
+            </span>
+            <div className="min-w-0">
+              <p className={cn("text-[13.5px] font-medium", m.done ? "text-ink" : "text-muted")}>
+                {m.label}
+              </p>
+              <p className="mt-0.5 text-[12px] leading-relaxed text-faint">{m.detail}</p>
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Artifacts + upload affordance */}
+      <Eyebrow>Your work</Eyebrow>
+      <div className="space-y-2">
+        {project.artifacts.map((a, i) => (
+          <div
+            key={i}
+            className={cn(
+              "flex items-center gap-3 rounded-xl border p-3",
+              a.uploaded ? "border-line bg-surface shadow-soft" : "border-dashed border-line-strong bg-sand/40",
+            )}
+          >
+            <span
+              className={cn(
+                "grid size-9 shrink-0 place-items-center rounded-lg",
+                a.uploaded ? "bg-indigo-soft text-indigo" : "bg-surface text-faint",
+              )}
+            >
+              {a.uploaded ? <Check size={16} /> : <Upload size={16} />}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className={cn("truncate text-[13px] font-medium", a.uploaded ? "text-ink" : "text-muted")}>
+                {a.label}
+              </p>
+              <p className="text-[11.5px] text-faint">{a.meta}</p>
+            </div>
+            {!a.uploaded && (
+              <span className="shrink-0 text-[12px] font-medium text-indigo">Add</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Rubric with anchored exemplars */}
+      <Eyebrow>How it&rsquo;s judged</Eyebrow>
+      <div className="space-y-2">
+        {project.rubric.map((r) => (
+          <Card
+            key={r.level}
+            className={cn(
+              "p-3.5",
+              r.current && "border-indigo/30 bg-indigo-soft/30 ring-1 ring-inset ring-indigo/15",
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-[13.5px] font-medium text-ink">{r.level}</p>
+              {r.current && <Badge tone="indigo">You&rsquo;re here</Badge>}
+            </div>
+            <p className="mt-1 text-[12.5px] leading-relaxed text-muted">{r.descriptor}</p>
+            <p className="mt-2 flex items-start gap-1.5 rounded-lg bg-sand/70 px-2.5 py-2 text-[12px] italic leading-relaxed text-faint">
+              <CornerDownRight size={12} className="mt-0.5 shrink-0" />
+              {r.exemplar}
+            </p>
+          </Card>
+        ))}
+      </div>
+
+      {/* Mentor feedback */}
+      <Eyebrow>From your mentor</Eyebrow>
+      <Card className="p-5">
+        <p className="text-[13.5px] leading-relaxed text-ink">{project.mentorFeedback.text}</p>
+        <p className="mt-2.5 text-[11px] text-faint">
+          {project.mentor.name} · 17 June
+        </p>
+      </Card>
+
+      {/* Bounded tutor support — and the judgment it hands back */}
+      <Eyebrow>Where your tutor can help</Eyebrow>
+      <Card className="p-5">
+        <TutorTag />
+        <p className="text-[13px] leading-relaxed text-muted">{project.tutorSupport.offer}</p>
+        <div className="mt-3.5 flex items-start gap-2 rounded-xl bg-practising-soft/70 p-3 text-[12.5px] leading-relaxed text-practising">
+          <Flag size={14} className="mt-0.5 shrink-0" />
+          <span>{project.tutorSupport.defers}</span>
+        </div>
+      </Card>
+
+      {/* Her own reflection on the project */}
+      <Eyebrow>In your words</Eyebrow>
+      <Card className="bg-sand/50 p-4">
+        <p className="text-[13px] italic leading-relaxed text-muted">
+          &ldquo;{project.studentReflection}&rdquo;
+        </p>
+      </Card>
+    </Screen>
+  );
+}
+
+/* =====================================================================
+   REFLECTION — what was hard, what changed, what to try next.
+   ===================================================================== */
+function ReflectTab() {
   const s = studentById(STUDENT_ID)!;
 
   return (
     <Screen>
       <div className="mb-1 mt-1">
-        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Your paths</p>
+        <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Reflection</p>
       </div>
       <h1 className="font-display text-[24px] leading-tight text-ink">
-        Two forms you&rsquo;re going deep on.
+        How did today actually go?
       </h1>
       <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-        You&rsquo;ve moved past sampling. Both of these are in the{" "}
-        <span className="font-medium text-indigo">Specialise</span> stage now &mdash; building
-        real craft.
+        A quiet minute for yourself &mdash; no marks, no one watching. Just noticing.
       </p>
 
       <div className="mt-5 space-y-3.5">
-        {s.paths.map((e) => {
-          const def = pathDefs[e.path];
-          return (
-            <Card key={e.path} className="p-5">
-              <div className="flex items-start justify-between gap-3">
-                <span className="inline-flex items-center gap-2.5">
-                  <span className="grid size-10 place-items-center rounded-xl bg-saffron-soft text-[18px] text-saffron-deep">
-                    {def.glyph}
-                  </span>
-                  <span>
-                    <span className="block text-[15px] font-medium text-ink">{def.name}</span>
-                    <span className="block text-[12px] text-faint">{def.verb}</span>
-                  </span>
-                </span>
-                <Badge tone={e.focus === "primary" ? "indigo" : "neutral"} className="capitalize">
-                  {e.focus}
-                </Badge>
+        {reflectionPrompts.map((p) => (
+          <Card key={p.id} className="p-5">
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-xl bg-indigo-soft text-indigo">
+                <NotebookPen size={15} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-[14.5px] font-medium leading-snug text-ink">{p.prompt}</p>
+                <p className="mt-0.5 text-[12px] text-faint">{p.hint}</p>
               </div>
+            </div>
 
-              <p className="mt-3 text-[13px] leading-relaxed text-muted">{e.headline}</p>
-
-              <div className="mt-3.5">
-                <div className="flex items-center justify-between text-[11px]">
-                  <SectionLabel>Standard of work</SectionLabel>
-                  <span className="font-medium text-ink tnum">{e.standard}</span>
-                </div>
-                <div className="mt-1.5 h-2 rounded-full bg-sand">
-                  <div
-                    className="h-full rounded-full bg-saffron"
-                    style={{ width: `${e.standard}%` }}
-                  />
-                </div>
+            {p.answer ? (
+              <p className="mt-3.5 rounded-xl bg-sand/70 px-3.5 py-3 text-[13px] leading-relaxed text-muted">
+                {p.answer}
+              </p>
+            ) : (
+              <div className="mt-3.5 rounded-xl border border-dashed border-line-strong bg-canvas px-3.5 py-3 text-[13px] text-faint">
+                Write a line when you&rsquo;re ready&hellip;
               </div>
-
-              <div className="mt-4 border-t border-line pt-1">
-                <ArcIndicator stage={e.stage} />
-              </div>
-            </Card>
-          );
-        })}
+            )}
+          </Card>
+        ))}
       </div>
+
+      <Card className="mt-6 border-indigo/15 bg-indigo-soft/40 p-5">
+        <div className="flex items-center gap-2.5">
+          <Avatar name={s.name} size={36} />
+          <div>
+            <p className="text-[13.5px] font-medium text-ink">{s.name}</p>
+            <p className="text-[12px] text-faint">{s.grade} · {s.house} House</p>
+          </div>
+        </div>
+        <p className="mt-3 text-[12.5px] leading-relaxed text-muted">
+          What you notice here is yours. If you&rsquo;d like, your coach can read it before your
+          next check-in &mdash; only if you choose to share it.
+        </p>
+        <div className="mt-3.5 flex gap-2">
+          <Button size="sm" variant="primary">Save for myself</Button>
+          <Button size="sm" variant="outline">Share with my coach</Button>
+        </div>
+      </Card>
     </Screen>
   );
 }
@@ -370,8 +657,10 @@ export default function StudentApp() {
   return (
     <DeviceFrame tabs={TABS} active={active} onTab={setActive} accent={ACCENT} title="Student">
       {active === "today" && <TodayTab />}
-      {active === "tutor" && <TutorTab />}
-      {active === "paths" && <PathsTab />}
+      {active === "learn" && <LearnTab />}
+      {active === "practice" && <PracticeTab />}
+      {active === "projects" && <ProjectsTab />}
+      {active === "reflect" && <ReflectTab />}
     </DeviceFrame>
   );
 }

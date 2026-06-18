@@ -1,58 +1,115 @@
-import { AppShell } from "@/components/shell/AppShell";
-import {
-  schoolHealth,
-  velocityByCohort,
-  gapDebtTrend,
-  retentionTrend,
-  benchmarks,
-} from "@/data/metrics";
-import { MetricTile } from "@/components/patterns/atoms";
-import { BarRow, TrendLine, BenchmarkPlot } from "@/components/viz/charts";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { AppShell, Section } from "@/components/shell/AppShell";
+import { benchmarks } from "@/data/metrics";
+import { healthMetrics, type HealthMetric } from "@/data/principal-extra";
+import { Sparkline, BenchmarkPlot } from "@/components/viz/charts";
+import { ConfidenceBadge, Freshness } from "@/components/patterns/Signals";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
+
+const SIGNAL_COLOR: Record<string, string> = {
+  pace: "#37357A",
+  "gap-debt": "#5E7C6A",
+  retention: "#37357A",
+  path: "#C0913A",
+  usage: "#5E7C6A",
+  parents: "#37357A",
+};
+
+function formatValue(m: HealthMetric) {
+  return m.unit === "ratio" ? pct(m.value) : m.value.toFixed(1);
+}
+
+function formatDelta(m: HealthMetric) {
+  const sign = m.momDelta >= 0 ? "+" : "";
+  return m.unit === "ratio"
+    ? `${sign}${(m.momDelta * 100).toFixed(0)} pts`
+    : `${sign}${m.momDelta.toFixed(1)}`;
+}
+
+function SignalCard({ m }: { m: HealthMetric }) {
+  const color = SIGNAL_COLOR[m.key] ?? "#37357A";
+  // A move in the healthy direction reads as good, regardless of sign.
+  const improving = m.goodWhenRising ? m.momDelta >= 0 : m.momDelta <= 0;
+  const Arrow = m.momDelta >= 0 ? ArrowUpRight : ArrowDownRight;
+
+  return (
+    <Card className="flex flex-col p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-faint">{m.label}</p>
+          <p className="mt-2 font-display text-[30px] leading-none tnum text-ink" style={{ color }}>
+            {formatValue(m)}
+            {m.unit === "pace" && <span className="ml-1 text-[13px] font-normal text-faint">/wk</span>}
+          </p>
+        </div>
+        <Sparkline data={m.trend.map((d) => d.value)} width={92} height={40} color={color} />
+      </div>
+
+      <div className="mt-3 flex items-center gap-2.5">
+        <span
+          className={
+            "inline-flex items-center gap-0.5 text-[12px] font-medium tnum " +
+            (improving ? "text-mastered" : "text-gap")
+          }
+        >
+          <Arrow size={13} />
+          {formatDelta(m)}
+        </span>
+        <span className="text-[12px] text-faint">vs last month</span>
+      </div>
+
+      <div className="mt-4 border-t border-line pt-3.5">
+        <div className="flex items-center justify-between gap-2">
+          <SectionLabel>Needs attention</SectionLabel>
+          <Badge tone={m.key === "gap-debt" ? "gap" : "saffron"}>{m.gradeNeedingAttention}</Badge>
+        </div>
+        <p className="mt-2 text-[13px] leading-relaxed text-muted">{m.action}</p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+          <span className="text-[12px] text-faint">
+            Owner <span className="font-medium text-ink">{m.owner}</span>
+          </span>
+          <ConfidenceBadge level={m.confidence} />
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 export default function PrincipalHealth() {
   const meanGap =
     benchmarks.reduce((a, b) => a + Math.abs(b.predicted - b.actual), 0) / benchmarks.length;
 
   return (
-    <AppShell persona="principal" eyebrow="Dr. Meera Nambiar · Whitefield Campus" title="School health">
+    <AppShell
+      persona="principal"
+      eyebrow="Dr. Meera Nambiar · Whitefield Campus"
+      title="School health"
+      actions={<Freshness state="today" />}
+    >
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        An operator&apos;s cockpit — a few decisive, leading numbers. The headline: our leading
-        metric is <em>real</em>, and it predicts the lagging outcome.
+        An operator&apos;s cockpit — six leading signals, each with where it is heading, the grade
+        that needs attention, and the one move to make. The headline: our leading metric is{" "}
+        <em>real</em>, and it predicts the lagging board outcome.
       </p>
 
-      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Comprehension" value={pct(schoolHealth.comprehensionRate)} accent="#37357A" foot="school-wide, leading" />
-        <MetricTile label="Retention integrity" value={pct(schoolHealth.retentionIntegrity)} foot="concepts holding over time" />
-        <MetricTile label="Predicted vs ACER" value={`±${meanGap.toFixed(1)}`} accent="#5E7C6A" foot="avg gap, predicted to actual" />
-        <MetricTile label="Parent engagement" value={pct(schoolHealth.parentEngagement)} foot="active on the app" />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="space-y-6 lg:col-span-3">
-          <Card className="p-6">
-            <SectionLabel>Mastery velocity by cohort</SectionLabel>
-            <p className="mb-5 mt-1 text-[12px] text-faint">nodes / week · marker shows grade-expected pace</p>
-            <div className="space-y-3.5">
-              {velocityByCohort.map((c) => (
-                <BarRow key={c.label} label={c.label} value={c.value} expected={c.expected} max={3} />
-              ))}
-            </div>
-          </Card>
-
-          <Card className="p-6">
-            <SectionLabel>Grade-level gap-debt trend</SectionLabel>
-            <p className="mb-2 mt-1 text-[12px] text-faint">8 weeks · falling is healthy</p>
-            <TrendLine data={gapDebtTrend} color="#5E7C6A" format={(v) => v.toFixed(1)} />
-          </Card>
+      <Section title="The six leading signals" description="Read against grade-expected pace — these move before the exam does.">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {healthMetrics.map((m) => (
+            <SignalCard key={m.key} m={m} />
+          ))}
         </div>
+      </Section>
 
-        <div className="space-y-6 lg:col-span-2">
-          <Card className="p-6">
+      <Section
+        title="Leading vs lagging — proven"
+        description="The proof the leading metric is real: each cohort's prediction against its eventual ACER result."
+      >
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+          <Card className="p-6 lg:col-span-3">
             <div className="flex items-center justify-between">
-              <SectionLabel>Leading vs lagging — proven</SectionLabel>
-              <Badge tone="mastered">tight fit</Badge>
+              <SectionLabel>Predicted vs ACER actual</SectionLabel>
+              <Badge tone="mastered">±{meanGap.toFixed(1)} avg gap</Badge>
             </div>
             <div className="mt-4 grid place-items-center">
               <BenchmarkPlot
@@ -70,13 +127,29 @@ export default function PrincipalHealth() {
             </p>
           </Card>
 
-          <Card className="p-6">
-            <SectionLabel>Retention integrity</SectionLabel>
-            <p className="mb-2 mt-1 text-[12px] text-faint">8 weeks · rising</p>
-            <TrendLine data={retentionTrend} color="#37357A" height={96} format={(v) => pct(v)} />
+          <Card className="flex flex-col justify-center gap-5 p-6 lg:col-span-2">
+            <div>
+              <SectionLabel>What the cockpit is for</SectionLabel>
+              <p className="mt-2 text-[13px] leading-relaxed text-muted">
+                Every number here moves before a report card could. A dip surfaces months early,
+                with a named owner and a single recommended move — not a wall of green, and never a
+                ranking of teachers.
+              </p>
+            </div>
+            <div className="border-t border-line pt-4">
+              <div className="flex items-baseline justify-between">
+                <span className="text-[13px] text-muted">Cohorts validated against ACER</span>
+                <span className="font-display text-2xl tnum text-ink">{benchmarks.length}</span>
+              </div>
+              <div className="mt-2 flex items-baseline justify-between">
+                <span className="text-[13px] text-muted">Mean prediction gap</span>
+                <span className="font-display text-2xl tnum text-mastered">±{meanGap.toFixed(1)}</span>
+              </div>
+            </div>
+            <ConfidenceBadge level="high" />
           </Card>
         </div>
-      </div>
+      </Section>
     </AppShell>
   );
 }

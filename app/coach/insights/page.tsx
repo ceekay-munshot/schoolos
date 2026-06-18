@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, EyeOff } from "lucide-react";
 import { AppShell } from "@/components/shell/AppShell";
 import { insights } from "@/data/insights";
 import { studentById } from "@/data/students";
@@ -17,10 +17,15 @@ export default function CoachInsights() {
 
   return (
     <AppShell persona="coach" eyebrow="Drafted by the system · curated by you" title="Insights">
-      <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
+      <p className="mb-4 max-w-2xl text-[14px] leading-relaxed text-muted">
         The system flags what it noticed. You never receive raw model output as truth — you
         curate it, and your context becomes a first-class signal that adjusts interpretation
         downstream.
+      </p>
+      <p className="mb-7 flex max-w-2xl items-start gap-2 rounded-xl border border-line bg-sand/60 p-3 text-[12.5px] leading-relaxed text-muted">
+        <EyeOff size={14} className="mt-0.5 shrink-0 text-faint" />
+        Not every true observation is one a family should receive raw. On each student’s digest you
+        decide, per insight, what is suitable for parent sharing and what stays as coach context.
       </p>
 
       <div className="space-y-9">

@@ -1,16 +1,26 @@
-import { Users2, ArrowRight } from "lucide-react";
+import { Users2, ArrowRight, TrendingDown, Rocket, Hourglass } from "lucide-react";
 import { AppShell, Section } from "@/components/shell/AppShell";
 import { heroClassStudents } from "@/data/students";
 import { masteryAt, gapClusters, classDistribution, FRACTION_PATH } from "@/data/mastery";
 import { nodeById } from "@/data/competency";
 import { DistributionBar } from "@/components/viz/charts";
 import { StudentInspector } from "@/components/patterns/StudentInspector";
-import { Delta } from "@/components/patterns/atoms";
-import { MetricTile } from "@/components/patterns/atoms";
+import { Delta, MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { statusColor } from "@/lib/status";
 import { pct } from "@/lib/utils";
+
+function Chip({ id, name }: { id: string; name: string }) {
+  return (
+    <StudentInspector
+      studentId={id}
+      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 pl-1 pr-2.5 text-[12px] text-ink transition-colors hover:bg-sand"
+    >
+      <Avatar name={name} size={22} /> {name.split(" ")[0]}
+    </StudentInspector>
+  );
+}
 
 export default function ClassHealth() {
   const n = heroClassStudents.length;
@@ -21,24 +31,52 @@ export default function ClassHealth() {
   const dist = classDistribution();
   const topCluster = clusters[0];
 
+  const stalling = heroClassStudents.filter((s) => s.masteryVelocity < s.expectedVelocity - 0.05);
+  const extension = heroClassStudents.filter((s) => s.masteryVelocity >= 2.4);
+  const fading = heroClassStudents.filter((s) => s.retentionIntegrity < 0.75);
+
+  const WATCH = [
+    { title: "Beginning to stall", note: "pace dipped below grade — catch it before a test would", Icon: TrendingDown, cls: "text-gap", list: stalling },
+    { title: "Ready for extension", note: "racing — give depth, not more repetition", Icon: Rocket, cls: "text-mastered", list: extension },
+    { title: "Knowledge fading", note: "was secure; recall is slipping — weave in refresh", Icon: Hourglass, cls: "text-practising", list: fading },
+  ];
+
   return (
     <AppShell persona="teacher" eyebrow="Class 5 Kaveri · 22 students" title="Class health">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Leading, not lagging — this is who is stalling <em>before</em> any exam would show it.
-        The report card is the output; this is the instrument.
+        Leading, not lagging — who is stalling <em>before</em> any exam would show it. The report
+        card is the output; this is the instrument.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Class velocity" value={avgVel.toFixed(1)} accent="#37357A" foot={<Delta value={avgVel} expected={2.0} unit="" />} />
-        <MetricTile label="Retention integrity" value={pct(avgRet)} foot="mastered nodes still passing recall" />
+        <MetricTile label="Learning pace" value={avgVel.toFixed(1)} accent="#37357A" foot={<Delta value={avgVel} expected={2.0} unit="" />} />
+        <MetricTile label="What's sticking" value={pct(avgRet)} foot="concepts holding on later recall" />
         <MetricTile label="Independent work" value={pct(avgIndep)} foot="the calm-room signal" />
-        <MetricTile label="Capture compliance" value="96%" accent="#5E7C6A" foot="worksheets scanned this week" />
+        <MetricTile label="Work captured" value="96%" accent="#5E7C6A" foot="worksheets scanned this week" />
       </div>
 
+      <Section title="This week — who to watch" description="A short, honest list. Not a wall of alerts.">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {WATCH.map((w) => (
+            <Card key={w.title} className="p-5">
+              <p className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink">
+                <w.Icon size={15} className={w.cls} /> {w.title}
+                <span className="tnum text-[12px] text-faint">· {w.list.length}</span>
+              </p>
+              <p className="mt-1 text-[12px] leading-relaxed text-faint">{w.note}</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {w.list.length ? w.list.map((s) => <Chip key={s.id} id={s.id} name={s.name} />) : (
+                  <span className="text-[12px] text-faint">No one this week.</span>
+                )}
+              </div>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        {/* the one group */}
         <div className="lg:col-span-3">
-          <Section title="Gap-clusters" description="Where children share a broken node — your candidate small-groups.">
+          <Section title="Foundational gaps" description="Where children share a broken prerequisite — your candidate small-group for the week.">
             {topCluster && (
               <Card className="border-gap/20">
                 <div className="p-5">
@@ -50,21 +88,13 @@ export default function ClassHealth() {
                   </div>
                   <p className="mt-3 font-display text-lg text-ink">{topCluster.label}</p>
                   <p className="mt-1 text-[13px] text-muted">
-                    This is your one group to pull — repair the root and the downstream addition work
-                    unblocks for all four.
+                    Your one group to pull — repair the root and the downstream addition work unblocks
+                    for all four.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {topCluster.studentIds.map((sid) => {
                       const s = heroClassStudents.find((x) => x.id === sid)!;
-                      return (
-                        <StudentInspector
-                          key={sid}
-                          studentId={sid}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 pl-1 pr-3 text-[12px] text-ink transition-colors hover:bg-sand"
-                        >
-                          <Avatar name={s.name} size={22} /> {s.name}
-                        </StudentInspector>
-                      );
+                      return <Chip key={sid} id={sid} name={s.name} />;
                     })}
                   </div>
                 </div>
@@ -73,7 +103,6 @@ export default function ClassHealth() {
           </Section>
         </div>
 
-        {/* distribution */}
         <div className="lg:col-span-2">
           <Section title="Distribution across the map">
             <Card className="p-5">
@@ -84,7 +113,6 @@ export default function ClassHealth() {
         </div>
       </div>
 
-      {/* roster heat strip */}
       <Section title="The roster" description="Each child's path through the Fractions strand. Tap any name for the full 360.">
         <Card>
           <div className="divide-y divide-line">

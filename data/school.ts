@@ -47,5 +47,5 @@ export const subjects: Subject[] = [
   },
 ];
 
-/** The current "today" the whole mock is anchored to. */
+/** The current "today" the whole system is anchored to. */
 export const TODAY = "2026-06-18";

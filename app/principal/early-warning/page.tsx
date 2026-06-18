@@ -1,53 +1,108 @@
-import { TriangleAlert } from "lucide-react";
-import { AppShell } from "@/components/shell/AppShell";
+import { TriangleAlert, FileText, ArrowRight, UserCheck, CalendarClock } from "lucide-react";
+import { AppShell, Section } from "@/components/shell/AppShell";
 import { earlyWarning } from "@/data/metrics";
+import { earlyWarningRows } from "@/data/principal-extra";
+import { studentById } from "@/data/students";
 import { StudentInspector } from "@/components/patterns/StudentInspector";
+import { ConfidenceBadge } from "@/components/patterns/Signals";
+import { MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
-import { Card, Badge } from "@/components/ui/primitives";
-import { pct } from "@/lib/utils";
+import { Card, Badge, Divider } from "@/components/ui/primitives";
+import { pct, relativeDays } from "@/lib/utils";
 
 export default function EarlyWarning() {
-  const rows = earlyWarning();
+  // The model surfaces the at-risk children; the operating detail (evidence,
+  // owner, follow-up) is carried alongside and joined on the student.
+  const base = earlyWarning();
+  const riskById = new Map(base.map((r) => [r.student.id, r.risk]));
+
+  const rows = earlyWarningRows
+    .map((r) => ({ ...r, student: studentById(r.studentId)!, risk: riskById.get(r.studentId) ?? "watch" }))
+    .filter((r) => r.student)
+    .sort((a, b) => b.student.gapDebt - a.student.gapDebt);
+
+  const elevated = rows.filter((r) => r.risk === "elevated").length;
 
   return (
-    <AppShell persona="principal" eyebrow="The retention & attrition predictor" title="Early-warning">
+    <AppShell persona="principal" eyebrow="The retention & attrition predictor" title="Early warning">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Which children are accumulating gap-debt that will surface as failures — and as attrition
-        — months from now. This is what the report card can never give you: time to act.
+        Which children are accumulating gap-debt that will surface as failures — and as attrition —
+        months from now. Every warning carries its evidence, a confidence, the next step, who owns
+        it, and when it is checked. This is what a report card can never give you: time to act.
       </p>
 
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-        {rows.map(({ student: s, risk, reason }) => (
-          <StudentInspector key={s.id} studentId={s.id} className="block w-full text-left">
-            <Card hover className="p-5">
-              <div className="flex items-start gap-4">
-                <Avatar name={s.name} size={44} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-[15px] font-medium text-ink">{s.name}</p>
-                    <span className="text-[12px] text-faint">{s.grade}</span>
-                    <Badge tone={risk === "elevated" ? "gap" : "practising"}>
-                      <TriangleAlert size={11} /> {risk}
-                    </Badge>
+      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <MetricTile label="On the watch-list" value={rows.length} accent="#C0913A" foot="children surfaced early" />
+        <MetricTile label="Elevated" value={elevated} accent="#B25B43" foot="root gap breaking downstream work" />
+        <MetricTile label="With a named owner" value={rows.length} foot="every warning has a person" />
+        <MetricTile label="Next follow-up" value={relativeDays(rows.reduce((min, r) => (r.followUpDate < min ? r.followUpDate : min), rows[0].followUpDate))} foot="soonest scheduled check" />
+      </div>
+
+      <Section title="The watch-list" description="Tap any child for the full 360. None of this is a verdict — it is a head-start.">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+          {rows.map((r) => {
+            const s = r.student;
+            return (
+              <Card key={s.id} className="flex flex-col p-5">
+                <StudentInspector studentId={s.id} className="block w-full text-left">
+                  <div className="flex items-start gap-4">
+                    <Avatar name={s.name} size={44} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-[15px] font-medium text-ink">{s.name}</p>
+                        <span className="text-[12px] text-faint">{s.grade} · {s.house}</span>
+                        <Badge tone={r.risk === "elevated" ? "gap" : "practising"}>
+                          <TriangleAlert size={11} /> {r.risk}
+                        </Badge>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-4">
+                        <span className="text-[12px] text-faint">
+                          Gap-debt <span className="font-medium tnum text-gap">{s.gapDebt}</span>
+                        </span>
+                        <span className="text-[12px] text-faint">
+                          Retention <span className="font-medium tnum text-ink">{pct(s.retentionIntegrity)}</span>
+                        </span>
+                        <span className="text-[12px] text-faint">
+                          Pace <span className="font-medium tnum text-ink">{s.masteryVelocity.toFixed(1)}</span>
+                        </span>
+                      </div>
+                    </div>
+                    <ArrowRight size={15} className="mt-1 shrink-0 text-faint" />
                   </div>
-                  <p className="mt-1 text-[13px] text-muted">{reason}</p>
-                  <div className="mt-3 flex gap-5">
-                    <span className="text-[12px] text-faint">
-                      Gap-debt <span className="font-medium tnum text-gap">{s.gapDebt}</span>
-                    </span>
-                    <span className="text-[12px] text-faint">
-                      Retention <span className="font-medium tnum text-ink">{pct(s.retentionIntegrity)}</span>
-                    </span>
-                    <span className="text-[12px] text-faint">
-                      Velocity <span className="font-medium tnum text-ink">{s.masteryVelocity.toFixed(1)}</span>
-                    </span>
+                </StudentInspector>
+
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-start gap-2.5">
+                    <FileText size={14} className="mt-0.5 shrink-0 text-muted" />
+                    <p className="text-[13px] leading-relaxed text-muted">
+                      <span className="font-medium text-ink">Evidence.</span> {r.evidence}
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <ArrowRight size={14} className="mt-0.5 shrink-0 text-indigo" />
+                    <p className="text-[13px] leading-relaxed text-muted">
+                      <span className="font-medium text-ink">Suggested next step.</span> {r.nextStep}
+                    </p>
                   </div>
                 </div>
-              </div>
-            </Card>
-          </StudentInspector>
-        ))}
-      </div>
+
+                <Divider className="my-3.5" />
+                <div className="flex flex-wrap items-center justify-between gap-y-2">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] text-faint">
+                    <UserCheck size={13} className="text-mastered" />
+                    <span className="font-medium text-ink">{r.owner}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-[12px] text-faint">
+                    <CalendarClock size={13} />
+                    Follow-up <span className="font-medium text-ink">{relativeDays(r.followUpDate)}</span>
+                  </span>
+                  <ConfidenceBadge level={r.confidence} />
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </Section>
     </AppShell>
   );
 }

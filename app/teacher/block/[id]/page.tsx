@@ -1,13 +1,16 @@
 import Link from "next/link";
-import { ArrowLeft, Clock, FileText, Repeat, Rocket, TrendingUp, LifeBuoy } from "lucide-react";
+import { ArrowLeft, Clock, FileText, Repeat, TrendingUp, Users, Rocket, Eye, PenLine, WifiOff } from "lucide-react";
 import { AppShell } from "@/components/shell/AppShell";
 import { timetable, blockById } from "@/data/timetable";
 import { lessonPlanForBlock, worksheetById } from "@/data/lessonplans";
-import { heroClassStudents, studentById } from "@/data/students";
+import { studentById } from "@/data/students";
+import { heroMoveMeta, heroGrouping } from "@/data/teacher-extra";
 import { nodeById } from "@/data/competency";
 import { OneMoveCard } from "@/components/patterns/OneMoveCard";
 import { OverrideControl } from "@/components/patterns/OverrideControl";
 import { StudentInspector } from "@/components/patterns/StudentInspector";
+import { ConfidenceBadge, Freshness, AIStatus } from "@/components/patterns/Signals";
+import { EvidenceDrawer } from "@/components/patterns/EvidenceDrawer";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge, Card, SectionLabel } from "@/components/ui/primitives";
 
@@ -38,8 +41,6 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
   }
 
   const totalMin = plan?.sections.reduce((a, s) => a + s.minutes, 0) ?? 0;
-  const racing = heroClassStudents.filter((s) => s.masteryVelocity >= 2.4);
-  const support = (plan?.oneMove.studentIds ?? []).map((sid) => studentById(sid)!);
 
   return (
     <AppShell
@@ -69,14 +70,22 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
         </Card>
       ) : (
         <div className="space-y-8">
-          <OneMoveCard oneMove={plan.oneMove} />
+          <div>
+            <OneMoveCard oneMove={plan.oneMove} />
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+              <ConfidenceBadge level={heroMoveMeta.confidence} />
+              <Freshness state={heroMoveMeta.freshness} label="Updated today" />
+              <span className="text-[12px] text-faint">{heroMoveMeta.dataNote}</span>
+              <EvidenceDrawer items={heroMoveMeta.evidence} className="ml-auto" />
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
             {/* lesson plan */}
             <div className="lg:col-span-3">
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="font-display text-xl text-ink">AI-proposed lesson plan</h2>
-                <span className="text-[12px] text-faint">{plan.generatedBy}</span>
+                <AIStatus status="suggested" />
               </div>
               <Card>
                 <div className="divide-y divide-line">
@@ -114,42 +123,51 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
 
             {/* pre-block insight + worksheets */}
             <div className="space-y-6 lg:col-span-2">
-              <Card>
-                <div className="p-5">
-                  <SectionLabel>Pre-block insight</SectionLabel>
-                  <div className="mt-3 space-y-4">
-                    <div>
-                      <p className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-gap">
-                        <LifeBuoy size={14} /> Needs you today
+              <Card className="p-5">
+                <SectionLabel>Room split</SectionLabel>
+                <p className="mt-1 text-[12px] text-faint">One move for you; everyone else has a prepared task.</p>
+                <div className="mt-3.5 space-y-4">
+                  {[
+                    { label: "Your group", note: "pull ~12 min · equivalence", cls: "text-gap", Icon: Users, ids: heroGrouping.teacherGroup },
+                    { label: "Extension", note: "ready for depth", cls: "text-mastered", Icon: Rocket, ids: heroGrouping.extensionGroup },
+                    { label: "Observe", note: "keep a light eye", cls: "text-practising", Icon: Eye, ids: heroGrouping.observe },
+                  ].map((b) => (
+                    <div key={b.label}>
+                      <p className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
+                        <b.Icon size={14} className={b.cls} /> {b.label}
+                        <span className="text-[11px] font-normal text-faint">· {b.note}</span>
                       </p>
                       <div className="flex flex-wrap gap-1.5">
-                        {support.map((s) => (
-                          <StudentInspector
-                            key={s.id}
-                            studentId={s.id}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 pl-1 pr-2.5 text-[12px] text-ink transition-colors hover:bg-sand"
-                          >
-                            <Avatar name={s.name} size={22} /> {s.name.split(" ")[0]}
-                          </StudentInspector>
-                        ))}
+                        {b.ids.map((id) => {
+                          const s = studentById(id)!;
+                          return (
+                            <StudentInspector
+                              key={id}
+                              studentId={id}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 pl-1 pr-2.5 text-[12px] text-ink transition-colors hover:bg-sand"
+                            >
+                              <Avatar name={s.name} size={22} /> {s.name.split(" ")[0]}
+                            </StudentInspector>
+                          );
+                        })}
                       </div>
                     </div>
-                    <div>
-                      <p className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-mastered">
-                        <Rocket size={14} /> Racing — needs nothing
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {racing.map((s) => (
-                          <StudentInspector
-                            key={s.id}
-                            studentId={s.id}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 pl-1 pr-2.5 text-[12px] text-ink transition-colors hover:bg-sand"
-                          >
-                            <Avatar name={s.name} size={22} /> {s.name.split(" ")[0]}
-                          </StudentInspector>
-                        ))}
-                      </div>
-                    </div>
+                  ))}
+                  <div className="flex items-center justify-between rounded-xl bg-canvas p-3">
+                    <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
+                      <PenLine size={14} className="text-faint" /> Independent
+                    </p>
+                    <p className="text-[12px] text-muted">{heroGrouping.independentGroup.length} students · prepared task</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-4">
+                <div className="flex items-start gap-2.5">
+                  <WifiOff size={15} className="mt-0.5 shrink-0 text-faint" />
+                  <div>
+                    <p className="text-[12px] font-medium text-ink">If data is missing or the engine is offline</p>
+                    <p className="mt-0.5 text-[12px] leading-relaxed text-muted">{heroMoveMeta.fallback}</p>
                   </div>
                 </div>
               </Card>
