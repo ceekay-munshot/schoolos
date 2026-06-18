@@ -28,28 +28,28 @@ export default function PrincipalParents() {
   const watch = parentEngagement.filter((c) => c.retentionSignal === "watch");
 
   return (
-    <AppShell persona="principal" eyebrow="Engagement, sentiment & retention" title="Parents">
+    <AppShell persona="principal" eyebrow="How parents are doing, and staying" title="Parents">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Parent trust is built on honesty — the gap being worked, not a wall of green. These signals
-        read engagement and sentiment as the early indicators of retention, while there is still
-        time to reach out.
+        Parent trust is built on honesty — showing the gap we&apos;re working on, not a wall of green.
+        These signs show how involved parents are and how they feel — early hints of who might stay,
+        while there is still time to reach out.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Active on the app" value={pct(parentSummary.active)} accent="#37357A" foot="this month" />
+        <MetricTile label="Using the app" value={pct(parentSummary.active)} accent="#37357A" foot="this month" />
         <MetricTile label="Check-ins booked" value={pct(parentSummary.checkInsBooked)} foot="this term's window" />
-        <MetricTile label="Positive sentiment" value={pct(parentSummary.positiveSentiment)} accent="#5E7C6A" foot="from check-ins & messages" />
-        <MetricTile label="Re-enrolment intent" value={pct(parentSummary.reEnrolmentIntent)} foot="the attrition early signal" />
+        <MetricTile label="Feeling positive" value={pct(parentSummary.positiveSentiment)} accent="#5E7C6A" foot="from check-ins and messages" />
+        <MetricTile label="Plan to re-enrol" value={pct(parentSummary.reEnrolmentIntent)} foot="an early sign of who might leave" />
       </div>
 
-      <Section title="By cohort" description="App engagement, check-in attendance and sentiment — with the retention read for each grade.">
+      <Section title="By year group" description="How much parents use the app, turn up for check-ins, and how they feel — with an early read on who might stay, for each grade.">
         <Card>
           <div className="grid grid-cols-12 gap-4 border-b border-line px-5 py-3 text-[11px] font-medium uppercase tracking-wide text-faint">
-            <span className="col-span-2">Cohort</span>
-            <span className="col-span-3">App engagement</span>
-            <span className="col-span-3">Check-in attendance</span>
-            <span className="col-span-2">Sentiment</span>
-            <span className="col-span-2 text-right">Retention</span>
+            <span className="col-span-2">Year group</span>
+            <span className="col-span-3">Using the app</span>
+            <span className="col-span-3">Turned up for check-ins</span>
+            <span className="col-span-2">How they feel</span>
+            <span className="col-span-2 text-right">Likely to stay</span>
           </div>
           <div className="divide-y divide-line">
             {parentEngagement.map((c) => (
@@ -74,7 +74,7 @@ export default function PrincipalParents() {
       </Section>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <Section className="lg:col-span-3" title="Sentiment trend" description="6 months · steady and rising.">
+        <Section className="lg:col-span-3" title="How they feel over time" description="6 months · steady and rising.">
           <Card className="p-6">
             <TrendLine data={parentSentimentTrend} color="#5E7C6A" height={120} format={(v) => pct(v)} />
           </Card>
@@ -82,9 +82,9 @@ export default function PrincipalParents() {
 
         <Section className="lg:col-span-2" title="Worth a personal call">
           <Card className="p-6">
-            <SectionLabel className="mb-3">Cohorts to reach out to</SectionLabel>
+            <SectionLabel className="mb-3">Year groups to reach out to</SectionLabel>
             {watch.length === 0 ? (
-              <p className="text-[13px] text-muted">Every cohort is engaged this term.</p>
+              <p className="text-[13px] text-muted">Every year group is involved this term.</p>
             ) : (
               <div className="space-y-3">
                 {watch.map((c) => (
@@ -94,16 +94,16 @@ export default function PrincipalParents() {
                       <Badge tone="practising">watch</Badge>
                     </div>
                     <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-                      App engagement at {pct(c.appEngagement)} and the lowest check-in attendance —
-                      the coach is calling the unbooked families before the window closes.
+                      Using the app {pct(c.appEngagement)} of the time and the fewest turning up for
+                      check-ins — the coach is calling the families who haven&apos;t booked, before the window closes.
                     </p>
                   </div>
                 ))}
               </div>
             )}
             <p className="mt-3 text-[12px] text-faint">
-              A quiet dip in engagement is the earliest attrition signal — a call now is worth more
-              than a survey later.
+              A quiet drop in how involved a parent is can be the first sign they may leave — a call
+              now is worth more than a survey later.
             </p>
           </Card>
         </Section>

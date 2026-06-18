@@ -16,16 +16,16 @@ export default function CoachInsights() {
   }
 
   return (
-    <AppShell persona="coach" eyebrow="Drafted by the system · curated by you" title="Insights">
+    <AppShell persona="coach" eyebrow="Drafted by the system · chosen by you" title="Insights">
       <p className="mb-4 max-w-2xl text-[14px] leading-relaxed text-muted">
-        The system flags what it noticed. You never receive raw model output as truth — you
-        curate it, and your context becomes a first-class signal that adjusts interpretation
-        downstream.
+        The system points out what it noticed. You never get the system's words as the final truth —
+        you pick what's right, and what you add becomes a real signal that changes how things are
+        read later on.
       </p>
       <p className="mb-7 flex max-w-2xl items-start gap-2 rounded-xl border border-line bg-sand/60 p-3 text-[12.5px] leading-relaxed text-muted">
         <EyeOff size={14} className="mt-0.5 shrink-0 text-faint" />
-        Not every true observation is one a family should receive raw. On each student’s digest you
-        decide, per insight, what is suitable for parent sharing and what stays as coach context.
+        Not every true thing is one a family should hear word for word. On each student’s page you
+        decide, item by item, what is okay to share with parents and what stays as your private note.
       </p>
 
       <div className="space-y-9">

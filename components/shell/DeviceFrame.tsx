@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, type LucideIcon } from "lucide-react";
+import { TomoMark } from "./TomoLogo";
 import { cn } from "@/lib/utils";
 
 export interface MobileTab {
@@ -38,7 +39,9 @@ export function DeviceFrame({
         >
           <ArrowLeft size={15} /> All interfaces
         </Link>
-        <span className="text-[12px] text-faint">{title}</span>
+        <span className="inline-flex items-center gap-2 text-[12px] font-medium text-faint">
+          <TomoMark size={20} /> {title}
+        </span>
       </div>
 
       <div className="relative w-full max-w-[390px] overflow-hidden rounded-[44px] border-[10px] border-ink/90 bg-canvas shadow-lift">

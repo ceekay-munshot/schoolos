@@ -15,8 +15,8 @@ export default function Capture() {
   return (
     <AppShell persona="teacher" eyebrow="Class 5 Kaveri · 09:00 block" title="Capture">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        The moment paper becomes data. Designed for 60 seconds, not a chore — confirm what
-        captured cleanly, and give a human read only where the machine isn&apos;t sure.
+        Turn the class&apos;s worksheets into a quick update. Takes about a minute, not a chore. Just
+        confirm what scanned cleanly, and take a look only where the system isn&apos;t sure.
       </p>
 
       {/* scan summary */}
@@ -37,7 +37,7 @@ export default function Capture() {
             </span>
             <div>
               <p className="font-display text-3xl text-ink tnum">{clean}</p>
-              <p className="text-[12px] text-faint">captured cleanly, marked</p>
+              <p className="text-[12px] text-faint">scanned cleanly and marked</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-6">
@@ -46,18 +46,18 @@ export default function Capture() {
             </span>
             <div>
               <p className="font-display text-3xl text-ink tnum">{lowConfidence.length}</p>
-              <p className="text-[12px] text-faint">need a human read</p>
+              <p className="text-[12px] text-faint">need a quick look from you</p>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2 border-t border-line bg-canvas px-6 py-3 text-[12px] text-muted">
-          <WifiOff size={13} className="text-faint" /> Captured offline. Marks and mastery state will sync when a connection returns — nothing here waits on the cloud.
+          <WifiOff size={13} className="text-faint" /> Scanned offline. Marks and progress will save once you&apos;re back online. Nothing here waits on the cloud.
         </div>
       </Card>
 
       <Section
-        title="Low-confidence queue"
-        description="The system won't guess on a messy scan — a misread slip vs a real misconception would poison the diagnosis. Your call."
+        title="Scans the system isn't sure about"
+        description="The system won't guess on a messy scan. A misread mark and a real mix-up are very different, so it leaves these to you."
       >
         <div className="space-y-3">
           {lowConfidence.map((item) => {

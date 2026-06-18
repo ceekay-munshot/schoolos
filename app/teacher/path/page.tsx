@@ -7,9 +7,9 @@ import { Card, Badge } from "@/components/ui/primitives";
 import { relativeDays } from "@/lib/utils";
 
 const ARC = [
-  { stage: "Sample", body: "Try the form. Notice what pulls you." },
-  { stage: "Specialise", body: "Hone into a few; build craft and a body of work." },
-  { stage: "Master", body: "A recognisable voice; a rising standard with no ceiling." },
+  { stage: "Sample", body: "Try it out. Notice what pulls you in." },
+  { stage: "Specialise", body: "Pick a few. Build skill and a real body of work." },
+  { stage: "Master", body: "A voice you can recognise. The bar keeps rising, with no ceiling." },
 ];
 
 function Stars({ n }: { n: number }) {
@@ -32,9 +32,9 @@ export default function PathBlocks() {
   return (
     <AppShell persona="teacher" eyebrow="Today · 13:00 · Workshop" title="PATH · Builder">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        A different shape from a Concept block — mixed-age groups, and the sensor is the
-        artifact and its rising standard, never a worksheet. The human rates the work; the
-        system tracks the trajectory.
+        This works differently from a Concept block. Groups are mixed-age, and what you watch is
+        the work itself and how its standard rises, never a worksheet. You rate the work. The
+        system tracks how it grows over time.
       </p>
 
       {/* the arc */}
@@ -55,7 +55,7 @@ export default function PathBlocks() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         {/* today's mixed-age builder group */}
         <div className="lg:col-span-2">
-          <Section title="Today's group" description="Class 4–5, mixed by level not age.">
+          <Section title="Today's group" description="Class 4–5, grouped by level, not age.">
             <Card className="p-4">
               <div className="space-y-1">
                 {builderGroup.map((s) => {
@@ -82,7 +82,7 @@ export default function PathBlocks() {
 
         {/* recent artifacts across paths */}
         <div className="lg:col-span-3">
-          <Section title="Recent work & rising standard" description="Artifacts this fortnight across all six paths.">
+          <Section title="Recent work & rising standard" description="Work from the last two weeks across all six paths.">
             <div className="space-y-3">
               {pathArtifacts.map((a) => {
                 const s = studentById(a.studentId)!;

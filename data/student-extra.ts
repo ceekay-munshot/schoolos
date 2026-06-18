@@ -29,8 +29,8 @@ export const todayTopic = {
   taughtWhen: "this morning's Maths block",
   /** Whether a tutor-supported self-work session is planned today. */
   selfWorkPlanned: true,
-  selfWorkWindow: "Self-work block · 2:10 pm",
-  todo: "Three more fraction-of-a-quantity problems — draw the bar model each time before you touch the numbers.",
+  selfWorkWindow: "Practice time · 2:10 pm",
+  todo: "Three more 'fraction of an amount' problems — draw the bar model each time before you touch the numbers.",
 };
 
 /* ---------------------------------------------------------------------------
@@ -61,12 +61,12 @@ export const learnModule: LearnModule = {
   nodeId: "MATH.FRAC.WORD.04",
   topic: "Fraction word problems",
   recap:
-    "In class today you turned word problems into bar models — drawing the whole first, then splitting it. Here is the same idea from a slightly different angle.",
+    "In class today you turned word problems into bar models — drawing the whole thing first, then splitting it up. Here's the same idea from a slightly different angle.",
   retellTitle: "Think of the fraction as an instruction, not a number",
   retell: [
-    "A fraction in a word problem is really a two-step instruction hiding in plain sight.",
-    "The bottom number (the denominator) says: cut the whole into this many equal pieces.",
-    "The top number (the numerator) says: now take this many of those pieces. That is all “three-quarters of something” is asking you to do.",
+    "A fraction in a word problem is really a two-step instruction, hiding in plain sight.",
+    "The bottom number says: cut the whole thing into this many equal pieces.",
+    "The top number says: now take this many of those pieces. That's all “three-quarters of something” is asking you to do.",
   ],
   simplerExample: {
     prompt: "Start small: what is one-half of 8 pencils?",
@@ -82,7 +82,7 @@ export const learnModule: LearnModule = {
     "If you split 12 into 4 equal parts, how many laddoos sit in each part?",
   ],
   theMove:
-    "Bar first. Split by the bottom number. Take the top number. The same three steps work every single time.",
+    "Draw the bar first. Split it by the bottom number. Take the top number. The same three steps work every single time.",
 };
 
 /* ---------------------------------------------------------------------------
@@ -101,9 +101,9 @@ export const progressStateMeta: Record<
   { label: string; tone: "practising" | "mastered" | "gap" }
 > = {
   practising: { label: "Practising", tone: "practising" },
-  "nearly-secure": { label: "Nearly secure", tone: "practising" },
-  mastered: { label: "Mastered", tone: "mastered" },
-  "needs-teacher": { label: "Needs teacher support", tone: "gap" },
+  "nearly-secure": { label: "Almost there", tone: "practising" },
+  mastered: { label: "Got it", tone: "mastered" },
+  "needs-teacher": { label: "Ask your teacher", tone: "gap" },
 };
 
 export interface PracticeItem {
@@ -166,7 +166,7 @@ export const practiceItems: PracticeItem[] = [
     answer: "40 kg — five of the six equal parts of 48 (only one 8 kg part is left).",
     state: "needs-teacher",
     escalation:
-      "You have tried three different approaches on this one. I have shared exactly where you are stuck — choosing how many parts to split into — with Ms. Krishnan, so she can help you during the next block. Let's pause here; you have done good thinking.",
+      "You've tried three different ways on this one. I've let Ms. Krishnan know exactly where you're stuck — choosing how many parts to split into — so she can help you in the next class. Let's stop here for now; you've done some really good thinking.",
   },
 ];
 
@@ -220,8 +220,8 @@ export const project: StudentProject = {
   pathLabel: "Scholar · olympiad track",
   title: "The Fraction Around You",
   brief:
-    "Find fractions hiding in everyday life at home and around school, then turn three of them into clear word problems with worked bar-model solutions — a small problem set you could hand to a classmate.",
-  driving: "Where do fractions of a quantity actually show up — and can I explain one so clearly that a friend never gets stuck?",
+    "Find fractions hiding in everyday life at home and around school, then turn three of them into clear word problems with worked bar-model answers — a little set of problems you could hand to a classmate.",
+  driving: "Where do fractions of an amount really show up — and can I explain one so clearly that a friend never gets stuck?",
   mentor: { name: "Ms. Lakshmi Krishnan", title: "Maths · Class 6" },
   group: "Class 6 · Scholar seminar",
   milestones: [
@@ -237,36 +237,36 @@ export const project: StudentProject = {
   ],
   rubric: [
     {
-      level: "Emerging",
-      descriptor: "Problems use fractions but the quantity or the question is unclear.",
-      exemplar: "“Half the sweets. How many?” — the whole is never stated, so it can't be solved.",
+      level: "Just starting",
+      descriptor: "The problems use fractions, but the amount or the question isn't clear.",
+      exemplar: "“Half the sweets. How many?” — you never say how many sweets there are, so it can't be solved.",
     },
     {
-      level: "Developing",
-      descriptor: "Clear problems; solutions reach the answer but skip the model.",
-      exemplar: "“Two-fifths of 20 glasses = 8” — correct, but no picture to show why.",
+      level: "Getting there",
+      descriptor: "Clear problems; your answers are right but you skip the picture.",
+      exemplar: "“Two-fifths of 20 glasses = 8” — correct, but there's no picture to show why.",
     },
     {
-      level: "Secure",
-      descriptor: "Clear problems, each solved with a correct, labelled bar model.",
+      level: "Got it",
+      descriptor: "Clear problems, each one solved with a correct, labelled bar model.",
       exemplar: "The laddoo problem with a bar split into 4 parts, three parts shaded, 9 circled.",
       current: true,
     },
     {
-      level: "Distinctive",
-      descriptor: "A problem set a classmate can follow alone, revised after testing.",
-      exemplar: "Includes a note: “Riya got stuck on the sixths, so I redrew the parts bigger.”",
+      level: "Really nailed it",
+      descriptor: "A set of problems a classmate can follow on their own, fixed up after you test it.",
+      exemplar: "Has a note like: “Riya got stuck on the sixths, so I drew the parts bigger.”",
     },
   ],
   mentorFeedback: {
     date: "2026-06-17",
-    text: "Your fraction hunt is genuinely sharp, Mahira — the cricket-over one is lovely. Now make the bar models do the talking: a reader should understand without you in the room. That's what moves this from Secure to Distinctive.",
+    text: "Your fraction hunt is really sharp, Mahira — the cricket-over one is lovely. Now let the bar models do the talking: someone should get it without you there to explain. That's what takes this from “Got it” to “Really nailed it”.",
   },
   tutorSupport: {
     offer:
-      "I can help you structure the hunt and check that each problem is solvable — does it state the whole, and a clear fraction of it? I can also tidy mechanical things like wording and units.",
+      "I can help you plan the hunt and check that each problem can actually be solved — does it say how much there is, and a clear fraction of it? I can also tidy up little things like wording and units.",
     defers:
-      "Whether your problem set is genuinely clever — whether it's worth handing to a friend — is Ms. Krishnan's call, not mine. I've flagged your draft for her to read.",
+      "Whether your set of problems is really clever — whether it's good enough to hand to a friend — is Ms. Krishnan's call, not mine. I've passed your draft to her to read.",
   },
   studentReflection:
     "The hunt was easy and fun. The hard part is drawing the bar so someone else gets it without me explaining. I want my friend to solve it on the first try.",

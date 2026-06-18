@@ -24,21 +24,22 @@ export default function EarlyWarning() {
   const elevated = rows.filter((r) => r.risk === "elevated").length;
 
   return (
-    <AppShell persona="principal" eyebrow="The retention & attrition predictor" title="Early warning">
+    <AppShell persona="principal" eyebrow="Who might fall behind, or leave" title="Early warning">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Which children are accumulating gap-debt that will surface as failures — and as attrition —
-        months from now. Every warning carries its evidence, a confidence, the next step, who owns
-        it, and when it is checked. This is what a report card can never give you: time to act.
+        Which children are building up missing basics that will show as failures — and as students
+        leaving — months from now. Every warning comes with what we&apos;re seeing, how sure we are,
+        the next step, who is on it, and when it gets checked. This is what a report card can never
+        give you: time to act.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="On the watch-list" value={rows.length} accent="#C0913A" foot="children surfaced early" />
-        <MetricTile label="Elevated" value={elevated} accent="#B25B43" foot="root gap breaking downstream work" />
-        <MetricTile label="With a named owner" value={rows.length} foot="every warning has a person" />
-        <MetricTile label="Next follow-up" value={relativeDays(rows.reduce((min, r) => (r.followUpDate < min ? r.followUpDate : min), rows[0].followUpDate))} foot="soonest scheduled check" />
+        <MetricTile label="On the watch-list" value={rows.length} accent="#C0913A" foot="children spotted early" />
+        <MetricTile label="Needs attention soon" value={elevated} accent="#B25B43" foot="a missing basic breaking later work" />
+        <MetricTile label="Has someone on it" value={rows.length} foot="every warning has a person" />
+        <MetricTile label="Next check-in" value={relativeDays(rows.reduce((min, r) => (r.followUpDate < min ? r.followUpDate : min), rows[0].followUpDate))} foot="soonest one planned" />
       </div>
 
-      <Section title="The watch-list" description="Tap any child for the full 360. None of this is a verdict — it is a head-start.">
+      <Section title="The watch-list" description="Tap any child for the full picture. None of this is a verdict — it is a head-start.">
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {rows.map((r) => {
             const s = r.student;
@@ -57,10 +58,10 @@ export default function EarlyWarning() {
                       </div>
                       <div className="mt-2 flex flex-wrap gap-4">
                         <span className="text-[12px] text-faint">
-                          Gap-debt <span className="font-medium tnum text-gap">{s.gapDebt}</span>
+                          Missing basics <span className="font-medium tnum text-gap">{s.gapDebt}</span>
                         </span>
                         <span className="text-[12px] text-faint">
-                          Retention <span className="font-medium tnum text-ink">{pct(s.retentionIntegrity)}</span>
+                          Sticking <span className="font-medium tnum text-ink">{pct(s.retentionIntegrity)}</span>
                         </span>
                         <span className="text-[12px] text-faint">
                           Pace <span className="font-medium tnum text-ink">{s.masteryVelocity.toFixed(1)}</span>
@@ -75,13 +76,13 @@ export default function EarlyWarning() {
                   <div className="flex items-start gap-2.5">
                     <FileText size={14} className="mt-0.5 shrink-0 text-muted" />
                     <p className="text-[13px] leading-relaxed text-muted">
-                      <span className="font-medium text-ink">Evidence.</span> {r.evidence}
+                      <span className="font-medium text-ink">What we&apos;re seeing.</span> {r.evidence}
                     </p>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <ArrowRight size={14} className="mt-0.5 shrink-0 text-indigo" />
                     <p className="text-[13px] leading-relaxed text-muted">
-                      <span className="font-medium text-ink">Suggested next step.</span> {r.nextStep}
+                      <span className="font-medium text-ink">What to do next.</span> {r.nextStep}
                     </p>
                   </div>
                 </div>
@@ -94,7 +95,7 @@ export default function EarlyWarning() {
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-[12px] text-faint">
                     <CalendarClock size={13} />
-                    Follow-up <span className="font-medium text-ink">{relativeDays(r.followUpDate)}</span>
+                    Next check <span className="font-medium text-ink">{relativeDays(r.followUpDate)}</span>
                   </span>
                   <ConfidenceBadge level={r.confidence} />
                 </div>

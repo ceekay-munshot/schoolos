@@ -24,20 +24,21 @@ export default function PrincipalOperations() {
   const captureRate = totalScans / (totalScans + totalMissed);
 
   return (
-    <AppShell persona="principal" eyebrow="The school as a running operation" title="Operations">
+    <AppShell persona="principal" eyebrow="The school as a working day" title="Operations">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Rooms, adults and stations — and the eyesight of the engine. If capture lapses, every
-        diagnosis downstream goes blind, so it is read here as ops-critical, not vanity.
+        Rooms, adults and scan stations — and what the system can see. If scanning slips, the system
+        goes blind to everything that follows, so it matters here as much as anything, not just a
+        number for show.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Space utilisation" value={pct(utilisation)} accent="#37357A" foot={`${totalEnrolled} of ${totalCap} seats`} />
-        <MetricTile label="Physical attendance" value={pct(physicalAttendanceToday)} foot="present today" />
-        <MetricTile label="Capture this week" value={pct(captureRate)} accent="#5E7C6A" foot={`${totalMissed} missed scans`} />
-        <MetricTile label="Tutor uptime" value={pct(tutorAvailability.uptime, 1)} foot="rolling 30 days" />
+        <MetricTile label="How full the rooms are" value={pct(utilisation)} accent="#37357A" foot={`${totalEnrolled} of ${totalCap} seats`} />
+        <MetricTile label="In school today" value={pct(physicalAttendanceToday)} foot="present today" />
+        <MetricTile label="Work scanned this week" value={pct(captureRate)} accent="#5E7C6A" foot={`${totalMissed} scans missed`} />
+        <MetricTile label="Tutor up and running" value={pct(tutorAvailability.uptime, 1)} foot="last 30 days" />
       </div>
 
-      <Section title="Room, group & adult allocation" description="Live allocation across the campus — who is where, with whom, and how full.">
+      <Section title="Rooms, groups and adults" description="Who is where right now, with whom, and how full each room is.">
         <Card>
           <div className="grid grid-cols-12 gap-4 border-b border-line px-5 py-3 text-[11px] font-medium uppercase tracking-wide text-faint">
             <span className="col-span-3">Room</span>
@@ -69,7 +70,7 @@ export default function PrincipalOperations() {
       </Section>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Section title="Physical attendance" description="Present today, by group.">
+        <Section title="In school today" description="Present today, by group.">
           <Card className="p-6">
             <div className="space-y-3.5">
               {attendance.map((a) => {
@@ -88,32 +89,32 @@ export default function PrincipalOperations() {
           </Card>
         </Section>
 
-        <Section title="AI Tutor availability & usage" description="Middle & high self-work — the tutor assists practice, never replaces a teacher.">
+        <Section title="AI Tutor — is it up, is it used" description="For older students working on their own — the tutor helps with practice, it never replaces a teacher.">
           <Card className="flex items-center gap-6 p-6">
             <MasteryRing value={tutorAvailability.activeStudentsThisWeek} color="#37357A" size={104} caption="active" />
             <div className="space-y-2.5">
               <p className="inline-flex items-center gap-2 font-display text-lg text-ink">
-                <GraduationCap size={18} className="text-indigo" /> {pct(tutorAvailability.activeStudentsThisWeek)} active this week
+                <GraduationCap size={18} className="text-indigo" /> {pct(tutorAvailability.activeStudentsThisWeek)} used it this week
               </p>
               <div className="flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-muted">
                 <span>{tutorAvailability.sessionsThisWeek} sessions</span>
-                <span>median {tutorAvailability.medianTurns} turns</span>
+                <span>usually {tutorAvailability.medianTurns} back-and-forths</span>
               </div>
               <p className="text-[12px] text-faint">
-                {tutorAvailability.flaggedForTeacher} sessions deferred to a teacher decision this
-                week — judgment territory is always handed back to a human.
+                {tutorAvailability.flaggedForTeacher} sessions handed to a teacher to decide this
+                week — anything needing judgment always goes back to a person.
               </p>
             </div>
           </Card>
         </Section>
       </div>
 
-      <Section title="Capture-station performance" description="The engine's eyesight — clean scans in, missed scans surfaced for a quick fix.">
+      <Section title="How the scan stations are doing" description="What the system can see — clean scans in, missed scans shown so they can be fixed fast.">
         <Card className="mb-4 flex items-start gap-3 border-practising/25 bg-practising-soft/40 p-4">
           <TriangleAlert size={18} className="mt-0.5 shrink-0 text-practising" />
           <p className="text-[13px] leading-relaxed text-ink">
-            Discovery Room&apos;s station is missing more scans than the rest — every miss is a child&apos;s
-            work the engine can&apos;t see. Operations is already on it; capture stays an ops-critical metric.
+            The Discovery Room station is missing more scans than the rest — every miss is a child&apos;s
+            work the system can&apos;t see. Operations is already on it; scanning stays one of the things that matters most.
           </p>
         </Card>
         <Card>
@@ -144,10 +145,10 @@ export default function PrincipalOperations() {
         </Card>
       </Section>
 
-      <Section title="Offline & sync health" description="Capture, marking and the day's plan all work offline and sync when a connection returns.">
+      <Section title="Working offline and catching up" description="Scanning, marking and the day's plan all work without internet, and catch up once a connection comes back.">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <Card className="p-6 lg:col-span-2">
-            <SectionLabel className="mb-4">Pending sync by surface</SectionLabel>
+            <SectionLabel className="mb-4">Still waiting to catch up, by area</SectionLabel>
             <div className="divide-y divide-line">
               {syncHealth.map((s) => (
                 <div key={s.surface} className="flex items-center justify-between py-3">
@@ -161,10 +162,10 @@ export default function PrincipalOperations() {
                   </span>
                   <span className="text-[13px] text-muted">
                     {s.pending === 0 ? (
-                      <Freshness state="today" label="Synced" />
+                      <Freshness state="today" label="Caught up" />
                     ) : (
                       <>
-                        <span className="font-medium tnum text-ink">{s.pending}</span> pending · {s.oldestPending}
+                        <span className="font-medium tnum text-ink">{s.pending}</span> waiting · {s.oldestPending}
                       </>
                     )}
                   </span>
@@ -180,7 +181,7 @@ export default function PrincipalOperations() {
               {offlineHealth.devicesOnline}
               <span className="text-lg text-faint"> / {offlineHealth.devicesTotal}</span>
             </p>
-            <Freshness state="sync-pending" label={`Last full sync · ${offlineHealth.lastFullSync}`} />
+            <Freshness state="sync-pending" label={`Last full catch-up · ${offlineHealth.lastFullSync}`} />
           </Card>
         </div>
       </Section>

@@ -29,17 +29,17 @@ export default function TeacherToday() {
             href={`/teacher/block/${heroLessonPlan.blockId}`}
             className="inline-flex items-center gap-1.5 text-[13px] font-medium text-indigo hover:text-indigo-ink"
           >
-            Open the 09:00 block prep <ArrowRight size={15} />
+            Open the 09:00 block <ArrowRight size={15} />
           </Link>
           {reviewCount > 0 && (
             <Link href="/teacher/review" className="inline-flex items-center gap-1.5 text-[13px] text-muted hover:text-ink">
-              <Inbox size={14} /> {reviewCount} items in your review queue
+              <Inbox size={14} /> {reviewCount} things waiting for you to check
             </Link>
           )}
         </div>
       </div>
 
-      <Section title="Today's blocks" description="Times, rooms and whether each block is prepared.">
+      <Section title="Today's blocks" description="Times, rooms, and whether each block is ready.">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {blocks.map(({ prep, block }) => {
             const p = PREP[prep.status];
@@ -73,7 +73,7 @@ export default function TeacherToday() {
       </Section>
 
       <p className={cn("flex items-center gap-2 text-[12px] text-faint")}>
-        <Check size={13} className="text-mastered" /> Working offline-ready · everything synced 6 minutes ago. Nothing today depends on the network.
+        <Check size={13} className="text-mastered" /> Works without internet · last saved 6 minutes ago. Nothing today needs the network.
       </p>
     </AppShell>
   );

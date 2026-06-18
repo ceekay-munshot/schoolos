@@ -161,3 +161,53 @@
 .live-dot {
   animation: tomo-pulse 2s var(--ease-calm) infinite;
 }
+
+/* Soft brand aura behind hero sections — warm saffron meeting cool indigo. */
+.hero-aura {
+  position: relative;
+  isolation: isolate;
+}
+.hero-aura::before {
+  content: "";
+  position: absolute;
+  inset: -30% -12% auto -12%;
+  height: 460px;
+  z-index: -1;
+  background:
+    radial-gradient(42% 60% at 16% 28%, rgba(200, 128, 46, 0.12), transparent 70%),
+    radial-gradient(40% 56% at 84% 16%, rgba(55, 53, 122, 0.1), transparent 72%);
+  pointer-events: none;
+}
+
+/* A faint dotted paper texture for large empty fields. */
+.dot-grid {
+  background-image: radial-gradient(rgba(28, 27, 25, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@keyframes tomo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.animate-float {
+  animation: tomo-float 6s var(--ease-calm) infinite;
+}
+
+@keyframes tomo-sheen {
+  0% { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}

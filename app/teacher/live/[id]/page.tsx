@@ -82,7 +82,7 @@ export default async function LiveBlock({ params }: { params: Promise<{ id: stri
         <Card className="p-5">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-faint">Quick flag</p>
-            <span className="inline-flex items-center gap-1.5 text-[11px] text-faint"><Hand size={12} /> tap a name to note a moment</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] text-faint"><Hand size={12} /> tap a name to jot a quick note</span>
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {heroClassStudents.slice(0, 12).map((s) => (
@@ -93,15 +93,15 @@ export default async function LiveBlock({ params }: { params: Promise<{ id: stri
             <span className="rounded-full border border-dashed border-line px-2.5 py-1 text-[12px] text-faint">+ more</span>
           </div>
           <div className="mt-3 flex gap-2 text-[12px] text-faint">
-            <Flag size={13} /> Flags become evidence after the block — never a live alert.
+            <Flag size={13} /> Your notes are saved for after the block. They never pop up as a live alert.
           </div>
         </Card>
 
         {/* elementary: paper-first, no student tutor (rule #3) */}
         <div className="flex items-start gap-2.5 rounded-xl border border-line bg-sand/50 p-4 text-[13px] text-muted">
           <PenLine size={16} className="mt-0.5 shrink-0 text-faint" />
-          This is an elementary block — paper-first, no student screens. The AI tutor only appears
-          from middle school, so there are no tutor exceptions to watch here.
+          This is an elementary block. It's paper-first, with no student screens. The AI tutor only
+          starts from middle school, so there's nothing from a tutor to watch here.
         </div>
       </div>
     </AppShell>

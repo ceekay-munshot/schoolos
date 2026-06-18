@@ -57,9 +57,9 @@ const FLOOR_META: Record<
   SubjectBridge["floor"],
   { label: string; dot: string; text: string }
 > = {
-  "on-track": { label: "On track", dot: "bg-mastered", text: "text-mastered" },
-  building: { label: "Building", dot: "bg-practising", text: "text-practising" },
-  "needs-support": { label: "Needs support", dot: "bg-gap", text: "text-gap" },
+  "on-track": { label: "Going well", dot: "bg-mastered", text: "text-mastered" },
+  building: { label: "Getting there", dot: "bg-practising", text: "text-practising" },
+  "needs-support": { label: "Needs a hand", dot: "bg-gap", text: "text-gap" },
 };
 
 function formatDate(iso: string) {
@@ -133,14 +133,14 @@ function HomeTab() {
         <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-saffron-soft/60 p-3.5">
           <Sparkles size={15} className="mt-0.5 shrink-0 text-saffron-deep" />
           <p className="text-[13px] leading-relaxed text-muted">
-            She isn&rsquo;t behind. What we&rsquo;re working is one specific, named step —
+            She isn&rsquo;t behind. There&rsquo;s just one clear step we&rsquo;re working on —
             and it&rsquo;s already being taught. We&rsquo;d always rather show you the real
             picture than a wall of green.
           </p>
         </div>
       </Card>
 
-      <Eyebrow>Academic floor</Eyebrow>
+      <Eyebrow>How her subjects are going</Eyebrow>
       <Card className="p-5">
         <div className="space-y-3.5">
           {floors.map(({ key, subjects }) => {
@@ -163,11 +163,11 @@ function HomeTab() {
         <Divider className="my-4" />
         <div className="flex items-center justify-between text-[12px]">
           <span className="text-muted">
-            <span className="font-medium text-ink tnum">{gapsClosed}</span> gaps closed this
+            <span className="font-medium text-ink tnum">{gapsClosed}</span> gaps sorted out this
             month
           </span>
           <span className="inline-flex items-center gap-1 text-mastered">
-            <ArrowUpRight size={13} /> moving the right way
+            <ArrowUpRight size={13} /> heading the right way
           </span>
         </div>
       </Card>
@@ -184,7 +184,7 @@ function HomeTab() {
           </span>
         </div>
         <p className="mt-3 text-[14px] leading-relaxed text-ink">
-          A recognisable hand is starting to show in her Madhubani work — and she came back to
+          A style of her own is starting to show in her Madhubani work — and she came back to
           it on her own to make it better.
         </p>
         <div className="mt-3.5 rounded-xl bg-sand/70 p-3">
@@ -198,7 +198,7 @@ function HomeTab() {
       <Eyebrow>What happens next</Eyebrow>
       <Card className="p-5">
         <div className="space-y-4">
-          <NextRow label="The school" body={whatHappensNext.school} />
+          <NextRow label="At school" body={whatHappensNext.school} />
           <NextRow label="At home" body={whatHappensNext.parent} accent />
         </div>
 
@@ -211,7 +211,7 @@ function HomeTab() {
             </span>
             <div className="min-w-0 flex-1">
               <p className="text-[13px] font-medium text-ink">
-                Next coach check-in
+                Next chat with her coach
                 <span className="font-normal text-faint"> · {coach.name}</span>
               </p>
               <p className="text-[12px] text-muted">
@@ -276,7 +276,7 @@ function SubjectCard({ s }: { s: SubjectBridge }) {
       <div className="mt-4 flex items-end justify-between">
         <div>
           <p className="font-display text-[28px] leading-none text-ink tnum">{s.mastery}%</p>
-          <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-faint">mastery</p>
+          <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-faint">how much she&rsquo;s got</p>
         </div>
         <div className="text-right">
           <Delta value={s.change} />
@@ -286,11 +286,11 @@ function SubjectCard({ s }: { s: SubjectBridge }) {
 
       <div className="mt-3.5 grid grid-cols-2 gap-2.5 text-[12px]">
         <div className="rounded-lg bg-sand/60 px-3 py-2">
-          <span className="text-faint">Gaps closed</span>
+          <span className="text-faint">Gaps sorted</span>
           <p className="mt-0.5 font-medium text-mastered tnum">{s.gapsClosed}</p>
         </div>
         <div className="rounded-lg bg-sand/60 px-3 py-2">
-          <span className="text-faint">In progress</span>
+          <span className="text-faint">Working on</span>
           <p className="mt-0.5 font-medium text-ink tnum">{s.gapsInProgress}</p>
         </div>
       </div>
@@ -308,7 +308,7 @@ function SubjectCard({ s }: { s: SubjectBridge }) {
         </div>
         <div>
           <p className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-faint">
-            <ArrowRight size={12} className="text-saffron-deep" /> What&rsquo;s next
+            <ArrowRight size={12} className="text-saffron-deep" /> What she&rsquo;s learning next
           </p>
           <p className="mt-1 text-[13px] leading-relaxed text-ink">{s.next}</p>
         </div>
@@ -323,11 +323,11 @@ function AcademicsTab() {
       <ChildHeader />
 
       <h2 className="font-display text-[22px] leading-snug text-ink">
-        What she&rsquo;s learning — not one number.
+        What she&rsquo;s learning — not just one number.
       </h2>
       <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-        Each subject as where she is, where she moved, and — always — what she can do and what
-        comes next.
+        Each subject shows where she is, how she&rsquo;s moved, and — always — what she can do and what
+        she&rsquo;s learning next.
       </p>
 
       <div className="mt-5 space-y-3.5">
@@ -336,7 +336,7 @@ function AcademicsTab() {
         ))}
       </div>
 
-      <Eyebrow>The gap we&rsquo;re working, openly</Eyebrow>
+      <Eyebrow>The one gap we&rsquo;re working on, openly</Eyebrow>
       <Card className="border-gap/20 bg-gap-soft/40 p-5">
         <div className="flex items-center gap-2">
           <span className="size-2.5 rounded-full bg-gap" />
@@ -349,7 +349,7 @@ function AcademicsTab() {
         <div className="mt-4 space-y-3.5">
           <GapRow label="Why it matters" body={namedGap.whyItMatters} />
           <GapRow label="What the school is doing" body={namedGap.whatSchoolIsDoing} />
-          <GapRow label="What already improved" body={namedGap.whatImproved} tone="mastered" />
+          <GapRow label="What&rsquo;s already better" body={namedGap.whatImproved} tone="mastered" />
           <div className="flex items-start gap-2.5 rounded-xl border border-line bg-surface p-3.5">
             <CalendarDays size={15} className="mt-0.5 shrink-0 text-saffron-deep" />
             <p className="text-[13px] leading-relaxed text-ink">{namedGap.whenReviewed}</p>
@@ -361,8 +361,8 @@ function AcademicsTab() {
       <Card className="p-5 pb-4">
         <CompetencyMap studentId={STUDENT_ID} />
         <p className="mt-4 text-[12px] leading-relaxed text-faint">
-          The ringed step is where the work is. Everything after it waits on that one unlock —
-          repair it, and the rest opens up.
+          The circled step is the one she&rsquo;s working on. Everything after it is waiting on that
+          one step — once it clicks, the rest opens up.
         </p>
       </Card>
     </Screen>
@@ -438,11 +438,11 @@ function PathsTab() {
       <ChildHeader />
 
       <h2 className="font-display text-[22px] leading-snug text-ink">
-        Mojo, shown as evidence.
+        Mojo, shown through her work.
       </h2>
       <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
         Not a score — the things she&rsquo;s made, what she said about them, and what her
-        mentors saw. In elementary she samples broadly; two are starting to pull.
+        mentors saw. At this age she tries lots of things; two are starting to catch her interest.
       </p>
 
       <div className="mt-5 space-y-3.5">
@@ -481,7 +481,7 @@ function PathsTab() {
               {/* stage movement + standard over time */}
               <div className="mt-4">
                 <div className="flex items-center justify-between text-[11px]">
-                  <SectionLabel>Standard of work</SectionLabel>
+                  <SectionLabel>How good her work is</SectionLabel>
                   <span className="font-medium text-ink tnum">{enrolment.standard}</span>
                 </div>
                 <div className="mt-1.5 h-2 rounded-full bg-saffron-soft">
@@ -497,7 +497,7 @@ function PathsTab() {
 
               {/* the evidence — concrete things she did */}
               <div className="mt-4">
-                <SectionLabel>Evidence</SectionLabel>
+                <SectionLabel>What she did</SectionLabel>
                 <ul className="mt-1.5 space-y-1.5">
                   {ev.evidence.map((e, i) => (
                     <li key={i} className="flex items-start gap-2 text-[13px] leading-relaxed text-ink">
@@ -529,7 +529,7 @@ function PathsTab() {
               <div className="mt-3.5 space-y-2.5">
                 <div className="rounded-xl bg-sand/70 p-3">
                   <p className="inline-flex items-center gap-1.5 text-[11px] font-medium text-faint">
-                    <MessageSquare size={12} /> Riya reflected
+                    <MessageSquare size={12} /> Riya&rsquo;s own words
                   </p>
                   <p className="mt-1 text-[13px] italic leading-relaxed text-muted">
                     &ldquo;{ev.reflection}&rdquo;
@@ -547,7 +547,7 @@ function PathsTab() {
               <div className="mt-3.5 flex items-start gap-2 rounded-xl bg-saffron-soft/50 p-3">
                 <ArrowRight size={15} className="mt-0.5 shrink-0 text-saffron-deep" />
                 <p className="text-[13px] leading-relaxed text-ink">
-                  <span className="font-medium">Next challenge — </span>
+                  <span className="font-medium">What she&rsquo;ll try next — </span>
                   {ev.nextChallenge}
                 </p>
               </div>
@@ -569,7 +569,7 @@ function CoachTab() {
     <Screen>
       <ChildHeader />
 
-      <Eyebrow>Your line to the coach</Eyebrow>
+      <Eyebrow>Your link to her coach</Eyebrow>
       <Card className="p-4">
         <div className="flex items-center gap-3">
           <Avatar name={coach.name} size={40} />
@@ -582,7 +582,7 @@ function CoachTab() {
           <div className="mt-3 flex items-center gap-2.5 rounded-xl bg-saffron-soft/60 p-3">
             <CalendarDays size={15} className="shrink-0 text-saffron-deep" />
             <p className="text-[13px] text-ink">
-              Next check-in{" "}
+              Next chat{" "}
               <span className="font-medium">{relativeDays(checkIn.next)}</span>
               <span className="text-muted"> · {formatDate(checkIn.next)}</span>
             </p>
@@ -598,18 +598,18 @@ function CoachTab() {
             <span className="grid size-8 place-items-center rounded-lg bg-saffron-soft text-saffron-deep">
               <MessageSquare size={15} />
             </span>
-            Send {coach.name.split(" ")[0]} a secure message
+            Send {coach.name.split(" ")[0]} a private message
           </span>
           <ArrowRight size={16} className="text-faint" />
         </button>
         <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] text-faint">
-          <ShieldCheck size={12} className="text-mastered" /> Private between you and the coach
+          <ShieldCheck size={12} className="text-mastered" /> Just between you and her coach
         </p>
       </Card>
 
       {checkIn && (
         <>
-          <Eyebrow>What this check-in is for</Eyebrow>
+          <Eyebrow>What this chat is for</Eyebrow>
           <Card className="p-5">
             <p className="text-[14px] leading-relaxed text-ink">{checkIn.prompt}</p>
           </Card>
@@ -618,13 +618,13 @@ function CoachTab() {
 
       {note && (
         <>
-          <Eyebrow>From the last conversation</Eyebrow>
+          <Eyebrow>From your last chat</Eyebrow>
           <Card className="p-5">
             <p className="text-[11px] text-faint">{formatDate(note.date)}</p>
 
             {/* the SHARED plan only — split by who owns what */}
             <div className="mt-3 rounded-xl border border-line bg-canvas p-3.5">
-              <SectionLabel>The plan we agreed</SectionLabel>
+              <SectionLabel>The plan you agreed on</SectionLabel>
               <div className="mt-2.5 space-y-2.5">
                 <PlanLine owner="School" body={sharedPlan.school} />
                 <PlanLine owner="Riya" body={sharedPlan.student} />
@@ -654,7 +654,7 @@ function CoachTab() {
         </>
       )}
 
-      <Eyebrow>Progress since then</Eyebrow>
+      <Eyebrow>What&rsquo;s gone well since then</Eyebrow>
       <Card className="p-5">
         <div className="space-y-3">
           {progressSinceCheckIn.map((p, i) => (
@@ -707,16 +707,16 @@ function ReportsTab() {
       <ChildHeader />
 
       <h2 className="font-display text-[22px] leading-snug text-ink">
-        Her months, kept honestly.
+        Her months, told honestly.
       </h2>
       <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-        A plain summary each month, with one thing worth doing at home. Capability over time —
-        never a single mark.
+        A simple summary each month, with one thing worth doing at home. What she can do, growing
+        over time — never just a single mark.
       </p>
 
       <Card className="mt-4 p-5">
         <div className="flex items-baseline justify-between">
-          <SectionLabel>Secure competencies</SectionLabel>
+          <SectionLabel>Skills she&rsquo;s got for keeps</SectionLabel>
           <span className="font-display text-2xl text-ink tnum">
             {growth[growth.length - 1].value}
           </span>
@@ -725,12 +725,13 @@ function ReportsTab() {
           <TrendLine data={growth} color={ACCENT} format={(v) => `${v}`} />
         </div>
         <p className="mt-3 text-[12px] leading-relaxed text-faint">
-          Capabilities she now holds for keeps — the count that actually compounds. A gentle
-          plateau this month as the fractions step is worked; it lifts again once it lands.
+          Skills she now has for good — the number that really adds up over time. It&rsquo;s levelled
+          off a little this month while she works on the fractions step; it&rsquo;ll climb again once
+          that clicks.
         </p>
       </Card>
 
-      <Eyebrow>Monthly summaries</Eyebrow>
+      <Eyebrow>Month-by-month</Eyebrow>
       <div className="space-y-3.5">
         {monthlySummaries.map((m, i) => (
           <Card key={m.id} className="p-5">
@@ -771,7 +772,7 @@ function ReportsTab() {
               <Sprout size={15} className="mt-0.5 shrink-0 text-saffron-deep" />
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-saffron-deep">
-                  What to do at home
+                  One thing to try at home
                 </p>
                 <p className="mt-1 text-[13px] leading-relaxed text-ink">{m.atHome}</p>
               </div>

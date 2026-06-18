@@ -36,22 +36,22 @@ export default function ClassHealth() {
   const fading = heroClassStudents.filter((s) => s.retentionIntegrity < 0.75);
 
   const WATCH = [
-    { title: "Beginning to stall", note: "pace dipped below grade — catch it before a test would", Icon: TrendingDown, cls: "text-gap", list: stalling },
-    { title: "Ready for extension", note: "racing — give depth, not more repetition", Icon: Rocket, cls: "text-mastered", list: extension },
-    { title: "Knowledge fading", note: "was secure; recall is slipping — weave in refresh", Icon: Hourglass, cls: "text-practising", list: fading },
+    { title: "Starting to slip", note: "pace has dipped below grade. Catch it before a test would.", Icon: TrendingDown, cls: "text-gap", list: stalling },
+    { title: "Ready for more", note: "racing ahead. Give them deeper work, not more of the same.", Icon: Rocket, cls: "text-mastered", list: extension },
+    { title: "Starting to forget", note: "had it down, but it's fading. Mix in a little review.", Icon: Hourglass, cls: "text-practising", list: fading },
   ];
 
   return (
     <AppShell persona="teacher" eyebrow="Class 5 Kaveri · 22 students" title="Class health">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Leading, not lagging — who is stalling <em>before</em> any exam would show it. The report
-        card is the output; this is the instrument.
+        Spot who&apos;s slipping <em>early</em>, before a test would show it. The report card comes
+        later. This is what helps you act now.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MetricTile label="Learning pace" value={avgVel.toFixed(1)} accent="#37357A" foot={<Delta value={avgVel} expected={2.0} unit="" />} />
-        <MetricTile label="What's sticking" value={pct(avgRet)} foot="concepts holding on later recall" />
-        <MetricTile label="Independent work" value={pct(avgIndep)} foot="the calm-room signal" />
+        <MetricTile label="What's sticking" value={pct(avgRet)} foot="how much they still remember later" />
+        <MetricTile label="Independent work" value={pct(avgIndep)} foot="how settled the class is" />
         <MetricTile label="Work captured" value="96%" accent="#5E7C6A" foot="worksheets scanned this week" />
       </div>
 
@@ -76,7 +76,7 @@ export default function ClassHealth() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="lg:col-span-3">
-          <Section title="Foundational gaps" description="Where children share a broken prerequisite — your candidate small-group for the week.">
+          <Section title="Missing basics" description="Where children share the same gap. A good small group to pull this week.">
             {topCluster && (
               <Card className="border-gap/20">
                 <div className="p-5">
@@ -88,8 +88,8 @@ export default function ClassHealth() {
                   </div>
                   <p className="mt-3 font-display text-lg text-ink">{topCluster.label}</p>
                   <p className="mt-1 text-[13px] text-muted">
-                    Your one group to pull — repair the root and the downstream addition work unblocks
-                    for all four.
+                    The one group worth pulling. Fix this root skill and the addition work that builds on it
+                    opens up for all four.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {topCluster.studentIds.map((sid) => {
@@ -104,7 +104,7 @@ export default function ClassHealth() {
         </div>
 
         <div className="lg:col-span-2">
-          <Section title="Distribution across the map">
+          <Section title="How the class is spread out">
             <Card className="p-5">
               <SectionLabel className="mb-4">Where the class sits on Fractions</SectionLabel>
               <DistributionBar counts={dist} />
@@ -113,7 +113,7 @@ export default function ClassHealth() {
         </div>
       </div>
 
-      <Section title="The roster" description="Each child's path through the Fractions strand. Tap any name for the full 360.">
+      <Section title="The class list" description="Each child's path through Fractions. Tap any name for the full picture.">
         <Card>
           <div className="divide-y divide-line">
             {heroClassStudents.map((s) => (

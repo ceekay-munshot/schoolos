@@ -36,35 +36,35 @@ export const heroMoveMeta: {
   blockId: HERO_BLOCK_ID,
   confidence: "high",
   freshness: "today",
-  dataNote: "Built from yesterday's scanned worksheets across all 22 children.",
+  dataNote: "Made from yesterday's scanned worksheets for all 22 children.",
   evidence: [
     {
       kind: "worksheet",
       label: "Riya — Fractions, sheet 14",
-      detail: "9 of 11 recent errors trace to equivalent fractions, not addition.",
+      detail: "9 of her 11 recent mistakes come from equivalent fractions, not adding.",
       date: "2026-06-17",
     },
     {
       kind: "worksheet",
       label: "Kabir & Diya — unlike denominators",
-      detail: "Both 'added across' (2/3 + 1/4 → 3/7) — the equivalence step is missing.",
+      detail: "Both 'added across' (2/3 + 1/4 → 3/7). They're skipping the equivalence step.",
       date: "2026-06-17",
     },
     {
       kind: "assessment",
       label: "Class 5 fractions check-point",
-      detail: "Four children cluster on the same broken node (MATH.FRAC.EQUIV.01).",
+      detail: "Four children are stuck on the same skill (MATH.FRAC.EQUIV.01).",
       date: "2026-06-16",
     },
     {
       kind: "teacher-note",
       label: "Ms. Krishnan",
-      detail: "Ishaan was away Mon–Tue; his gap may be exposure, not misconception.",
+      detail: "Ishaan was away Mon–Tue. His gap may just be missed time, not a real mix-up.",
       date: "2026-06-16",
     },
   ],
   fallback:
-    "If yesterday's capture is incomplete or the engine is offline, the block opens with the standard Class 5 equivalence plan, or yesterday's plan, unchanged.",
+    "If yesterday's scans are incomplete or the system is offline, the block opens with the standard Class 5 equivalence plan, or yesterday's plan, unchanged.",
 };
 
 /* Today screen prep status (§5.2). */
@@ -75,9 +75,9 @@ export interface TodayPrep {
   note: string;
 }
 export const todayPrep: TodayPrep[] = [
-  { blockId: HERO_BLOCK_ID, status: "review", note: "Plan ready · support worksheet awaiting your review" },
+  { blockId: HERO_BLOCK_ID, status: "review", note: "Plan ready · one support worksheet needs your okay" },
   { blockId: "blk-thu-1015", status: "ready", note: "Plan and materials ready" },
-  { blockId: "blk-thu-1300", status: "ready", note: "Workshop set up · artifacts from last week loaded" },
+  { blockId: "blk-thu-1300", status: "ready", note: "Workshop set up · last week's work loaded" },
 ];
 
 /* Classes overview (Brief sitemap: Classes). */

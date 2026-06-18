@@ -1,5 +1,7 @@
 "use client";
 
+import { useId } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface TabItem {
@@ -8,7 +10,9 @@ export interface TabItem {
   count?: number;
 }
 
-/** Underline tabs — quiet, editorial. */
+const SPRING = { type: "spring" as const, stiffness: 420, damping: 36 };
+
+/** Underline tabs — the indicator glides between items. */
 export function Tabs({
   items,
   value,
@@ -20,6 +24,7 @@ export function Tabs({
   onChange: (id: string) => void;
   className?: string;
 }) {
+  const uid = useId();
   return (
     <div className={cn("flex gap-6 border-b border-line", className)}>
       {items.map((t) => {
@@ -29,16 +34,18 @@ export function Tabs({
             key={t.id}
             onClick={() => onChange(t.id)}
             className={cn(
-              "relative -mb-px whitespace-nowrap pb-3 text-sm font-medium transition-colors",
+              "relative -mb-px whitespace-nowrap pb-3 text-sm font-medium transition-colors duration-200",
               active ? "text-ink" : "text-faint hover:text-muted",
             )}
           >
             {t.label}
-            {typeof t.count === "number" && (
-              <span className="ml-1.5 text-xs text-faint tnum">{t.count}</span>
-            )}
+            {typeof t.count === "number" && <span className="ml-1.5 text-xs text-faint tnum">{t.count}</span>}
             {active && (
-              <span className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-indigo" />
+              <motion.span
+                layoutId={`tab-underline-${uid}`}
+                transition={SPRING}
+                className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-indigo"
+              />
             )}
           </button>
         );
@@ -47,7 +54,7 @@ export function Tabs({
   );
 }
 
-/** Pill segmented control. */
+/** Pill segmented control — the active pill slides. */
 export function Segmented({
   items,
   value,
@@ -59,13 +66,9 @@ export function Segmented({
   onChange: (id: string) => void;
   className?: string;
 }) {
+  const uid = useId();
   return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-0.5 rounded-xl border border-line bg-sand p-0.5",
-        className,
-      )}
-    >
+    <div className={cn("inline-flex items-center gap-0.5 rounded-xl border border-line bg-sand p-0.5", className)}>
       {items.map((t) => {
         const active = t.id === value;
         return (
@@ -73,13 +76,18 @@ export function Segmented({
             key={t.id}
             onClick={() => onChange(t.id)}
             className={cn(
-              "rounded-lg px-3 py-1.5 text-[13px] font-medium transition-all",
-              active
-                ? "bg-surface text-ink shadow-soft"
-                : "text-muted hover:text-ink",
+              "relative rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors duration-200",
+              active ? "text-ink" : "text-muted hover:text-ink",
             )}
           >
-            {t.label}
+            {active && (
+              <motion.span
+                layoutId={`seg-pill-${uid}`}
+                transition={SPRING}
+                className="absolute inset-0 rounded-lg bg-surface shadow-soft"
+              />
+            )}
+            <span className="relative z-10">{t.label}</span>
           </button>
         );
       })}

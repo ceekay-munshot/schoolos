@@ -57,14 +57,14 @@ export const worksheets: Worksheet[] = [
 
 export const heroLessonPlan: LessonPlan = {
   blockId: HERO_BLOCK_ID,
-  generatedBy: "Tomo AI · reviewed against the Class 5 Fractions map",
+  generatedBy: "Made by Tomo AI · checked against the Class 5 fractions map",
   worksheetIds: ["ws-support", "ws-core", "ws-stretch"],
   oneMove: {
-    headline: "Riya + 3 — equivalent-fractions gap",
+    headline: "Riya + 3 — stuck on equal fractions",
     studentIds: ONE_MOVE_GROUP,
     nodeId: "MATH.FRAC.EQUIV.01",
-    why: "Four children share one broken node — MATH.FRAC.EQUIV.01, equivalent fractions. For Riya it's the root of the 'adds across' error in addition; repair it here and the downstream work unblocks. Pull these four to the fraction wall for ~12 minutes while the rest run their differentiated self-work.",
-    everyoneElse: "Everyone else is set for independent self-work — including Aarav and Saanvi, who need stretch, not support.",
+    why: "Four children are stuck on the same skill: equal fractions. For Riya, it's why she 'adds across' when adding fractions (2/3 + 1/4 → 3/7). Fix it here and the rest opens up. Pull these four to the fraction wall for about 12 minutes while everyone else does their own work.",
+    everyoneElse: "Everyone else is set with their own work — including Aarav and Saanvi, who need a harder challenge, not help.",
   },
   sections: [
     {
@@ -72,7 +72,7 @@ export const heroLessonPlan: LessonPlan = {
       minutes: 12,
       title: "Equivalent fractions on the fraction wall",
       detail: "Whole-class: show 1/2 = 2/4 = 3/6 by lining up the wall. Name the move — multiply top and bottom by the same number.",
-      aiNote: "Held to 12 minutes — under the 15-minute focus ceiling for this age.",
+      aiNote: "Kept to 12 minutes — under the 15-minute focus limit for this age.",
       decision: "accepted",
     },
     {
@@ -80,15 +80,15 @@ export const heroLessonPlan: LessonPlan = {
       minutes: 10,
       title: "Explain it to your partner",
       detail: "Pairs take turns explaining why 1/2 and 2/4 are the same amount, using the wall strips.",
-      aiNote: "Pairs balanced so a secure child sits with a practising one.",
+      aiNote: "Pairs set so a confident child sits with one who's still practising.",
       decision: "accepted",
     },
     {
       kind: "Self-work",
       minutes: 25,
-      title: "Differentiated worksheets (3 bands)",
-      detail: "Support, core and stretch sheets distributed by name. This is your window for the one small-group pull.",
-      aiNote: "AI differentiated three bands from yesterday's submissions. The support band needs your review before it goes out.",
+      title: "Worksheets matched to each child (3 levels)",
+      detail: "Support, core and harder sheets, handed out by name. This is your window to pull the small group.",
+      aiNote: "The AI made three levels from yesterday's work. The support sheet needs your okay before it goes out.",
       decision: "pending",
     },
     {

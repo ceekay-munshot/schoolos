@@ -40,20 +40,20 @@ export default function CoachCaseload() {
   return (
     <AppShell persona="coach" eyebrow="Rohan D'Souza · Executive Coach" title="Caseload">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Forty students, each a whole child across Concept and PATH. The system assembles the
-        picture; your time goes to judgment and the relationship.
+        Forty students, each a whole child across school work and PATH. The system puts the
+        picture together; your time goes to understanding each child and building the relationship.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Caseload" value="40" foot="students, 1:40 ratio" />
-        <MetricTile label="This fortnight" value={checkInSchedule.length} accent="#37357A" foot="check-ins scheduled" />
-        <MetricTile label="Needs attention" value={highCount} accent="#B25B43" foot="this fortnight, gently prioritised" />
-        <MetricTile label="Feedback logged" value="92%" accent="#5E7C6A" foot="re-entered as signal" />
+        <MetricTile label="Your students" value="40" foot="students, 1 to 40" />
+        <MetricTile label="Next two weeks" value={checkInSchedule.length} accent="#37357A" foot="check-ins planned" />
+        <MetricTile label="Needs attention" value={highCount} accent="#B25B43" foot="next two weeks, gently sorted" />
+        <MetricTile label="Notes saved" value="92%" accent="#5E7C6A" foot="put back in as signal" />
       </div>
 
       <Section
-        title="This fortnight"
-        description="Gentle priority — who this round's check-in matters most for, and why."
+        title="Next two weeks"
+        description="A gentle order — who this round's check-in matters most for, and why."
       >
         <div className="space-y-3">
           {sorted.map((c) => {

@@ -19,7 +19,7 @@ export default function TeacherWeek() {
       <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-muted">
         <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-full bg-indigo" /> Concept block</span>
         <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-full bg-saffron" /> PATH block</span>
-        <span className="text-faint">Groups stay stable through the term — the system forms small intervention groups within a block, never a new class every hour.</span>
+        <span className="text-faint">Your classes stay the same all term. Inside a block, the system makes small help groups. It never reshuffles your class every hour.</span>
       </div>
 
       <Section>

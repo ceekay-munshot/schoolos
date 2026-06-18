@@ -13,7 +13,7 @@ import { pct } from "@/lib/utils";
 function StandingBar() {
   const { ahead, onTrack, behind } = gradeMapStanding;
   const seg = [
-    { label: "Ahead of the map", value: ahead, color: "#5E7C6A" },
+    { label: "Ahead of where they should be", value: ahead, color: "#5E7C6A" },
     { label: "On track", value: onTrack, color: "#37357A" },
     { label: "Behind", value: behind, color: "#B25B43" },
   ];
@@ -49,21 +49,21 @@ export default function PrincipalLearning() {
     benchmarks.reduce((a, b) => a + Math.abs(b.predicted - b.actual), 0) / benchmarks.length;
 
   return (
-    <AppShell persona="principal" eyebrow="Where every cohort sits on the map" title="Learning">
+    <AppShell persona="principal" eyebrow="Where every year group sits" title="Learning">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Who is ahead of, on, or behind the grade map; where foundational gaps still sit; and — for
-        the board years — readiness alongside the mastery that drives it.
+        Who is ahead, on track, or behind for their grade; where missing basics still sit; and — for
+        the board years — how ready they are, next to the skills that drive that readiness.
       </p>
 
-      <Section title="Standing against the grade map" description="School-wide, by leading competency placement — not by marks.">
+      <Section title="How they sit for their grade" description="Across the whole school, by where each child's skills sit — not by marks.">
         <Card className="p-6">
-          <SectionLabel className="mb-4">Students on / ahead of / behind the map</SectionLabel>
+          <SectionLabel className="mb-4">Students on track, ahead, or behind for their grade</SectionLabel>
           <StandingBar />
         </Card>
       </Section>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Section title="Learning pace by cohort" description="Nodes / week · the marker is grade-expected pace.">
+        <Section title="Learning pace by year group" description="Topics a week · the marker is the pace expected for the grade.">
           <Card className="p-6">
             <div className="space-y-3.5">
               {velocityByCohort.map((c) => (
@@ -73,17 +73,17 @@ export default function PrincipalLearning() {
           </Card>
         </Section>
 
-        <Section title="Foundational gap trend" description="8 weeks · falling is healthy.">
+        <Section title="Missing basics over time" description="8 weeks · going down is good.">
           <Card className="p-6">
             <TrendLine data={gapDebtTrend} color="#5E7C6A" format={(v) => v.toFixed(1)} />
             <p className="mt-2 text-[12px] text-faint">
-              Residual gap-debt is down a third over the window as the Class 5 cluster clears.
+              Missing basics are down by a third over this window as the Class 5 group clears them.
             </p>
           </Card>
         </Section>
       </div>
 
-      <Section title="Unresolved foundational gaps" description="Open root gaps by grade and subject — candidate small-groups, not a scorecard.">
+      <Section title="Missing basics still open" description="Basics not yet filled in, by grade and subject — ideas for small groups, not a scorecard.">
         <Card>
           <div className="grid grid-cols-12 gap-3 border-b border-line px-5 py-3 text-[11px] font-medium uppercase tracking-wide text-faint">
             <span className="col-span-4">Grade</span>
@@ -116,20 +116,20 @@ export default function PrincipalLearning() {
           </div>
         </Card>
         <p className="mt-3 text-[12px] text-faint">
-          Class 5 Maths carries the heaviest cluster — the equivalent-fractions root that surfaces
-          across the early-warning roster.
+          Class 5 Maths has the most to clear — the equivalent-fractions basic that shows up across
+          the early-warning list.
         </p>
       </Section>
 
       <Section
-        title="Board-readiness alongside mastery"
-        description="Classes 9–12 · readiness is the leading read on the board exam; mastery is the competency coverage beneath it."
+        title="How ready for the boards, next to skills covered"
+        description="Classes 9–12 · readiness is the early read on the board exam; skills covered is what sits beneath it."
       >
         <Card>
           <div className="grid grid-cols-12 gap-4 border-b border-line px-5 py-3 text-[11px] font-medium uppercase tracking-wide text-faint">
             <span className="col-span-3">Grade</span>
-            <span className="col-span-4">Mastery (competency coverage)</span>
-            <span className="col-span-4">Board-readiness (leading)</span>
+            <span className="col-span-4">Skills covered</span>
+            <span className="col-span-4">Ready for the boards</span>
             <span className="col-span-1 text-right">n</span>
           </div>
           <div className="divide-y divide-line">
@@ -157,20 +157,20 @@ export default function PrincipalLearning() {
           </div>
         </Card>
         <p className="mt-3 text-[12px] text-faint">
-          Readiness tracks just below mastery in every board cohort — the gap is the work still to
-          consolidate before the exam, surfaced now while there is time to act.
+          Readiness sits just below skills covered in every board year group — that gap is the work
+          still to firm up before the exam, shown now while there is time to act.
         </p>
       </Section>
 
       <Section
-        title="Predicted vs actual vs ACER"
-        description="The proof the leading read is real — prediction against the eventual external result."
+        title="What we predicted vs what they got vs ACER"
+        description="Proof the early read is real — what we predicted against the outside result they actually got."
       >
         <Card className="p-6">
           <div className="flex items-center justify-between">
-            <SectionLabel>Cohort predictions vs ACER actual</SectionLabel>
+            <SectionLabel>What we predicted for each year group vs the ACER result</SectionLabel>
             <div className="flex items-center gap-2">
-              <Badge tone="mastered">±{meanGap.toFixed(1)} avg gap</Badge>
+              <Badge tone="mastered">±{meanGap.toFixed(1)} average gap</Badge>
               <ConfidenceBadge level="high" />
             </div>
           </div>

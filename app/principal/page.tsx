@@ -88,12 +88,12 @@ export default function PrincipalHealth() {
       actions={<Freshness state="today" />}
     >
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        An operator&apos;s cockpit — six leading signals, each with where it is heading, the grade
-        that needs attention, and the one move to make. The headline: our leading metric is{" "}
-        <em>real</em>, and it predicts the lagging board outcome.
+        A simple control room — six signs worth watching. For each one: where it&apos;s going, which
+        grade needs attention, and the one thing to do. The big point: the number we watch early is{" "}
+        <em>real</em>, and it tells us how the board exam will go.
       </p>
 
-      <Section title="The six leading signals" description="Read against grade-expected pace — these move before the exam does.">
+      <Section title="Six signs worth watching" description="Compared with the pace expected for each grade — these move before a test does.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {healthMetrics.map((m) => (
             <SignalCard key={m.key} m={m} />
@@ -102,14 +102,14 @@ export default function PrincipalHealth() {
       </Section>
 
       <Section
-        title="Leading vs lagging — proven"
-        description="The proof the leading metric is real: each cohort's prediction against its eventual ACER result."
+        title="Spot it early — and here's the proof"
+        description="Proof the early number is real: what we predicted for each year group against the ACER result it actually got."
       >
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           <Card className="p-6 lg:col-span-3">
             <div className="flex items-center justify-between">
               <SectionLabel>Predicted vs ACER actual</SectionLabel>
-              <Badge tone="mastered">±{meanGap.toFixed(1)} avg gap</Badge>
+              <Badge tone="mastered">±{meanGap.toFixed(1)} average gap</Badge>
             </div>
             <div className="mt-4 grid place-items-center">
               <BenchmarkPlot
@@ -121,28 +121,28 @@ export default function PrincipalHealth() {
               />
             </div>
             <p className="mt-3 text-[12px] leading-relaxed text-muted">
-              Each point is a cohort: our leading-metric prediction against their eventual{" "}
-              {"ACER"} result. The tight fit to the diagonal is the moat — not &ldquo;we have
-              data,&rdquo; but proof the engine predicts the outcome.
+              Each dot is a year group: what we predicted against the {"ACER"} result they actually
+              got. The dots sitting close to the line is what sets us apart — not &ldquo;we have
+              data,&rdquo; but proof the system gets the result right.
             </p>
           </Card>
 
           <Card className="flex flex-col justify-center gap-5 p-6 lg:col-span-2">
             <div>
-              <SectionLabel>What the cockpit is for</SectionLabel>
+              <SectionLabel>What this control room is for</SectionLabel>
               <p className="mt-2 text-[13px] leading-relaxed text-muted">
-                Every number here moves before a report card could. A dip surfaces months early,
-                with a named owner and a single recommended move — not a wall of green, and never a
+                Every number here moves before a report card could. A dip shows up months early,
+                with a person named to act and one thing to do — not a wall of green, and never a
                 ranking of teachers.
               </p>
             </div>
             <div className="border-t border-line pt-4">
               <div className="flex items-baseline justify-between">
-                <span className="text-[13px] text-muted">Cohorts validated against ACER</span>
+                <span className="text-[13px] text-muted">Year groups checked against ACER</span>
                 <span className="font-display text-2xl tnum text-ink">{benchmarks.length}</span>
               </div>
               <div className="mt-2 flex items-baseline justify-between">
-                <span className="text-[13px] text-muted">Mean prediction gap</span>
+                <span className="text-[13px] text-muted">Average gap in our prediction</span>
                 <span className="font-display text-2xl tnum text-mastered">±{meanGap.toFixed(1)}</span>
               </div>
             </div>

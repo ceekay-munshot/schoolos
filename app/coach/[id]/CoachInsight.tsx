@@ -64,7 +64,7 @@ export function CoachInsight({
                   onClick={() => setStatus("confirmed")}
                   className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-mastered/30 bg-mastered-soft px-2.5 text-[12px] font-medium text-mastered transition-colors hover:bg-mastered/15"
                 >
-                  <Check size={13} /> Save in my words
+                  <Check size={13} /> Save in my own words
                 </button>
                 <button
                   onClick={() => {
@@ -88,13 +88,13 @@ export function CoachInsight({
                   onClick={() => setStatus("rewriting")}
                   className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 text-[12px] font-medium text-muted transition-colors hover:bg-sand hover:text-ink"
                 >
-                  <Pencil size={12} /> Rewrite
+                  <Pencil size={12} /> Reword
                 </button>
                 <button
                   onClick={() => setStatus("dismissed")}
                   className="inline-flex h-7 items-center gap-1 rounded-lg border border-line bg-surface px-2 text-[12px] font-medium text-faint transition-colors hover:bg-gap-soft hover:text-gap"
                 >
-                  <X size={13} /> Dismiss
+                  <X size={13} /> Set aside
                 </button>
               </div>
             ) : (
@@ -108,9 +108,9 @@ export function CoachInsight({
                 {status === "confirmed" ? <Check size={13} /> : <X size={13} />}
                 {status === "confirmed"
                   ? draft === insight.text
-                    ? "Confirmed by coach"
-                    : "Rewritten by coach"
-                  : "Dismissed"}
+                    ? "You confirmed this"
+                    : "You reworded this"
+                  : "Set aside"}
               </button>
             )}
 
@@ -123,10 +123,10 @@ export function CoachInsight({
                     ? "text-faint hover:text-muted"
                     : "bg-practising-soft text-practising",
                 )}
-                title="Toggle whether this can be surfaced to the family"
+                title="Turn on or off whether this can be shown to the family"
               >
                 {parentSafe ? <Eye size={12} /> : <EyeOff size={12} />}
-                {parentSafe ? "Can be shared with parent" : "Not suitable for parent sharing"}
+                {parentSafe ? "Okay to share with parent" : "Better not to share with parent"}
               </button>
             )}
           </div>

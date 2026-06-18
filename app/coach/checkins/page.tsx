@@ -30,9 +30,9 @@ import { Card, Badge, SectionLabel } from "@/components/ui/primitives";
 import { relativeDays } from "@/lib/utils";
 
 const STEPS: { id: string; n: number; label: string; icon: LucideIcon; hint: string }[] = [
-  { id: "prepare", n: 1, label: "Prepare", icon: ListChecks, hint: "What the system assembled to raise" },
-  { id: "conversation", n: 2, label: "Conversation", icon: MessagesSquare, hint: "What student and parents said" },
-  { id: "plan", n: 3, label: "Simple plan", icon: Target, hint: "2–3 commitments, each with an owner" },
+  { id: "prepare", n: 1, label: "Get ready", icon: ListChecks, hint: "What the system pulled together to talk about" },
+  { id: "conversation", n: 2, label: "Talk", icon: MessagesSquare, hint: "What student and parents said" },
+  { id: "plan", n: 3, label: "Simple plan", icon: Target, hint: "2 or 3 promises, each owned by someone" },
   { id: "share", n: 4, label: "Share", icon: Share2, hint: "Who sees what" },
   { id: "follow-up", n: 5, label: "Follow up", icon: CalendarCheck, hint: "Did it change anything?" },
 ];
@@ -60,19 +60,19 @@ const SHARE_AUDIENCES: { who: string; icon: LucideIcon; sees: string; tone: stri
   {
     who: "Parent",
     icon: Eye,
-    sees: "The named gap and the plan to fix it; the rising Artist work; the request to keep maths low-pressure at home.",
+    sees: "The one gap and the plan to fix it; the art work getting better; the ask to keep maths low-pressure at home.",
     tone: "bg-mastered-soft text-mastered",
   },
   {
     who: "Teacher",
     icon: Eye,
-    sees: "The small-group commitment and the context note, so the room and the plan stay in step.",
+    sees: "The small-group promise and your note, so the classroom and the plan stay in step.",
     tone: "bg-indigo-soft text-indigo",
   },
   {
     who: "Stays private",
     icon: Lock,
-    sees: "The detail of the mother's night-rotation schedule — held as coach context, never surfaced.",
+    sees: "The detail about the mother's night shifts — kept as your private note, never shown.",
     tone: "bg-sand text-muted",
   },
 ];
@@ -104,7 +104,7 @@ export default function CheckIns() {
   const follows = followUpsForStudent(focusId);
 
   return (
-    <AppShell persona="coach" eyebrow="Every 15 days · student + parents" title="Check-in workflow">
+    <AppShell persona="coach" eyebrow="Every two weeks · student and parents" title="The check-in steps">
       {/* featured check-in */}
       <Card className="mb-6 p-5">
         <div className="flex flex-wrap items-center gap-4">
@@ -142,7 +142,7 @@ export default function CheckIns() {
           <Card className="flex flex-col">
             <StepHead step={STEPS[0]} />
             <div className="flex-1 p-4">
-              <SectionLabel className="mb-2.5">Assembled for this hour</SectionLabel>
+              <SectionLabel className="mb-2.5">Pulled together for this hour</SectionLabel>
               <ul className="space-y-2.5">
                 <li className="flex items-start gap-2 text-[13px] text-ink">
                   <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-indigo" />
@@ -156,7 +156,7 @@ export default function CheckIns() {
                 ))}
                 <li className="flex items-start gap-2 text-[13px] text-muted">
                   <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-saffron" />
-                  Carry forward last fortnight’s plan and check what actually moved.
+                  Bring last plan forward and check what actually changed.
                 </li>
               </ul>
             </div>
@@ -184,7 +184,7 @@ export default function CheckIns() {
           <StepHead step={STEPS[2]} />
           <div className="p-4">
             <div className="mb-3 flex items-center gap-2 text-[12px] text-faint">
-              <span>No more than three commitments. Each one is owned by someone.</span>
+              <span>No more than three promises. Each one is owned by someone.</span>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {plan.commitments.map((c, i) => (
@@ -195,7 +195,7 @@ export default function CheckIns() {
               ))}
             </div>
             <p className="mt-3 text-[12px] text-faint">
-              This plan re-enters the system as a first-class signal — it shapes what{" "}
+              This plan goes back into the system as a real signal — it shapes what{" "}
               {s.name.split(" ")[0]} gets next, and the teacher sees it too. Review set for{" "}
               {relativeDays(plan.reviewDate)}.
             </p>
@@ -208,10 +208,10 @@ export default function CheckIns() {
           <div className="p-4">
             <div className="mb-3 flex flex-wrap items-center gap-2 text-[12px] text-faint">
               <span className="inline-flex items-center gap-1">
-                <Eye size={12} /> shared deliberately
+                <Eye size={12} /> shared on purpose
               </span>
               <span className="inline-flex items-center gap-1">
-                <EyeOff size={12} /> held as private context
+                <EyeOff size={12} /> kept as a private note
               </span>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -268,7 +268,7 @@ export default function CheckIns() {
               href="/coach/follow-ups"
               className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-indigo hover:text-indigo-ink"
             >
-              Open the follow-up tracker <ArrowRight size={13} />
+              Open the follow-up list <ArrowRight size={13} />
             </Link>
           </div>
         </Card>

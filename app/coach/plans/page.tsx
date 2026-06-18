@@ -15,8 +15,8 @@ const OWNER_TONE: Record<Owner, "indigo" | "saffron" | "mastered"> = {
 };
 
 const STATUS_META: Record<PlanStatus, { label: string; tone: "mastered" | "saffron" | "indigo" }> = {
-  "on-track": { label: "On track", tone: "mastered" },
-  "needs-review": { label: "Review due", tone: "saffron" },
+  "on-track": { label: "Going well", tone: "mastered" },
+  "needs-review": { label: "Time to review", tone: "saffron" },
   new: { label: "Just set", tone: "indigo" },
 };
 
@@ -31,19 +31,19 @@ export default function CoachPlans() {
   const totalCommitments = coachPlans.reduce((a, p) => a + p.commitments.length, 0);
 
   return (
-    <AppShell persona="coach" eyebrow="Active across the caseload" title="Plans">
+    <AppShell persona="coach" eyebrow="Going on across your students" title="Plans">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        A plan is small on purpose — never more than two or three commitments, and every one of
-        them belongs to someone: the School, the Student, or the Parent. Shared ownership is what
+        A plan is small on purpose — never more than two or three promises, and every one of
+        them belongs to someone: the School, the Student, or the Parent. Sharing the work is what
         makes a plan move.
       </p>
 
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Active plans" value={coachPlans.length} accent="#37357A" foot="across the caseload" />
-        <MetricTile label="Review due" value={reviewSoon} accent="#C8802E" foot="at the next check-in" />
-        <MetricTile label="Commitments" value={totalCommitments} foot="kept deliberately few" />
+        <MetricTile label="Plans going" value={coachPlans.length} accent="#37357A" foot="across your students" />
+        <MetricTile label="Time to review" value={reviewSoon} accent="#C8802E" foot="at the next check-in" />
+        <MetricTile label="Promises" value={totalCommitments} foot="kept few on purpose" />
         <MetricTile
-          label="Shared ownership"
+          label="Who's helping"
           value={`${ownerCount("school")} · ${ownerCount("student")} · ${ownerCount("parent")}`}
           foot="School · Student · Parent"
         />
@@ -90,7 +90,7 @@ export default function CoachPlans() {
               <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <div className="min-w-[200px] flex-1">
                   <div className="mb-1.5 flex items-center justify-between">
-                    <SectionLabel>Progress this fortnight</SectionLabel>
+                    <SectionLabel>Progress these two weeks</SectionLabel>
                     <span className="text-[11px] font-medium text-muted tnum">
                       {Math.round(plan.progress * 100)}%
                     </span>

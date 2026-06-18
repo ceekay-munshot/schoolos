@@ -8,8 +8,8 @@ export default function TeacherClasses() {
   return (
     <AppShell persona="teacher" eyebrow="Ms. Lakshmi Krishnan · Maths" title="Classes">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Your classes this term, with the one shared gap worth a small group and the overall pace.
-        Open a class for its full learning health.
+        Your classes this term. Each one shows the top shared gap worth a small group, plus how the class is doing overall.
+        Open a class to see its full picture.
       </p>
 
       <Section>

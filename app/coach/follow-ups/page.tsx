@@ -22,19 +22,19 @@ const IMPACT_META: Record<
     icon: Check,
     tone: "mastered",
     dot: "#5E7C6A",
-    blurb: "Learning or participation actually moved.",
+    blurb: "Learning or taking part really did change.",
   },
   partial: {
     icon: CircleDot,
     tone: "saffron",
     dot: "#C8802E",
-    blurb: "Some movement; the action isn't finished landing.",
+    blurb: "Some change; it hasn't fully taken hold yet.",
   },
   "not-yet": {
     icon: Clock3,
     tone: "neutral",
     dot: "#9C988E",
-    blurb: "No change yet — named honestly, not buried.",
+    blurb: "No change yet — said plainly, not hidden.",
   },
 };
 
@@ -75,17 +75,17 @@ export default function CoachFollowUps() {
   for (const f of followUps) counts[f.impact]++;
 
   return (
-    <AppShell persona="coach" eyebrow="Honest tracking · not a wall of green" title="Follow-ups">
+    <AppShell persona="coach" eyebrow="Honest tracking · not all green ticks" title="Follow-ups">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Every commitment from a check-in, tracked to a plain answer: did it change learning or
-        participation? Some did. Some are partway. Some haven’t yet — and that’s recorded as
-        clearly as the wins. Honesty is the whole point.
+        Every promise from a check-in, tracked to a simple answer: did it change learning or how
+        much the child takes part? Some did. Some are partway. Some haven’t yet — and that’s written
+        down just as clearly as the wins. Being honest is the whole point.
       </p>
 
       <div className="mb-8 grid grid-cols-3 gap-4">
-        <MetricTile label="Changed" value={counts.changed} accent="#5E7C6A" foot="moved the needle" />
-        <MetricTile label="Partial" value={counts.partial} accent="#C8802E" foot="still landing" />
-        <MetricTile label="Not yet" value={counts["not-yet"]} accent="#9C988E" foot="named, not hidden" />
+        <MetricTile label="Changed" value={counts.changed} accent="#5E7C6A" foot="made a difference" />
+        <MetricTile label="Partial" value={counts.partial} accent="#C8802E" foot="still taking hold" />
+        <MetricTile label="Not yet" value={counts["not-yet"]} accent="#9C988E" foot="said, not hidden" />
       </div>
 
       <div className="space-y-8">

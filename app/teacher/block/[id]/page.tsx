@@ -59,10 +59,10 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
     >
       {!plan ? (
         <Card className="p-10 text-center">
-          <p className="font-display text-xl text-ink">The plan generates the evening before.</p>
+          <p className="font-display text-xl text-ink">The plan is ready the evening before.</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-            Tomo drafts this block&apos;s lesson plan and differentiated worksheets overnight from
-            yesterday&apos;s captured work. Today&apos;s Class 5 Kaveri block is ready to preview.
+            Overnight, Tomo drafts this block&apos;s lesson plan and worksheets matched to each child,
+            using yesterday&apos;s scanned work. Today&apos;s Class 5 Kaveri block is ready to look at.
           </p>
           <Link href="/teacher/block/blk-thu-0900" className="mt-5 inline-flex text-sm font-medium text-indigo">
             Open today&apos;s ready block →
@@ -84,7 +84,7 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
             {/* lesson plan */}
             <div className="lg:col-span-3">
               <div className="mb-3 flex items-center justify-between">
-                <h2 className="font-display text-xl text-ink">AI-proposed lesson plan</h2>
+                <h2 className="font-display text-xl text-ink">Lesson plan the AI suggests</h2>
                 <AIStatus status="suggested" />
               </div>
               <Card>
@@ -115,8 +115,8 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
                   ))}
                 </div>
                 <div className="border-t border-line bg-canvas px-5 py-3 text-[12px] text-faint">
-                  Every section carries accept / edit / reject. You are the decider of record —
-                  the AI does the diagnostic legwork, never the teaching.
+                  Every section lets you accept, edit, or reject. You decide.
+                  The AI does the checking work, never the teaching.
                 </div>
               </Card>
             </div>
@@ -125,12 +125,12 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
             <div className="space-y-6 lg:col-span-2">
               <Card className="p-5">
                 <SectionLabel>Room split</SectionLabel>
-                <p className="mt-1 text-[12px] text-faint">One move for you; everyone else has a prepared task.</p>
+                <p className="mt-1 text-[12px] text-faint">One move for you. Everyone else has a task ready.</p>
                 <div className="mt-3.5 space-y-4">
                   {[
                     { label: "Your group", note: "pull ~12 min · equivalence", cls: "text-gap", Icon: Users, ids: heroGrouping.teacherGroup },
-                    { label: "Extension", note: "ready for depth", cls: "text-mastered", Icon: Rocket, ids: heroGrouping.extensionGroup },
-                    { label: "Observe", note: "keep a light eye", cls: "text-practising", Icon: Eye, ids: heroGrouping.observe },
+                    { label: "Ready for more", note: "ready for deeper work", cls: "text-mastered", Icon: Rocket, ids: heroGrouping.extensionGroup },
+                    { label: "Watch", note: "keep a light eye on them", cls: "text-practising", Icon: Eye, ids: heroGrouping.observe },
                   ].map((b) => (
                     <div key={b.label}>
                       <p className="mb-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
@@ -155,9 +155,9 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
                   ))}
                   <div className="flex items-center justify-between rounded-xl bg-canvas p-3">
                     <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
-                      <PenLine size={14} className="text-faint" /> Independent
+                      <PenLine size={14} className="text-faint" /> On their own
                     </p>
-                    <p className="text-[12px] text-muted">{heroGrouping.independentGroup.length} students · prepared task</p>
+                    <p className="text-[12px] text-muted">{heroGrouping.independentGroup.length} students · task ready</p>
                   </div>
                 </div>
               </Card>
@@ -166,14 +166,14 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
                 <div className="flex items-start gap-2.5">
                   <WifiOff size={15} className="mt-0.5 shrink-0 text-faint" />
                   <div>
-                    <p className="text-[12px] font-medium text-ink">If data is missing or the engine is offline</p>
+                    <p className="text-[12px] font-medium text-ink">If data is missing or the system is offline</p>
                     <p className="mt-0.5 text-[12px] leading-relaxed text-muted">{heroMoveMeta.fallback}</p>
                   </div>
                 </div>
               </Card>
 
               <div>
-                <h2 className="mb-3 font-display text-xl text-ink">Differentiated worksheets</h2>
+                <h2 className="mb-3 font-display text-xl text-ink">Worksheets matched to each child</h2>
                 <div className="space-y-3">
                   {plan.worksheetIds.map((wid) => {
                     const w = worksheetById(wid)!;
@@ -195,16 +195,16 @@ export default async function BlockPrep({ params }: { params: Promise<{ id: stri
                         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] text-muted">
                           <span>{w.forStudentIds.length} students</span>
                           {w.includesSpacedReview && (
-                            <span className="inline-flex items-center gap-1"><Repeat size={11} /> spaced review</span>
+                            <span className="inline-flex items-center gap-1"><Repeat size={11} /> review of older work</span>
                           )}
                           {w.includesStretch && (
-                            <span className="inline-flex items-center gap-1"><TrendingUp size={11} /> stretch item</span>
+                            <span className="inline-flex items-center gap-1"><TrendingUp size={11} /> harder bonus question</span>
                           )}
                         </div>
                         <div className="mt-3 border-t border-line pt-3">
                           {w.reviewStatus === "needs-review" ? (
                             <div className="flex items-center justify-between gap-2">
-                              <span className="text-[12px] text-practising">Awaiting your review</span>
+                              <span className="text-[12px] text-practising">Needs your okay</span>
                               <OverrideControl initial="pending" size="sm" />
                             </div>
                           ) : (

@@ -151,29 +151,29 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
       {/* ============ the three pictures, side by side ============ */}
       <Section
         title="The whole child"
-        description="Three pictures, assembled for you — academic, PATH, and the human truth the data can't see."
+        description="Three pictures, put together for you — school work, PATH, and the human side the data can't see."
       >
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {/* ---- Academic picture ---- */}
           <Card className="flex flex-col p-5">
             <PictureHead
               icon={GraduationCap}
-              title="Academic"
+              title="School work"
               trailing={<Freshness state="recent" />}
             />
             <div className="mb-4">
               <MetricRow
-                label="Mastery velocity"
+                label="Learning pace"
                 value={s.masteryVelocity.toFixed(1)}
                 foot={<Delta value={s.masteryVelocity} expected={s.expectedVelocity} />}
               />
-              <MetricRow label="Gap-debt" value={s.gapDebt} foot="prereqs" />
-              <MetricRow label="Retention" value={pct(s.retentionIntegrity)} foot="still passing recall" />
-              <MetricRow label="Pace on the map" value={`${retained}/${states.length}`} foot="nodes secure" />
+              <MetricRow label="Missing basics" value={s.gapDebt} foot="gaps" />
+              <MetricRow label="Sticking" value={pct(s.retentionIntegrity)} foot="still remembered" />
+              <MetricRow label="Pace on the map" value={`${retained}/${states.length}`} foot="topics solid" />
             </div>
             {frontierNode && frontier && (
               <div className="rounded-xl bg-canvas p-3">
-                <SectionLabel className="mb-1.5">Working edge</SectionLabel>
+                <SectionLabel className="mb-1.5">Working on now</SectionLabel>
                 <p className="flex items-center gap-2 text-[13px] font-medium text-ink">
                   <StatusDot status={frontier.status} /> {statusLabel(frontier.status)} ·{" "}
                   {frontierNode.statement}
@@ -183,12 +183,12 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
             )}
             <p className="mt-3 flex items-start gap-2 text-[12px] leading-relaxed text-muted">
               <Quote size={13} className="mt-0.5 shrink-0 text-faint" />
-              Teacher observation: Ms. Krishnan reads {s.name.split(" ")[0]} as{" "}
+              What the teacher sees: Ms. Krishnan reads {s.name.split(" ")[0]} as{" "}
               {s.gapDebt >= 2
-                ? "conceptually capable — the blocker is one named prerequisite, not reach."
+                ? "able to grasp the ideas — what's holding things up is one missing basic, not how far they can go."
                 : s.masteryVelocity > s.expectedVelocity
-                  ? "ahead of pace and ready for depth rather than more repetition."
-                  : "steady and on pace across the strand."}
+                  ? "ahead of pace and ready for harder work, not more of the same."
+                  : "steady and right on pace across the subject."}
             </p>
           </Card>
 
@@ -217,7 +217,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
             </div>
             {arts.length > 0 && (
               <div className="mt-4 rounded-xl bg-canvas p-3">
-                <SectionLabel className="mb-1.5">Latest work · quality</SectionLabel>
+                <SectionLabel className="mb-1.5">Latest work · how good</SectionLabel>
                 <p className="text-[13px] font-medium text-ink">{arts[0].title}</p>
                 <div className="mt-1 flex items-center gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -235,10 +235,10 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
               </div>
             )}
             <p className="mt-3 text-[12px] leading-relaxed text-muted">
-              Interest signal:{" "}
+              What they're drawn to:{" "}
               {arts.length
-                ? `participation is steady and the quality of work is rising in ${pathDefs[s.paths[0].path].name}.`
-                : "sampling across paths; an obsession hasn't settled yet."}
+                ? `taking part steadily, and the work is getting better in ${pathDefs[s.paths[0].path].name}.`
+                : "still trying different paths; no clear favourite yet."}
             </p>
           </Card>
 
@@ -248,32 +248,32 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
             {human ? (
               <div className="space-y-3.5 text-[13px] leading-relaxed">
                 <div>
-                  <SectionLabel className="mb-1">Their goal</SectionLabel>
+                  <SectionLabel className="mb-1">What they want</SectionLabel>
                   <p className="text-ink">{human.studentGoal}</p>
                 </div>
                 <Divider />
                 <div>
-                  <SectionLabel className="mb-1">Parent concern</SectionLabel>
+                  <SectionLabel className="mb-1">What the parent worries about</SectionLabel>
                   <p className="text-muted">{human.parentConcern}</p>
                 </div>
                 <div>
-                  <SectionLabel className="mb-1">Confidence</SectionLabel>
+                  <SectionLabel className="mb-1">How they're feeling</SectionLabel>
                   <p className="text-muted">{human.confidence}</p>
                 </div>
                 <div>
-                  <SectionLabel className="mb-1">Home context</SectionLabel>
+                  <SectionLabel className="mb-1">What's happening at home</SectionLabel>
                   <p className="text-muted">{human.homeContext}</p>
                 </div>
                 <Divider />
                 <div>
-                  <SectionLabel className="mb-1">Prior plan</SectionLabel>
+                  <SectionLabel className="mb-1">Last plan</SectionLabel>
                   <p className="text-muted">{human.priorPlan}</p>
                 </div>
               </div>
             ) : (
               <p className="text-[13px] leading-relaxed text-muted">
-                A settled, healthy picture. Nothing in the home context needs naming this fortnight —
-                the next check-in is about keeping momentum.
+                A settled, healthy picture. Nothing at home needs naming over the next two weeks —
+                the next check-in is about keeping things going.
               </p>
             )}
           </Card>
@@ -282,7 +282,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
         {/* evidence behind the synthesis */}
         {evidence.length > 0 && (
           <Card className="mt-4 p-5">
-            <EvidenceDrawer items={evidence} label="What this picture is built on" />
+            <EvidenceDrawer items={evidence} label="What this picture is based on" />
           </Card>
         )}
       </Section>
@@ -290,8 +290,8 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
       {/* ============ logged context annotation (Brief §6.6) ============ */}
       {annotations.length > 0 && (
         <Section
-          title="Logged context"
-          description="Your reading of a signal, recorded so the system stops mis-interpreting it."
+          title="What you've added"
+          description="Your read on a signal, saved so the system stops getting it wrong."
         >
           <div className="space-y-3">
             {annotations.map((a) => (
@@ -302,7 +302,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-[12px] text-faint">
-                      The system saw: <span className="text-muted">{a.signal}</span>
+                      What the system saw: <span className="text-muted">{a.signal}</span>
                     </p>
                     <p className="mt-2 text-[14px] leading-relaxed text-ink">{a.context}</p>
                     <p className="mt-1.5 text-[13px] font-medium leading-relaxed text-ink">
@@ -325,13 +325,13 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
         {/* fortnightly insight digest */}
         <div className="lg:col-span-3">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-xl text-ink">Fortnightly insight digest</h2>
-            <Freshness state="today" label="This fortnight" />
+            <h2 className="font-display text-xl text-ink">What we noticed, every two weeks</h2>
+            <Freshness state="today" label="These two weeks" />
           </div>
           <p className="mb-4 text-[12.5px] leading-relaxed text-faint">
-            Drafted and organised by the system. You never receive raw model output as truth —
-            confirm it, rewrite it in your own words, or dismiss it. You also decide, per item,
-            whether it is suitable to share with the family.
+            Drafted and sorted by the system. You never get the system's words as the final truth —
+            confirm them, put them in your own words, or set them aside. You also decide, item by
+            item, whether each one is okay to share with the family.
           </p>
           <div className="space-y-3">
             {insights.length ? (
@@ -348,14 +348,14 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
               ))
             ) : (
               <Card className="p-5 text-[13px] text-muted">
-                Nothing flagged this fortnight — a quiet, healthy picture.
+                Nothing came up these two weeks — a quiet, healthy picture.
               </Card>
             )}
           </div>
 
           {/* deep academic layer */}
           <div className="mt-8">
-            <h2 className="mb-3 font-display text-xl text-ink">The full academic picture</h2>
+            <h2 className="mb-3 font-display text-xl text-ink">The full school-work picture</h2>
             <Card className="p-6">
               <Student360 studentId={id} />
             </Card>
@@ -369,7 +369,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
               <div className="bg-indigo-soft/50 p-5">
                 <SectionLabel>Next check-in</SectionLabel>
                 <p className="mt-1.5 font-display text-lg text-ink">
-                  {relativeDays(checkIn.next)} · with student + parents
+                  {relativeDays(checkIn.next)} · with student and parents
                 </p>
                 <p className="mt-2 flex items-start gap-2 text-[13px] text-muted">
                   <ListChecks size={15} className="mt-0.5 shrink-0 text-indigo" />
@@ -377,7 +377,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
                 </p>
                 <Link href="/coach/checkins">
                   <Button size="sm" className="mt-4">
-                    <CalendarClock size={14} /> Open check-in workflow
+                    <CalendarClock size={14} /> Open the check-in steps
                   </Button>
                 </Link>
               </div>
@@ -387,9 +387,9 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
           {plan && (
             <Card className="p-5">
               <div className="flex items-center justify-between">
-                <SectionLabel>Current plan</SectionLabel>
+                <SectionLabel>Plan right now</SectionLabel>
                 <Badge tone={plan.status === "on-track" ? "mastered" : "saffron"}>
-                  {plan.status === "on-track" ? "On track" : plan.status === "new" ? "Just set" : "Review due"}
+                  {plan.status === "on-track" ? "Going well" : plan.status === "new" ? "Just set" : "Time to review"}
                 </Badge>
               </div>
               <p className="mt-2 flex items-start gap-2 text-[13.5px] leading-relaxed text-ink">
@@ -423,7 +423,7 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
 
           {note && (
             <Card className="p-5">
-              <SectionLabel className="mb-2">From the last conversation</SectionLabel>
+              <SectionLabel className="mb-2">From the last talk</SectionLabel>
               <p className="rounded-xl bg-canvas p-3 text-[12.5px] leading-relaxed text-ink">
                 <MessageSquare size={12} className="mr-1 inline text-faint" /> Parent: &ldquo;{note.parentVoice}&rdquo;
               </p>

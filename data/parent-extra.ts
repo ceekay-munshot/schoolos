@@ -48,70 +48,70 @@ export const subjectBridges: SubjectBridge[] = [
     glyph: "∑",
     mastery: 76,
     change: 5,
-    position: "On the Class 5 map, working at grade level",
+    position: "Working right where a Class 5 child should be",
     gapsClosed: 3,
     gapsInProgress: 1,
     floor: "building",
     canDo:
-      "She reads a fraction as equal parts of a whole and places it confidently on a number line. Her multiplication facts are quick and reliable, which is what lets the fractions work move.",
+      "She knows a fraction is equal parts of a whole, and she can place one on a number line without help. Her times tables are quick and sure, and that's what's letting the fractions work move.",
     next:
-      "Equivalent fractions — recognising that 1/2 and 2/4 are the same amount. It's one specific step, and it's the move that unlocks adding fractions cleanly.",
+      "Equal fractions — seeing that 1/2 and 2/4 are the same amount. It's one clear step, and it's the one that makes adding fractions click.",
   },
   {
     subject: "English",
     glyph: "✍",
     mastery: 68,
     change: 2,
-    position: "On the Class 5 map; reading ahead of writing",
+    position: "Right where a Class 5 child should be; her reading is ahead of her writing",
     gapsClosed: 1,
     gapsInProgress: 1,
     floor: "building",
     canDo:
-      "She reads above grade level and her ideas are vivid — give her a prompt and the images come easily. Spelling and tense within a sentence are secure.",
+      "She reads above her grade and her ideas are full of life — give her a prompt and the pictures come easily. Spelling and getting the tense right in a sentence are solid.",
     next:
-      "Structure across a whole piece: holding one idea from opening to ending so the reader stays with her. This is her clearest area of focus right now, and it's a craft skill that builds steadily.",
+      "Holding one idea all the way through a piece, from the start to the end, so the reader stays with her. This is the main thing she's working on right now, and it's a skill that grows a little at a time.",
   },
   {
     subject: "Science",
     glyph: "✺",
     mastery: 82,
     change: 4,
-    position: "On the Class 5 map, among the stronger observers",
+    position: "Right where a Class 5 child should be, and one of the keenest observers",
     gapsClosed: 2,
     gapsInProgress: 0,
     floor: "on-track",
     canDo:
-      "She observes carefully and asks good 'what if' questions — the habits that matter most at this age. Her notes from the materials unit were detailed and accurate.",
+      "She looks closely and asks good 'what if' questions — the habits that matter most at this age. Her notes from the materials unit were full of detail and got things right.",
     next:
-      "Moving from describing what she sees to predicting what will happen and then checking it. Her Explorer work is already pulling her in this direction.",
+      "Going from describing what she sees to guessing what will happen, then checking if she was right. Her Explorer work is already pulling her this way.",
   },
   {
     subject: "Hindi",
     glyph: "अ",
     mastery: 74,
     change: 3,
-    position: "On the Class 5 map, comfortably at grade level",
+    position: "Comfortably where a Class 5 child should be",
     gapsClosed: 1,
     gapsInProgress: 0,
     floor: "on-track",
     canDo:
-      "Reads aloud fluently and follows a story well. Vocabulary is growing and she's confident speaking in class.",
+      "Reads aloud smoothly and follows a story well. She's learning more words and speaks up happily in class.",
     next:
-      "Writing longer answers in her own words rather than lifting phrases from the passage — the same structure work that helps her English will help here.",
+      "Writing longer answers in her own words instead of copying lines from the passage — the same work that helps her English will help here too.",
   },
   {
     subject: "Social Studies",
     glyph: "❖",
     mastery: 79,
     change: 3,
-    position: "On the Class 5 map, secure across the term's topics",
+    position: "Right where a Class 5 child should be, and solid across this term's topics",
     gapsClosed: 1,
     gapsInProgress: 0,
     floor: "on-track",
     canDo:
-      "Connects ideas across a topic — she linked the rivers unit to where cities grew without being prompted. Maps and timelines are secure.",
+      "Links ideas across a topic — she connected the rivers unit to where cities grew, all on her own. Maps and timelines are solid.",
     next:
-      "Backing an answer with a specific reason or example, rather than a general statement. A small habit that lifts the quality of her written work.",
+      "Backing up an answer with a clear reason or example, instead of a general statement. A small habit that makes her written work even better.",
   },
 ];
 
@@ -131,14 +131,14 @@ export interface NamedGap {
 
 export const namedGap: NamedGap = {
   subject: "Maths",
-  title: "Equivalent fractions",
+  title: "Equal fractions",
   whyItMatters:
-    "It's the one step that sits underneath adding and comparing fractions. Her adding has been wobbling — but the cause isn't addition, it's this. Fix it here and the rest opens up.",
+    "This is the one step that sits under adding and comparing fractions. Her adding has been a bit shaky — but the trouble isn't adding, it's this. Sort this out and the rest opens up.",
   whatSchoolIsDoing:
-    "Ms. Krishnan is running a small group on exactly this, using a fraction wall so Riya can see why 1/2 and 2/4 are the same before any rule is written down. Three targeted sessions are planned over the next two weeks.",
+    "Ms. Krishnan is running a small group on exactly this, using a fraction wall so Riya can see why 1/2 and 2/4 are the same before any rule is written down. Three sessions just for this are planned over the next two weeks.",
   whatImproved:
-    "Two prerequisite steps closed this month — fraction meaning is now retained and number-line placement is secure. Those were the foundations this step needs.",
-  whenReviewed: "Accuracy will be re-checked at the fortnightly coach check-in on 20 June.",
+    "Two of the building blocks were sorted this month — she now remembers what a fraction is, and she can place one on a number line. Those are the basics this step needs.",
+  whenReviewed: "We'll check how she's doing at the coach check-in on 20 June, which happens every two weeks.",
 };
 
 /* ---------------------------------------------------------------------------
@@ -166,13 +166,13 @@ export const monthlySummaries: MonthlySummary[] = [
     short: "Jun",
     range: "1–18 June",
     summary:
-      "Riya had a strong month in maths and in her Artist path. She closed two prerequisite steps in fractions and her Madhubani work is starting to show a recognisable hand. Equivalent fractions remains the one named thing we're working — it's specific, it's being taught in a small group, and it's the step that unlocks her adding. Writing structure is her clearest area of focus, and we've begun gentle work on holding one idea across a whole piece.",
+      "Riya had a strong month in maths and in her Artist path. She sorted out two of the building blocks for fractions, and her Madhubani art is starting to show a style of her own. Equal fractions is still the one thing we're working on — it's a clear step, she's learning it in a small group, and it's what makes her adding click. Holding one idea all the way through a piece of writing is her main focus, and we've made a gentle start on it.",
     atHome:
-      "When you cook together, halve or double a recipe out loud with her — 'half of three-quarters of a cup'. Real, hands-on equivalence does more than any worksheet.",
+      "When you cook together, halve or double a recipe out loud with her — 'half of three-quarters of a cup'. Real, hands-on sharing helps far more than any worksheet.",
     highlights: [
-      { label: "Closed", detail: "Fraction meaning now retained; number-line placement secure" },
-      { label: "Rising", detail: "Artist standard of work climbing — a recognisable hand emerging" },
-      { label: "Working", detail: "Equivalent fractions, in a small group this fortnight" },
+      { label: "Sorted", detail: "She remembers what a fraction is now, and can place one on a number line" },
+      { label: "Rising", detail: "Her Artist work is getting better — a style of her own is showing" },
+      { label: "Working on", detail: "Equal fractions, in a small group these two weeks" },
     ],
   },
   {
@@ -181,12 +181,12 @@ export const monthlySummaries: MonthlySummary[] = [
     short: "May",
     range: "1–31 May",
     summary:
-      "A steady month. Riya held her pace across subjects and her reading continued to run ahead of her writing. In maths she consolidated fraction meaning — the groundwork that made June's progress possible. We first named the equivalent-fractions step this month after her addition errors clustered there; it was reassuring to trace the wobble to one specific cause rather than a general slip.",
+      "A steady month. Riya kept up her pace across subjects, and her reading stayed ahead of her writing. In maths she got really firm on what a fraction is — the groundwork that made June's progress possible. This is the month we first spotted that the equal-fractions step was the issue, after most of her adding mistakes turned out to be about that one thing. It was a relief to trace it to one clear cause rather than a general slip.",
     atHome:
-      "Keep reading together, then ask her to tell you what happened in her own words, in order. That retelling is exactly the structure muscle her writing needs.",
+      "Keep reading together, then ask her to tell you what happened in her own words, in order. That retelling builds exactly the skill her writing needs.",
     highlights: [
-      { label: "Held", detail: "Steady pace across all five subjects" },
-      { label: "Named", detail: "Located the maths wobble to one specific step" },
+      { label: "Steady", detail: "Kept a steady pace across all five subjects" },
+      { label: "Spotted", detail: "Traced the maths wobble to one clear step" },
     ],
   },
   {
@@ -195,12 +195,12 @@ export const monthlySummaries: MonthlySummary[] = [
     short: "Apr",
     range: "1–30 April",
     summary:
-      "Riya's Science work stood out this month — her notes from the materials unit were among the most careful in the class, and her questions on the nature walks showed a genuine observer's instinct. Maths was solid on the meaning of fractions. Writing ideas were lovely; the focus, as it has been, is on carrying one of them all the way through a piece.",
+      "Riya's Science work stood out this month — her notes from the materials unit were among the most careful in the class, and her questions on the nature walks showed she's a real observer. Her maths was solid on what a fraction means. Her writing ideas were lovely; the focus, as before, is on carrying one of them all the way through a piece.",
     atHome:
-      "Lean into the curiosity — let her keep a small 'I wonder…' notebook for questions from walks or the kitchen. We can pick the best ones up at school.",
+      "Lean into the curiosity — let her keep a little 'I wonder…' notebook for questions from walks or the kitchen. We can pick the best ones up at school.",
     highlights: [
-      { label: "Strong", detail: "Science observation notes among the best in class" },
-      { label: "Solid", detail: "Fraction meaning secure and growing" },
+      { label: "Strong", detail: "Her Science notes were among the best in class" },
+      { label: "Solid", detail: "Sure of what a fraction means, and growing" },
     ],
   },
   {
@@ -209,12 +209,12 @@ export const monthlySummaries: MonthlySummary[] = [
     short: "Mar",
     range: "1–31 March",
     summary:
-      "A confident month all round. Riya settled into the term well, with reliable multiplication recall that's quietly powering everything in fractions since. Her enthusiasm for art grew noticeably, and she began sampling the Explorer path with real curiosity. No gaps of concern this month — a good, steady base to build from.",
+      "A confident month all round. Riya settled into the term well, with quick, reliable times tables that have quietly been powering all her fractions work since. Her love of art grew a lot, and she started trying out the Explorer path with real curiosity. Nothing to worry about this month — a good, steady base to build from.",
     atHome:
-      "Times tables are paying off everywhere — keep them playful with quick games in the car. A strong recall here makes the harder maths feel easy.",
+      "Times tables are paying off everywhere — keep them fun with quick games in the car. Knowing them well makes the harder maths feel easy.",
     highlights: [
-      { label: "Reliable", detail: "Multiplication facts quick and secure" },
-      { label: "Growing", detail: "Art enthusiasm and a first taste of Explorer" },
+      { label: "Reliable", detail: "Times tables quick and sure" },
+      { label: "Growing", detail: "More love of art, and a first taste of Explorer" },
     ],
   },
 ];
@@ -236,13 +236,13 @@ export const whatHappensNext: {
   event: NextEvent;
 } = {
   school:
-    "Ms. Krishnan continues the equivalent-fractions small group — three short sessions over the next two weeks, using the fraction wall before any rule is written down.",
+    "Ms. Krishnan keeps going with the equal-fractions small group — three short sessions over the next two weeks, using the fraction wall before any rule is written down.",
   parent:
-    "Halve and double recipes out loud together this fortnight, and keep the bedtime reading going with a quick 'what happened, in order?' afterwards.",
+    "Halve and double recipes out loud together over the next two weeks, and keep the bedtime reading going with a quick 'what happened, in order?' afterwards.",
   event: {
     title: "Atelier open afternoon",
     date: "2026-06-27",
-    detail: "Come and see the Madhubani pieces the Class 4–5 group has been working on.",
+    detail: "Come and see the Madhubani pieces the Class 4–5 group has been making.",
   },
 };
 
@@ -272,32 +272,32 @@ export const pathEvidence: Record<string, PathEvidence> = {
     path: "artist",
     interestSignal: "Rising",
     evidence: [
-      "Completed her first full Madhubani fish in ink — confident, controlled linework",
-      "Came back to the piece voluntarily to tighten the colour discipline",
+      "Finished her first whole Madhubani fish in ink — sure, steady lines",
+      "Came back to the piece on her own to make the colours neater",
       "Helped two younger children in the atelier with their border patterns",
     ],
     reflection:
       "I like that you can be neat and wild at the same time. The fish took three tries and the third one finally looked like mine.",
     mentorFeedback:
-      "A recognisable hand is genuinely starting to show. She's moving from copying a pattern to making choices — that's the real beginning of taste.",
+      "A style of her own is really starting to show. She's moving from copying a pattern to making her own choices — that's where real taste begins.",
     mentor: "Atelier · Class 4–5",
     nextChallenge:
-      "A small series — three fish that clearly belong together — to start building a body of work with a through-line.",
+      "A small set — three fish that clearly go together — to start building a little body of work that hangs together.",
   },
   explorer: {
     path: "explorer",
     interestSignal: "Early",
     evidence: [
-      "Kept careful notes on the school garden over a fortnight",
-      "Asked a genuine 'why does it do that?' question about how seeds find the light",
+      "Kept careful notes on the school garden over two weeks",
+      "Asked a real 'why does it do that?' question about how seeds find the light",
     ],
     reflection:
       "I didn't know you could just watch one thing for two weeks and keep finding new stuff.",
     mentorFeedback:
-      "Still sampling, and that's exactly right for now. The instinct to look closely and ask why is there — we'll see whether it deepens into an obsession.",
+      "Still trying things out, and that's just right for now. The urge to look closely and ask why is there — we'll see if it grows into a real passion.",
     mentor: "Field · Class 5",
     nextChallenge:
-      "Pick one plant in the garden and predict what it'll do over the next two weeks, then check whether she was right.",
+      "Pick one plant in the garden and guess what it'll do over the next two weeks, then check whether she was right.",
   },
 };
 
@@ -328,16 +328,16 @@ export const sharedPlan: {
   parent: string;
 } = {
   school:
-    "Run the equivalent-fractions small group with the fraction wall; re-check accuracy at the next fortnightly check-in.",
+    "Run the equal-fractions small group with the fraction wall, and check how she's doing at the next check-in two weeks on.",
   student:
-    "Use the fraction wall before reaching for the rule, and try two 'find an equal fraction' problems in self-work each day.",
+    "Use the fraction wall before reaching for the rule, and try two 'find an equal fraction' problems in your own practice each day.",
   parent:
-    "Keep the maths light and hands-on at home — halving recipes, sharing things equally — and protect the bedtime reading.",
+    "Keep the maths light and hands-on at home — halving recipes, sharing things equally — and keep the bedtime reading going.",
 };
 
 /** Progress since the last check-in (5 June) — concrete, honest movement. */
 export const progressSinceCheckIn: { label: string; detail: string }[] = [
-  { label: "Closed", detail: "Two prerequisite steps in fractions now secure" },
-  { label: "Steadied", detail: "Addition errors are narrowing as equivalence work takes hold" },
-  { label: "Held", detail: "Artist momentum strong — the visible win the plan protects" },
+  { label: "Sorted", detail: "Two building blocks for fractions are now solid" },
+  { label: "Steadied", detail: "Fewer adding mistakes as the equal-fractions work takes hold" },
+  { label: "Going strong", detail: "Her Artist work is flying — the clear win the plan looks after" },
 ];

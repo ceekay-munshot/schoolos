@@ -107,10 +107,10 @@ function TodayTab() {
       </div>
       <h1 className="font-display text-[28px] leading-tight text-ink">Hi, Mahira</h1>
       <p className="mt-1 text-[13px] leading-relaxed text-muted">
-        One thing to sharpen today, on the topic you just learnt.
+        One thing to get sharper at today, on the topic you just learnt.
       </p>
 
-      <Eyebrow>Just taught in class</Eyebrow>
+      <Eyebrow>Just learnt in class</Eyebrow>
       <Card className="border-indigo/15 p-5">
         <div className="flex items-center gap-2.5">
           <span className="grid size-9 place-items-center rounded-xl bg-indigo-soft text-indigo">
@@ -138,9 +138,9 @@ function TodayTab() {
               <Sparkles size={14} />
             </span>
             <p className="text-[12.5px] leading-snug text-muted">
-              A tutor-supported self-work session is planned &mdash;{" "}
+              You&rsquo;ve got practice time with your tutor today &mdash;{" "}
               <span className="font-medium text-ink">{todayTopic.selfWorkWindow}</span>. Your
-              tutor is warmed up on this exact topic.
+              tutor is all ready to help with this exact topic.
             </p>
           </div>
         )}
@@ -158,7 +158,7 @@ function TodayTab() {
         </Card>
         <Card className="p-4">
           <p className="font-display text-[26px] leading-none text-ink tnum">6</p>
-          <p className="mt-1.5 text-[12px] leading-snug text-muted">day self-work streak</p>
+          <p className="mt-1.5 text-[12px] leading-snug text-muted">days in a row on your own</p>
         </Card>
       </div>
 
@@ -175,7 +175,7 @@ function TodayTab() {
             </div>
             <p className="mt-2.5 text-[13px] leading-relaxed text-muted">{scholar.headline}</p>
             <p className="mt-2 text-[12px] text-faint">
-              Today&rsquo;s fraction work feeds straight into your &ldquo;{project.title}&rdquo;
+              Today&rsquo;s fraction work goes straight into your &ldquo;{project.title}&rdquo;
               project.
             </p>
           </Card>
@@ -213,7 +213,7 @@ function GuidingQuestion({ q }: { q: string }) {
 function LearnTab() {
   return (
     <Screen>
-      <GuardRail>Stays on today&rsquo;s topic &middot; your teacher owns the bigger questions</GuardRail>
+      <GuardRail>Sticks to today&rsquo;s topic &middot; your teacher helps with the bigger questions</GuardRail>
 
       <div className="mb-1">
         <p className="text-[12px] uppercase tracking-[0.14em] text-faint">Learn</p>
@@ -257,9 +257,9 @@ function LearnTab() {
       </Card>
 
       {/* Guiding questions — the tutor asks, the student thinks */}
-      <Eyebrow>Questions to sit with</Eyebrow>
+      <Eyebrow>Questions to think about</Eyebrow>
       <p className="-mt-1 mb-3 text-[12px] leading-relaxed text-faint">
-        Your tutor won&rsquo;t hand you the answer &mdash; it&rsquo;ll nudge your thinking.
+        Your tutor won&rsquo;t just give you the answer &mdash; it&rsquo;ll help you work it out.
       </p>
       <div className="space-y-2.5">
         {learnModule.guidingQuestions.map((q, i) => (
@@ -287,8 +287,8 @@ function LearnTab() {
    ===================================================================== */
 const SUPPORT_CONTROLS: { label: string; icon: LucideIcon }[] = [
   { label: "Give me a hint", icon: Lightbulb },
-  { label: "Explain differently", icon: RefreshCw },
-  { label: "Show a simpler example", icon: BookOpen },
+  { label: "Explain it another way", icon: RefreshCw },
+  { label: "Show me an easier example", icon: BookOpen },
   { label: "Let me try again", icon: CornerDownRight },
   { label: "Ask my teacher", icon: HelpCircle },
 ];
@@ -378,7 +378,7 @@ function PracticeTab() {
       {item.escalation ? (
         <Card className="mt-4 border-gap/25 bg-gap-soft/50 p-4">
           <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-gap">
-            <Flag size={12} /> Shared with your teacher
+            <Flag size={12} /> Told your teacher
           </div>
           <p className="text-[13px] leading-relaxed text-ink">{item.escalation}</p>
         </Card>
@@ -418,7 +418,7 @@ function PracticeTab() {
       {/* How the tutor reads her progress — the L2/L3 capture, in plain words */}
       {unlock && (
         <Card className="mt-6 p-4">
-          <SectionLabel>What unlocked progress</SectionLabel>
+          <SectionLabel>What helped it click</SectionLabel>
           <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{unlock}.</p>
         </Card>
       )}
@@ -446,7 +446,7 @@ function ProjectsTab() {
       <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{project.brief}</p>
 
       <Card className="mt-4 border-saffron/20 bg-saffron-soft/30 p-4">
-        <SectionLabel className="text-saffron-deep/80">Driving question</SectionLabel>
+        <SectionLabel className="text-saffron-deep/80">The big question</SectionLabel>
         <p className="mt-1.5 text-[14px] font-medium leading-relaxed text-ink">
           {project.driving}
         </p>
@@ -468,7 +468,7 @@ function ProjectsTab() {
 
       {/* Milestones */}
       <Eyebrow className="flex items-center justify-between">
-        <span>Milestones</span>
+        <span>Your steps</span>
         <span className="font-normal tracking-normal text-faint tnum">
           {doneCount}/{project.milestones.length}
         </span>
@@ -533,7 +533,7 @@ function ProjectsTab() {
       </div>
 
       {/* Rubric with anchored exemplars */}
-      <Eyebrow>How it&rsquo;s judged</Eyebrow>
+      <Eyebrow>How your work is looked at</Eyebrow>
       <div className="space-y-2">
         {project.rubric.map((r) => (
           <Card
@@ -641,7 +641,7 @@ function ReflectTab() {
         </div>
         <p className="mt-3 text-[12.5px] leading-relaxed text-muted">
           What you notice here is yours. If you&rsquo;d like, your coach can read it before your
-          next check-in &mdash; only if you choose to share it.
+          next chat &mdash; only if you choose to share it.
         </p>
         <div className="mt-3.5 flex gap-2">
           <Button size="sm" variant="primary">Save for myself</Button>

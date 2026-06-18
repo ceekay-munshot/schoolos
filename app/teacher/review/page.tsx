@@ -9,17 +9,17 @@ import { Avatar } from "@/components/ui/avatar";
 import { Card, Badge, Button } from "@/components/ui/primitives";
 
 const GROUPS = [
-  { kind: "low-confidence" as const, title: "Low-confidence captures", icon: ScanLine, blurb: "The system won't guess on a messy scan — a misread slip vs a real misconception would poison the diagnosis." },
-  { kind: "judgment" as const, title: "Judgment calls — yours to decide", icon: Scale, blurb: "The tutor flags the mechanical layer and never scores thinking. Meaning, argument and voice are your call." },
-  { kind: "content" as const, title: "Content to approve", icon: FileCheck2, blurb: "Assembled from approved generators — a quick check before it reaches a child." },
+  { kind: "low-confidence" as const, title: "Scans the system isn't sure about", icon: ScanLine, blurb: "The system won't guess on a messy scan. A misread mark and a real mix-up are very different, so it asks you." },
+  { kind: "judgment" as const, title: "Your call to make", icon: Scale, blurb: "The tutor only checks the mechanics. It never grades thinking. Meaning, argument, and voice are yours to judge." },
+  { kind: "content" as const, title: "Content to approve", icon: FileCheck2, blurb: "Put together by trusted tools. A quick look before it reaches a child." },
 ];
 
 export default function ReviewQueue() {
   return (
     <AppShell persona="teacher" eyebrow="Human in the loop" title="Review queue">
       <p className="mb-8 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Evidence first, AI suggestion second, your decision always. A short, finite list — not a
-        scrolling feed of alerts.
+        Evidence first, the AI&apos;s idea second, your decision always. A short list with an end. Not
+        an endless feed of alerts.
       </p>
 
       <div className="space-y-9">

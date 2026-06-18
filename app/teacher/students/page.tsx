@@ -13,8 +13,8 @@ export default function TeacherStudents() {
   return (
     <AppShell persona="teacher" eyebrow="Class 5 · Kaveri" title="Students">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        Every child&apos;s position on the current map at a glance. Open anyone for their full
-        360 — learning, foundations, PATH and the coach&apos;s picture in one place.
+        See where every child is on the current map at a glance. Open anyone for their full
+        picture. Learning, basics, PATH, and the coach&apos;s view all in one place.
       </p>
 
       <Section>

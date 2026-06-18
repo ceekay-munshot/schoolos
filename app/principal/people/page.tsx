@@ -21,20 +21,20 @@ export default function PrincipalPeople() {
   const trainingSection = peopleSections.find((s) => s.support);
 
   return (
-    <AppShell persona="principal" eyebrow="The system runs, not the heroics" title="People">
+    <AppShell persona="principal" eyebrow="The system carries it, not heroics" title="People">
       <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        The promise is that the model works on the <em>system</em>, not on any one teacher&apos;s
-        brilliance. These are signals of how well the system is supporting each room — read as
-        where to offer help, never as a ranking.
+        The promise is that the model works through the <em>system</em>, not through any one
+        teacher&apos;s brilliance. These signs show how well the system is supporting each room — read
+        them as where to offer help, never as a ranking.
       </p>
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <MetricTile label="System adoption" value={pct(avg("adoption"))} accent="#37357A" foot="rooms running on the system" />
-        <MetricTile label="Classroom independence" value={pct(avg("independence"))} accent="#5E7C6A" foot="children working independently in the block" />
-        <MetricTile label="Recommended-action follow-through" value={pct(avg("followThrough"))} foot="suggested one-moves being run" />
+        <MetricTile label="System adoption" value={pct(avg("adoption"))} accent="#37357A" foot="rooms using the system" />
+        <MetricTile label="Classroom independence" value={pct(avg("independence"))} accent="#5E7C6A" foot="children working on their own in the block" />
+        <MetricTile label="Recommended-action follow-through" value={pct(avg("followThrough"))} foot="suggested next moves being done" />
       </div>
 
-      <Section title="By section" description="How the system is landing in each room — and where a little support is already in motion.">
+      <Section title="By section" description="How the system is landing in each room — and where a little support is already under way.">
         <Card>
           <div className="grid grid-cols-12 gap-4 border-b border-line px-5 py-3 text-[11px] font-medium uppercase tracking-wide text-faint">
             <span className="col-span-3">Section</span>
@@ -73,13 +73,13 @@ export default function PrincipalPeople() {
           </div>
         </Card>
         <p className="mt-3 text-[12px] text-faint">
-          The system never auto-judges a teacher. A lower number is a prompt to offer support —
-          co-planning and a paired session — not a performance flag.
+          The system never judges a teacher on its own. A lower number is a nudge to offer support —
+          planning together and a paired session — not a mark against anyone.
         </p>
       </Section>
 
       {trainingSection && (
-        <Section title="Support in motion">
+        <Section title="Support under way">
           <Card className="flex items-start gap-4 border-indigo/20 bg-indigo-soft/30 p-6">
             <HeartHandshake size={22} className="mt-0.5 shrink-0 text-indigo" />
             <div>
@@ -93,7 +93,7 @@ export default function PrincipalPeople() {
                 {trainingSection.support}
               </p>
               <p className="mt-3 text-[12px] text-faint">
-                Framed as support, with a named mentor and a clear next session — the goal is a
+                This is support, with a named mentor and a clear next session — the goal is a
                 confident room, reached together.
               </p>
             </div>
