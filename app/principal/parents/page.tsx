@@ -6,7 +6,8 @@ import {
   type ParentCohort,
 } from "@/data/principal-extra";
 import { MetricTile } from "@/components/patterns/atoms";
-import { TrendLine } from "@/components/viz/charts";
+import { InfoDrawer } from "@/components/patterns/InfoDrawer";
+import { AnimatedTrend } from "@/components/viz/AnimatedTrend";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
 
@@ -53,7 +54,40 @@ export default function PrincipalParents() {
           </div>
           <div className="divide-y divide-line">
             {parentEngagement.map((c) => (
-              <div key={c.cohort} className="grid grid-cols-12 items-center gap-4 px-5 py-4">
+              <InfoDrawer
+                key={c.cohort}
+                eyebrow="Year group"
+                title={`${c.cohort} parents`}
+                className="grid w-full grid-cols-12 items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-sand"
+                panel={
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between rounded-xl bg-canvas p-4">
+                      <p className="font-display text-lg text-ink">{c.cohort} parents</p>
+                      <Badge tone={RETENTION_TONE[c.retentionSignal]}>{c.retentionSignal}</Badge>
+                    </div>
+                    <div className="space-y-3.5">
+                      {([
+                        ["Using the app", c.appEngagement, "#37357A"],
+                        ["Turned up for check-ins", c.checkInAttendance, "#5E7C6A"],
+                        ["How they feel", c.sentiment, "#C0913A"],
+                      ] as [string, number, string][]).map(([label, val, color]) => (
+                        <div key={label}>
+                          <div className="flex items-center justify-between text-[12.5px]">
+                            <span className="text-muted">{label}</span>
+                            <span className="tnum font-medium text-ink">{pct(val)}</span>
+                          </div>
+                          <div className="mt-1.5"><Bar value={val} color={color} /></div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="rounded-xl bg-canvas p-3 text-[13px] leading-relaxed text-muted">
+                      {c.retentionSignal === "watch"
+                        ? "Worth a personal call before the check-in window closes — a quiet drop in involvement is often the first sign a family may leave."
+                        : "Involved and steady this term — no action needed right now."}
+                    </p>
+                  </div>
+                }
+              >
                 <span className="col-span-2 text-[14px] font-medium text-ink">{c.cohort}</span>
                 <div className="col-span-3 flex items-center gap-3">
                   <Bar value={c.appEngagement} color="#37357A" />
@@ -67,7 +101,7 @@ export default function PrincipalParents() {
                 <span className="col-span-2 text-right">
                   <Badge tone={RETENTION_TONE[c.retentionSignal]}>{c.retentionSignal}</Badge>
                 </span>
-              </div>
+              </InfoDrawer>
             ))}
           </div>
         </Card>
@@ -76,7 +110,7 @@ export default function PrincipalParents() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <Section className="lg:col-span-3" title="How they feel over time" description="6 months · steady and rising.">
           <Card className="p-6">
-            <TrendLine data={parentSentimentTrend} color="#5E7C6A" height={120} format={(v) => pct(v)} />
+            <AnimatedTrend data={parentSentimentTrend} color="#5E7C6A" height={132} format="percent" />
           </Card>
         </Section>
 

@@ -5,8 +5,10 @@ import {
   gradeMapStanding,
   gapsByGradeSubject,
 } from "@/data/principal-extra";
-import { BarRow, TrendLine, BenchmarkPlot } from "@/components/viz/charts";
+import { BarRow, BenchmarkPlot, MasteryRing } from "@/components/viz/charts";
+import { AnimatedTrend } from "@/components/viz/AnimatedTrend";
 import { ConfidenceBadge } from "@/components/patterns/Signals";
+import { InfoDrawer } from "@/components/patterns/InfoDrawer";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
 
@@ -75,7 +77,7 @@ export default function PrincipalLearning() {
 
         <Section title="Missing basics over time" description="8 weeks · going down is good.">
           <Card className="p-6">
-            <TrendLine data={gapDebtTrend} color="#5E7C6A" format={(v) => v.toFixed(1)} />
+            <AnimatedTrend data={gapDebtTrend} color="#5E7C6A" format="decimal1" />
             <p className="mt-2 text-[12px] text-faint">
               Missing basics are down by a third over this window as the Class 5 group clears them.
             </p>
@@ -134,7 +136,32 @@ export default function PrincipalLearning() {
           </div>
           <div className="divide-y divide-line">
             {boardReadiness.map((b) => (
-              <div key={b.grade} className="grid grid-cols-12 items-center gap-4 px-5 py-4">
+              <InfoDrawer
+                key={b.grade}
+                eyebrow="Board readiness"
+                title={b.grade}
+                className="grid w-full grid-cols-12 items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-sand"
+                panel={
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between rounded-xl bg-canvas p-4">
+                      <div>
+                        <p className="font-display text-lg text-ink">{b.grade}</p>
+                        <p className="text-[12px] text-faint">{b.stream}</p>
+                      </div>
+                      <ConfidenceBadge level={b.confidence} />
+                    </div>
+                    <div className="flex items-center justify-around gap-4 rounded-xl border border-line p-4">
+                      <MasteryRing value={b.mastery} color="#5E7C6A" size={92} caption="skills covered" />
+                      <MasteryRing value={b.readiness} color="#37357A" size={92} caption="board-ready" />
+                    </div>
+                    <p className="rounded-xl bg-canvas p-3 text-[13px] leading-relaxed text-muted">
+                      {b.students} students. Readiness sits {Math.round((b.mastery - b.readiness) * 100)} points
+                      below skills covered — that gap is the work still to firm up before the exam, shown now
+                      while there is time to act.
+                    </p>
+                  </div>
+                }
+              >
                 <div className="col-span-3">
                   <p className="text-[14px] font-medium text-ink">{b.grade}</p>
                   <p className="text-[12px] text-faint">{b.stream}</p>
@@ -152,7 +179,7 @@ export default function PrincipalLearning() {
                   <span className="w-9 shrink-0 text-right text-[12px] tnum text-ink">{pct(b.readiness)}</span>
                 </div>
                 <span className="col-span-1 text-right text-[13px] tnum text-muted">{b.students}</span>
-              </div>
+              </InfoDrawer>
             ))}
           </div>
         </Card>

@@ -12,6 +12,8 @@ import {
 import { MetricTile } from "@/components/patterns/atoms";
 import { MasteryRing } from "@/components/viz/charts";
 import { Freshness } from "@/components/patterns/Signals";
+import { InfoDrawer } from "@/components/patterns/InfoDrawer";
+import { Avatar } from "@/components/ui/avatar";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
 
@@ -51,7 +53,45 @@ export default function PrincipalOperations() {
             {rooms.map((r) => {
               const full = r.enrolled / r.capacity;
               return (
-                <div key={r.room} className="grid grid-cols-12 items-center gap-4 px-5 py-3.5">
+                <InfoDrawer
+                  key={r.room}
+                  eyebrow={r.group}
+                  title={r.room}
+                  className="grid w-full grid-cols-12 items-center gap-4 px-5 py-3.5 text-left transition-colors hover:bg-sand"
+                  panel={
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-3 rounded-xl bg-canvas p-4">
+                        <div>
+                          <p className="text-[12px] text-faint">Room</p>
+                          <p className="font-display text-lg text-ink">{r.room}</p>
+                        </div>
+                        <Badge tone="indigo">{r.group}</Badge>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="rounded-xl border border-line p-3">
+                          <p className="text-[11px] uppercase tracking-wide text-faint">Teacher</p>
+                          <p className="mt-1.5 inline-flex items-center gap-2 text-[13px] text-ink">
+                            <Avatar name={r.teacher} size={22} /> {r.teacher}
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-line p-3">
+                          <p className="text-[11px] uppercase tracking-wide text-faint">Assistant</p>
+                          <p className="mt-1.5 text-[13px] text-ink">{r.assistant}</p>
+                        </div>
+                      </div>
+                      <div className="rounded-xl border border-line p-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[13px] text-muted">How full</span>
+                          <span className="tnum text-[13px] text-ink">{r.enrolled}/{r.capacity}</span>
+                        </div>
+                        <div className="mt-2 h-2.5 rounded-full bg-sand">
+                          <div className="h-full rounded-full" style={{ width: `${full * 100}%`, backgroundColor: full > 0.95 ? "#C0913A" : "#5E7C6A" }} />
+                        </div>
+                        <p className="mt-2 text-[12px] text-faint">{r.capacity - r.enrolled} free seats</p>
+                      </div>
+                    </div>
+                  }
+                >
                   <span className="col-span-3 text-[14px] font-medium text-ink">{r.room}</span>
                   <span className="col-span-3 text-[13px] text-muted">{r.group}</span>
                   <span className="col-span-2 text-[13px] text-ink">{r.teacher}</span>
@@ -62,7 +102,7 @@ export default function PrincipalOperations() {
                     </div>
                     <span className="w-12 shrink-0 text-right text-[13px] tnum text-ink">{r.enrolled}/{r.capacity}</span>
                   </div>
-                </div>
+                </InfoDrawer>
               );
             })}
           </div>

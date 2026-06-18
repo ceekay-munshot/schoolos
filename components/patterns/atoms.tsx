@@ -94,7 +94,7 @@ export function MetricTile({
   accent?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface p-5 shadow-soft">
+    <div className="rounded-2xl border border-line bg-surface p-5 shadow-soft transition-shadow duration-300 hover:shadow-lift">
       <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-faint">{label}</p>
       <p className="mt-2 font-display text-[28px] leading-none tnum text-ink" style={accent ? { color: accent } : undefined}>
         {value}

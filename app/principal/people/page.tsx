@@ -2,6 +2,8 @@ import { Sparkles, HeartHandshake } from "lucide-react";
 import { AppShell, Section } from "@/components/shell/AppShell";
 import { peopleSections, type PeopleSection } from "@/data/principal-extra";
 import { MetricTile } from "@/components/patterns/atoms";
+import { InfoDrawer } from "@/components/patterns/InfoDrawer";
+import { Avatar } from "@/components/ui/avatar";
 import { Card, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
 
@@ -44,7 +46,48 @@ export default function PrincipalPeople() {
           </div>
           <div className="divide-y divide-line">
             {peopleSections.map((s) => (
-              <div key={s.section} className="grid grid-cols-12 items-center gap-4 px-5 py-4">
+              <InfoDrawer
+                key={s.section}
+                eyebrow="Section"
+                title={s.section}
+                className="grid w-full grid-cols-12 items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-sand"
+                panel={
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 rounded-xl bg-canvas p-4">
+                      <Avatar name={s.teacher} size={40} />
+                      <div>
+                        <p className="font-display text-lg text-ink">{s.section}</p>
+                        <p className="text-[12px] text-faint">{s.teacher} · {s.assistant}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3.5">
+                      {([
+                        ["System adoption", s.adoption, "#37357A"],
+                        ["Classroom independence", s.independence, "#5E7C6A"],
+                        ["Recommended-action follow-through", s.followThrough, "#C0913A"],
+                      ] as [string, number, string][]).map(([label, val, color]) => (
+                        <div key={label}>
+                          <div className="flex items-center justify-between text-[12.5px]">
+                            <span className="text-muted">{label}</span>
+                            <span className="tnum font-medium text-ink">{pct(val)}</span>
+                          </div>
+                          <div className="mt-1.5"><Bar value={val} color={color} /></div>
+                        </div>
+                      ))}
+                    </div>
+                    {s.support ? (
+                      <div className="rounded-xl border border-indigo/20 bg-indigo-soft/30 p-4">
+                        <Badge tone="indigo"><Sparkles size={11} /> Training opportunity</Badge>
+                        <p className="mt-2 text-[13px] leading-relaxed text-muted">{s.support}</p>
+                      </div>
+                    ) : (
+                      <p className="rounded-xl bg-canvas p-3 text-[13px] leading-relaxed text-muted">
+                        The system is landing well here — no extra support needed right now.
+                      </p>
+                    )}
+                  </div>
+                }
+              >
                 <div className="col-span-3">
                   <p className="inline-flex flex-wrap items-center gap-2 text-[14px] font-medium text-ink">
                     {s.section}
@@ -57,7 +100,7 @@ export default function PrincipalPeople() {
                   <p className="text-[12px] text-faint">{s.teacher} · {s.assistant}</p>
                 </div>
                 <div className="col-span-3 flex items-center gap-3">
-                  <Bar value={s.adoption} color={s.support ? "#37357A" : "#37357A"} />
+                  <Bar value={s.adoption} color="#37357A" />
                   <span className="w-9 shrink-0 text-right text-[12px] tnum text-ink">{pct(s.adoption)}</span>
                 </div>
                 <div className="col-span-3 flex items-center gap-3">
@@ -68,7 +111,7 @@ export default function PrincipalPeople() {
                   <Bar value={s.followThrough} color="#C0913A" />
                   <span className="w-9 shrink-0 text-right text-[12px] tnum text-ink">{pct(s.followThrough)}</span>
                 </div>
-              </div>
+              </InfoDrawer>
             ))}
           </div>
         </Card>

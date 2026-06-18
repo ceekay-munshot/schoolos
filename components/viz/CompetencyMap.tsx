@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const SHORT: Record<string, string> = {
   "MATH.FRAC.MEANING.01": "Meaning",
   "MATH.FRAC.MEANING.02": "Number line",
-  "MATH.FRAC.EQUIV.01": "Equivalence",
+  "MATH.FRAC.EQUIV.01": "Equal fractions",
   "MATH.FRAC.COMPARE.02": "Compare",
   "MATH.FRAC.ADD.03": "Add / subtract",
   "MATH.FRAC.WORD.04": "Word problems",
@@ -14,7 +14,8 @@ const SHORT: Record<string, string> = {
 
 /** Linear prerequisite chain for the Fractions strand, coloured by a child's
  *  mastery. The gap node is ringed; everything downstream of it is visibly
- *  blocked — that's the "walk back to the root" made legible. */
+ *  blocked. Each node sits in a fixed-width cell so labels never collide; the
+ *  row scrolls sideways when space is tight (e.g. the phone). */
 export function CompetencyMap({
   studentId,
   className,
@@ -29,15 +30,15 @@ export function CompetencyMap({
   const gapIndex = states.findIndex((s) => s.state?.status === "gap");
 
   return (
-    <div className={cn("w-full", className)}>
-      <div className="flex items-start">
+    <div className={cn("-mx-1 overflow-x-auto px-1 pb-1", className)}>
+      <div className="flex min-w-max items-start">
         {states.map(({ node, state }, i) => {
           const status = state?.status ?? "not-introduced";
           const color = statusColor(status);
           const isGap = status === "gap";
           const blocked = gapIndex >= 0 && i > gapIndex && status !== "mastered" && status !== "retained";
           return (
-            <div key={node.id} className="flex flex-1 flex-col items-center">
+            <div key={node.id} className="flex w-[74px] shrink-0 flex-col items-center">
               <div className="flex w-full items-center">
                 <span className={cn("h-0.5 flex-1", i === 0 ? "opacity-0" : "bg-line")} />
                 <span className="relative grid place-items-center">
@@ -51,13 +52,16 @@ export function CompetencyMap({
                       </svg>
                     )}
                   </span>
-                  {isGap && (
-                    <span className="absolute -inset-1 rounded-full ring-2 ring-gap/40" />
-                  )}
+                  {isGap && <span className="absolute -inset-1 rounded-full ring-2 ring-gap/40" />}
                 </span>
                 <span className={cn("h-0.5 flex-1", i === states.length - 1 ? "opacity-0" : "bg-line")} />
               </div>
-              <p className={cn("mt-2 text-center text-[11px] font-medium leading-tight", blocked ? "text-faint" : "text-ink")}>
+              <p
+                className={cn(
+                  "mt-2 w-full px-0.5 text-center text-[10px] font-medium leading-[1.2] [text-wrap:balance]",
+                  blocked ? "text-faint" : "text-ink",
+                )}
+              >
                 {SHORT[node.id] ?? node.id}
               </p>
               {isGap ? (
@@ -65,7 +69,7 @@ export function CompetencyMap({
                   Root gap
                 </span>
               ) : (
-                <span className="mt-1 text-[10px] text-faint">{statusLabel(status)}</span>
+                <span className="mt-1 w-full text-center text-[9.5px] leading-tight text-faint">{statusLabel(status)}</span>
               )}
             </div>
           );
