@@ -1,10 +1,13 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Users, ArrowRight, Drama, MapPin, Clock } from "lucide-react";
 import { AppShell, Section } from "@/components/shell/AppShell";
-import { pathArtifacts, pathDefs } from "@/data/paths";
-import { students, studentById } from "@/data/students";
-import { StudentInspector } from "@/components/patterns/StudentInspector";
-import { Avatar } from "@/components/ui/avatar";
+import { teacherProfiles, teacherById, pathClasses, type TeacherClass } from "@/data/teacher-profiles";
+import { Segmented } from "@/components/ui/tabs";
 import { Card, Badge } from "@/components/ui/primitives";
-import { relativeDays } from "@/lib/utils";
+import { Avatar } from "@/components/ui/avatar";
 
 const ARC = [
   { stage: "Sample", body: "Try it out. Notice what pulls you in." },
@@ -12,32 +15,65 @@ const ARC = [
   { stage: "Master", body: "A voice you can recognise. The bar keeps rising, with no ceiling." },
 ];
 
-function Stars({ n }: { n: number }) {
+function PathCard({ c }: { c: TeacherClass }) {
+  const teacher = teacherById(c.teacherId);
+  const groups = c.groups?.length ?? 0;
   return (
-    <span className="inline-flex gap-0.5">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <span
-          key={i}
-          className="size-2 rounded-full"
-          style={{ backgroundColor: i <= n ? "#C8802E" : "#ECEAE3" }}
-        />
-      ))}
-    </span>
+    <Link href={`/teacher/class/${c.id}`}>
+      <Card hover className="flex h-full flex-col p-6">
+        <div className="flex items-center justify-between">
+          <Badge tone="saffron"><Drama size={12} /> {c.subject.replace("PATH · ", "")}</Badge>
+          <span className="inline-flex items-center gap-1.5 text-[12px] text-faint">
+            <Users size={13} /> {c.roster.length}
+          </span>
+        </div>
+        <h2 className="mt-4 font-display text-xl leading-snug text-ink">{c.topic}</h2>
+        <p className="mt-1 text-[13px] text-muted">{c.klass}</p>
+
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-faint">
+          <span className="inline-flex items-center gap-1.5"><Clock size={12} /> {c.start}–{c.end}</span>
+          <span className="inline-flex items-center gap-1.5"><MapPin size={12} /> {c.room}</span>
+        </div>
+
+        <p className="mt-3 border-t border-line pt-3 text-[12.5px] leading-relaxed text-muted">{c.competency}</p>
+
+        <div className="mt-auto flex items-center justify-between pt-4">
+          {teacher && (
+            <span className="inline-flex items-center gap-1.5 text-[12px] text-faint">
+              <Avatar name={teacher.name} size={20} /> {teacher.name.split(" ")[0]}
+            </span>
+          )}
+          <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-indigo">
+            {groups ? `${groups} groups` : "Open"} <ArrowRight size={14} />
+          </span>
+        </div>
+      </Card>
+    </Link>
   );
 }
 
 export default function PathBlocks() {
-  const builderGroup = students.filter((s) => s.paths.some((p) => p.path === "builder"));
+  const [filter, setFilter] = useState("all");
+  const list = filter === "all" ? pathClasses : pathClasses.filter((c) => c.teacherId === filter);
 
   return (
-    <AppShell persona="teacher" eyebrow="Today · 13:00 · Workshop" title="PATH · Builder">
-      <p className="mb-7 max-w-2xl text-[14px] leading-relaxed text-muted">
-        This works differently from a Concept block. Groups are mixed-age, and what you watch is
-        the work itself and how its standard rises, never a worksheet. You rate the work. The
-        system tracks how it grows over time.
-      </p>
+    <AppShell persona="teacher" eyebrow="Builder · Explorer · Scholar · Artist · Communicator" title="PATH blocks">
+      <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
+        <p className="max-w-2xl text-[14px] leading-relaxed text-muted">
+          PATH works differently from a Concept block. Groups are mixed-age, and what you watch is the
+          work itself and how its standard rises — never a worksheet. You rate the work; the system
+          tracks how it grows.
+        </p>
+        <Segmented
+          items={[
+            { id: "all", label: "All teachers" },
+            ...teacherProfiles.map((t) => ({ id: t.id, label: t.name.split(" ")[0] })),
+          ]}
+          value={filter}
+          onChange={setFilter}
+        />
+      </div>
 
-      {/* the arc */}
       <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {ARC.map((a, i) => (
           <Card key={a.stage} className="p-5">
@@ -52,66 +88,13 @@ export default function PathBlocks() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        {/* today's mixed-age builder group */}
-        <div className="lg:col-span-2">
-          <Section title="Today's group" description="Class 4–5, grouped by level, not age.">
-            <Card className="p-4">
-              <div className="space-y-1">
-                {builderGroup.map((s) => {
-                  const e = s.paths.find((p) => p.path === "builder")!;
-                  return (
-                    <StudentInspector
-                      key={s.id}
-                      studentId={s.id}
-                      className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left transition-colors hover:bg-sand"
-                    >
-                      <Avatar name={s.name} size={34} />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[13px] font-medium text-ink">{s.name}</span>
-                        <span className="block truncate text-[11px] text-faint">{s.grade} · {e.stage}</span>
-                      </span>
-                      <span className="tnum text-[12px] text-saffron-deep">{e.standard}</span>
-                    </StudentInspector>
-                  );
-                })}
-              </div>
-            </Card>
-          </Section>
+      <Section title="PATH classes" description="Tap any class for its session plan, mixed-age groups and recent work.">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {list.map((c) => (
+            <PathCard key={c.id} c={c} />
+          ))}
         </div>
-
-        {/* recent artifacts across paths */}
-        <div className="lg:col-span-3">
-          <Section title="Recent work & rising standard" description="Work from the last two weeks across all six paths.">
-            <div className="space-y-3">
-              {pathArtifacts.map((a) => {
-                const s = studentById(a.studentId)!;
-                const def = pathDefs[a.path];
-                return (
-                  <Card key={a.id} className="p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <Badge tone="saffron">
-                        <span>{def.glyph}</span> {def.name}
-                      </Badge>
-                      <span className="text-[11px] text-faint">{relativeDays(a.date)}</span>
-                    </div>
-                    <p className="mt-3 font-display text-lg leading-snug text-ink">{a.title}</p>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{a.note}</p>
-                    <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
-                      <StudentInspector studentId={s.id} className="flex items-center gap-2 text-[12px] text-muted hover:text-ink">
-                        <Avatar name={s.name} size={22} /> {s.name} · {a.group}
-                      </StudentInspector>
-                      <span className="inline-flex items-center gap-2 text-[11px] text-faint">
-                        standard <Stars n={a.standardRating} />
-                      </span>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </Section>
-        </div>
-      </div>
+      </Section>
     </AppShell>
   );
 }
