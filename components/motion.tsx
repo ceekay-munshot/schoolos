@@ -123,8 +123,7 @@ export function AnimatedTomo({ className }: { className?: string }) {
       <motion.path variants={draw(0)} d="M12 5 V27 C12 32 15 34 20 33" strokeWidth={6.4} {...stroke.common} />
       <motion.path variants={draw(0.5)} d="M5 14.5 H20" strokeWidth={6.4} {...stroke.common} />
       <motion.circle variants={draw(1)} cx="34" cy="25.5" r="8.4" strokeWidth={6.4} {...stroke.common} />
-      <motion.path variants={draw(1.4)} d="M48 34 V24 C48 18.5 51.5 16.5 55 16.5 C58.5 16.5 60.5 19 60.5 24 V34" strokeWidth={6.4} {...stroke.common} />
-      <motion.path variants={draw(1.7)} d="M60.5 24 C60.5 19 64 16.5 67.5 16.5 C71 16.5 73 19 73 24 V34" strokeWidth={6.4} {...stroke.common} />
+      <motion.path variants={draw(1.4)} d="M46 34 C58 6 34 6 56 34 C68 6 44 6 66 34 C78 6 54 6 76 34" strokeWidth={6.4} {...stroke.common} />
       <motion.circle variants={draw(2.1)} cx="104" cy="22" r="16.5" strokeWidth={7.4} {...stroke.common} />
     </motion.svg>
   );

@@ -31,9 +31,8 @@ export function TomoWordmark({
         <path d="M5 14.5 H20" />
         {/* o */}
         <circle cx="34" cy="25.5" r="8.4" />
-        {/* m (two soft humps) */}
-        <path d="M48 34 V24 C48 18.5 51.5 16.5 55 16.5 C58.5 16.5 60.5 19 60.5 24 V34" />
-        <path d="M60.5 24 C60.5 19 64 16.5 67.5 16.5 C71 16.5 73 19 73 24 V34" />
+        {/* m — the signature curly loops that flow toward the O */}
+        <path d="M46 34 C58 6 34 6 56 34 C68 6 44 6 66 34 C78 6 54 6 76 34" />
       </g>
       {/* O — the oversized hero ring */}
       <circle
