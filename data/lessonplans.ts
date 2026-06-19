@@ -63,16 +63,16 @@ export const heroLessonPlan: LessonPlan = {
     headline: "Riya + 3 — stuck on equal fractions",
     studentIds: ONE_MOVE_GROUP,
     nodeId: "MATH.FRAC.EQUIV.01",
-    why: "Four children are stuck on the same skill: equal fractions. For Riya, it's why she 'adds across' when adding fractions (2/3 + 1/4 → 3/7). Fix it here and the rest opens up. Pull these four to the fraction wall for about 12 minutes while everyone else does their own work.",
+    why: "Four children are stuck on the same skill: equal fractions. For Riya, it's why she 'adds across' when adding fractions (2/3 + 1/4 → 3/7). Fix it here and the rest opens up. Pull these four to the fraction wall for about 20 minutes while everyone else does their own work.",
     everyoneElse: "Everyone else is set with their own work — including Aarav and Saanvi, who need a harder challenge, not help.",
   },
   sections: [
     {
       kind: "Instruction",
-      minutes: 12,
+      minutes: 20,
       title: "Equivalent fractions on the fraction wall",
       detail: "Whole-class: show 1/2 = 2/4 = 3/6 by lining up the wall. Name the move — multiply top and bottom by the same number.",
-      aiNote: "Kept to 12 minutes — under the 15-minute focus limit for this age.",
+      aiNote: "20 minutes of clear teaching to open the hour, in short bursts so attention holds.",
       decision: "accepted",
     },
     {
@@ -85,7 +85,7 @@ export const heroLessonPlan: LessonPlan = {
     },
     {
       kind: "Self-work",
-      minutes: 25,
+      minutes: 20,
       title: "Worksheets matched to each child (3 levels)",
       detail: "Support, core and harder sheets, handed out by name. This is your window to pull the small group.",
       aiNote: "The AI made three levels from yesterday's work. The support sheet needs your okay before it goes out.",
@@ -93,7 +93,7 @@ export const heroLessonPlan: LessonPlan = {
     },
     {
       kind: "Activity",
-      minutes: 13,
+      minutes: 10,
       title: "Fraction-wall card game",
       detail: "Mixed pairs match equivalent-fraction cards against the wall. Movement-based, low-stakes.",
       aiNote: "Reuses last week's printed card set — no new materials needed.",

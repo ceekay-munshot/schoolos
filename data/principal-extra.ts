@@ -428,3 +428,58 @@ export const earlyWarningRows: EarlyWarningRow[] = [
     followUpDate: "2026-06-29",
   },
 ];
+
+/* ---------------------------------------------------------------------------
+   7 · School at a glance — the principal's headline numbers, filterable by
+   period. (Per dashboard feedback.)
+--------------------------------------------------------------------------- */
+export type GlancePeriod = "week" | "month" | "term";
+
+export interface GlanceNumbers {
+  attendance: number; // 0–1
+  completion: string; // course-completion speed vs schedule
+  retention: number; // 0–1, learning retention average
+  aiWorksheets: number; // 0–1, use of AI-generated worksheets
+  aiTutor: number; // 0–1, use of AI tutor (MS/HS)
+  parentRating: number; // out of 5
+  parentEngagement: number; // 0–1
+  teacherHours: number; // avg hours/day in classrooms
+  teacherNPS: number; // -100..100
+  cases: number; // cases needing the principal's attention
+}
+
+export const schoolGlance: {
+  totalStudents: number;
+  numTeachers: number;
+  byPeriod: Record<GlancePeriod, GlanceNumbers>;
+} = {
+  totalStudents: 1480,
+  numTeachers: 96,
+  byPeriod: {
+    week: { attendance: 0.965, completion: "On schedule", retention: 0.87, aiWorksheets: 0.92, aiTutor: 0.78, parentRating: 4.6, parentEngagement: 0.86, teacherHours: 4.6, teacherNPS: 62, cases: 6 },
+    month: { attendance: 0.958, completion: "On schedule", retention: 0.86, aiWorksheets: 0.9, aiTutor: 0.76, parentRating: 4.6, parentEngagement: 0.85, teacherHours: 4.5, teacherNPS: 60, cases: 9 },
+    term: { attendance: 0.951, completion: "1 week ahead", retention: 0.85, aiWorksheets: 0.89, aiTutor: 0.74, parentRating: 4.5, parentEngagement: 0.84, teacherHours: 4.5, teacherNPS: 58, cases: 14 },
+  },
+};
+
+/** How the whole school is spread across the six PATHs (sums to total students). */
+export const pathBreakdown: { path: string; glyph: string; students: number }[] = [
+  { path: "Scholar", glyph: "❖", students: 312 },
+  { path: "Builder", glyph: "⚒", students: 286 },
+  { path: "Explorer", glyph: "✺", students: 248 },
+  { path: "Communicator", glyph: "❝", students: 234 },
+  { path: "Athlete", glyph: "➤", students: 220 },
+  { path: "Artist", glyph: "✣", students: 180 },
+];
+
+export interface SchoolEvent {
+  date: string; // human
+  title: string;
+  kind: "parents" | "academic" | "path" | "ops";
+}
+export const upcomingEvents: SchoolEvent[] = [
+  { date: "Fri, 20 Jun", title: "Fortnightly coach check-ins begin", kind: "parents" },
+  { date: "Tue, 24 Jun", title: "ACER benchmark window opens (Cl 5–8)", kind: "academic" },
+  { date: "Sat, 28 Jun", title: "PATH showcase — Builder & Artist", kind: "path" },
+  { date: "Mon, 30 Jun", title: "Capture-station servicing · Discovery Room", kind: "ops" },
+];

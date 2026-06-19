@@ -7,17 +7,17 @@
 */
 
 @theme {
-  /* ---- surfaces ---- */
-  --color-canvas: #faf9f6; /* app background — warm paper */
-  --color-sand: #f4f2ec; /* alternate sections / rails */
-  --color-surface: #ffffff; /* cards */
-  --color-line: #eceae3; /* hairline border */
-  --color-line-strong: #e1ddd3;
+  /* ---- surfaces (cool, low-glare; per design feedback) ---- */
+  --color-canvas: #f9fafb; /* app background — soft off-white / gray-50 */
+  --color-sand: #f3f4f6; /* alternate sections / rails — gray-100 */
+  --color-surface: #ffffff; /* cards — pure white */
+  --color-line: #e5e7eb; /* hairline border — gray-200 */
+  --color-line-strong: #d1d5db;
 
   /* ---- ink ---- */
-  --color-ink: #1c1b19; /* primary text, near-black */
-  --color-muted: #6b6862; /* secondary text */
-  --color-faint: #9c988e; /* tertiary / captions */
+  --color-ink: #111827; /* primary text — off-black / gray-900 */
+  --color-muted: #4b5563; /* secondary text — gray-600 */
+  --color-faint: #9ca3af; /* tertiary / captions — gray-400 */
 
   /* ---- primary accent: indigo (intellect / trust) ---- */
   --color-indigo: #37357a;
@@ -100,12 +100,12 @@
     height: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d9d5cc;
+    background: #d1d5db;
     border: 3px solid var(--color-canvas);
     border-radius: 99px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #c7c2b6;
+    background: #9ca3af;
   }
 }
 

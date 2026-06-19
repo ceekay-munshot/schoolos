@@ -1,7 +1,7 @@
-import { Users2, ArrowRight, TrendingDown, Rocket, Hourglass } from "lucide-react";
+import { Users2, ArrowRight, LifeBuoy, Rocket, Check } from "lucide-react";
 import { AppShell, Section } from "@/components/shell/AppShell";
 import { heroClassStudents } from "@/data/students";
-import { masteryAt, gapClusters, classDistribution, FRACTION_PATH } from "@/data/mastery";
+import { masteryFor, masteryAt, gapClusters, classDistribution, FRACTION_PATH } from "@/data/mastery";
 import { nodeById } from "@/data/competency";
 import { DistributionBar } from "@/components/viz/charts";
 import { StudentInspector } from "@/components/patterns/StudentInspector";
@@ -9,7 +9,6 @@ import { Delta, MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { statusColor } from "@/lib/status";
-import { pct } from "@/lib/utils";
 
 function Chip({ id, name }: { id: string; name: string }) {
   return (
@@ -24,21 +23,22 @@ function Chip({ id, name }: { id: string; name: string }) {
 
 export default function ClassHealth() {
   const n = heroClassStudents.length;
-  const avgVel = heroClassStudents.reduce((a, s) => a + s.masteryVelocity, 0) / n;
-  const avgRet = heroClassStudents.reduce((a, s) => a + s.retentionIntegrity, 0) / n;
-  const avgIndep = heroClassStudents.reduce((a, s) => a + s.independentWorkRatio, 0) / n;
+
+  // three honest bands, with names
+  const needSupport = heroClassStudents.filter((s) => masteryFor(s.id).some((m) => m.status === "gap"));
+  const readyForMore = heroClassStudents.filter(
+    (s) => s.masteryVelocity >= 2.3 && !needSupport.includes(s),
+  );
+  const atPar = heroClassStudents.filter((s) => !needSupport.includes(s) && !readyForMore.includes(s));
+
   const clusters = gapClusters();
   const dist = classDistribution();
   const topCluster = clusters[0];
 
-  const stalling = heroClassStudents.filter((s) => s.masteryVelocity < s.expectedVelocity - 0.05);
-  const extension = heroClassStudents.filter((s) => s.masteryVelocity >= 2.4);
-  const fading = heroClassStudents.filter((s) => s.retentionIntegrity < 0.75);
-
-  const WATCH = [
-    { title: "Starting to slip", note: "pace has dipped below grade. Catch it before a test would.", Icon: TrendingDown, cls: "text-gap", list: stalling },
-    { title: "Ready for more", note: "racing ahead. Give them deeper work, not more of the same.", Icon: Rocket, cls: "text-mastered", list: extension },
-    { title: "Starting to forget", note: "had it down, but it's fading. Mix in a little review.", Icon: Hourglass, cls: "text-practising", list: fading },
+  const BANDS = [
+    { title: "Need support", list: needSupport, Icon: LifeBuoy, cls: "text-gap", tone: "gap" as const, note: "last worksheet didn't pass the skill yet" },
+    { title: "At par", list: atPar, Icon: Check, cls: "text-mastered", tone: "mastered" as const, note: "moving with the class" },
+    { title: "Ready for more", list: readyForMore, Icon: Rocket, cls: "text-indigo", tone: "indigo" as const, note: "give them a harder challenge" },
   ];
 
   return (
@@ -48,25 +48,28 @@ export default function ClassHealth() {
         later. This is what helps you act now.
       </p>
 
-      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <MetricTile label="Learning pace" value={avgVel.toFixed(1)} accent="#37357A" foot={<Delta value={avgVel} expected={2.0} unit="" />} />
-        <MetricTile label="What's sticking" value={pct(avgRet)} foot="how much they still remember later" />
-        <MetricTile label="Independent work" value={pct(avgIndep)} foot="how settled the class is" />
-        <MetricTile label="Work captured" value="96%" accent="#5E7C6A" foot="worksheets scanned this week" />
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <MetricTile label="Learning pace" value="On time" accent="#5E7C6A" foot="Fractions unit on schedule — no need to speed up" />
+        <MetricTile label="What's sticking" value="85%" accent="#37357A" foot="of the class keeping up with the content" />
+        <MetricTile label="Work captured" value="96%" foot="worksheets scanned this week" />
       </div>
 
-      <Section title="This week — who to watch" description="A short, honest list. Not a wall of alerts.">
+      <Section title="Where the class stands" description="Every child in one of three honest bands — with names, so you know exactly who.">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {WATCH.map((w) => (
-            <Card key={w.title} className="p-5">
-              <p className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink">
-                <w.Icon size={15} className={w.cls} /> {w.title}
-                <span className="tnum text-[12px] text-faint">· {w.list.length}</span>
-              </p>
-              <p className="mt-1 text-[12px] leading-relaxed text-faint">{w.note}</p>
+          {BANDS.map((b) => (
+            <Card key={b.title} className="p-5">
+              <div className="flex items-center justify-between">
+                <p className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink">
+                  <b.Icon size={15} className={b.cls} /> {b.title}
+                </p>
+                <Badge tone={b.tone}>
+                  {Math.round((b.list.length / n) * 100)}% · {b.list.length}
+                </Badge>
+              </div>
+              <p className="mt-1 text-[12px] leading-relaxed text-faint">{b.note}</p>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {w.list.length ? w.list.map((s) => <Chip key={s.id} id={s.id} name={s.name} />) : (
-                  <span className="text-[12px] text-faint">No one this week.</span>
+                {b.list.length ? b.list.map((s) => <Chip key={s.id} id={s.id} name={s.name} />) : (
+                  <span className="text-[12px] text-faint">No one here this week.</span>
                 )}
               </div>
             </Card>

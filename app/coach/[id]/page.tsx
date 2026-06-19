@@ -30,6 +30,7 @@ import { Student360 } from "@/components/patterns/Student360";
 import { StatusDot, Delta } from "@/components/patterns/atoms";
 import { ConfidenceBadge, Freshness, AIStatus } from "@/components/patterns/Signals";
 import { EvidenceDrawer } from "@/components/patterns/EvidenceDrawer";
+import { CommentBox } from "@/components/patterns/CommentBox";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, Button, SectionLabel, Badge, Divider } from "@/components/ui/primitives";
 import { statusLabel } from "@/lib/status";
@@ -431,6 +432,10 @@ export default async function CoachStudent({ params }: { params: Promise<{ id: s
           )}
         </div>
       </div>
+
+      <Section title="Add a note" description="Jot anything worth remembering — it stays private to you.">
+        <CommentBox name={s.name} seed={note ? [{ text: note.context, when: "from your last check-in" }] : []} />
+      </Section>
     </AppShell>
   );
 }

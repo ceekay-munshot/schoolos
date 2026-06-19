@@ -2,6 +2,7 @@ import { AppShell, Section } from "@/components/shell/AppShell";
 import { benchmarks } from "@/data/metrics";
 import { healthMetrics } from "@/data/principal-extra";
 import { SignalBoard } from "@/components/principal/SignalBoard";
+import { SchoolGlance } from "@/components/principal/SchoolGlance";
 import { BenchmarkPlot } from "@/components/viz/charts";
 import { ConfidenceBadge, Freshness } from "@/components/patterns/Signals";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
@@ -24,6 +25,10 @@ export default function PrincipalHealth() {
       </p>
 
       <Section>
+        <SchoolGlance />
+      </Section>
+
+      <Section title="Leading signals" description="The few numbers that move before a report card could — tap any for the full story.">
         <SignalBoard metrics={healthMetrics} />
       </Section>
 
