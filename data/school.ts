@@ -8,7 +8,7 @@ export const school: School = {
   benchmark: "ACER",
   annualFee: 400000,
   ibComparableFee: 1000000,
-  students: 1480,
+  students: 15000,
   educators: 96,
   houses: ["Ganga", "Kaveri", "Narmada", "Yamuna"],
   foundedYear: 2024,

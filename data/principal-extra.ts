@@ -453,7 +453,7 @@ export const schoolGlance: {
   numTeachers: number;
   byPeriod: Record<GlancePeriod, GlanceNumbers>;
 } = {
-  totalStudents: 1480,
+  totalStudents: 15000,
   numTeachers: 96,
   byPeriod: {
     week: { attendance: 0.965, completion: "On schedule", retention: 0.87, aiWorksheets: 0.92, aiTutor: 0.78, parentRating: 4.6, parentEngagement: 0.86, teacherHours: 4.6, teacherNPS: 62, cases: 6 },
@@ -464,12 +464,12 @@ export const schoolGlance: {
 
 /** How the whole school is spread across the six PATHs (sums to total students). */
 export const pathBreakdown: { path: string; glyph: string; students: number }[] = [
-  { path: "Scholar", glyph: "❖", students: 312 },
-  { path: "Builder", glyph: "⚒", students: 286 },
-  { path: "Explorer", glyph: "✺", students: 248 },
-  { path: "Communicator", glyph: "❝", students: 234 },
-  { path: "Athlete", glyph: "➤", students: 220 },
-  { path: "Artist", glyph: "✣", students: 180 },
+  { path: "Scholar", glyph: "❖", students: 3160 },
+  { path: "Builder", glyph: "⚒", students: 2900 },
+  { path: "Explorer", glyph: "✺", students: 2510 },
+  { path: "Communicator", glyph: "❝", students: 2370 },
+  { path: "Athlete", glyph: "➤", students: 2230 },
+  { path: "Artist", glyph: "✣", students: 1830 },
 ];
 
 export interface SchoolEvent {
