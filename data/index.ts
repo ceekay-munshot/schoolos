@@ -84,9 +84,21 @@ export const personas: PersonaMeta[] = [
     tagline: "Your practice partner",
     blurb: "Practise today's topic at your own pace. Your tutor stays on topic and leaves the big calls to your teacher.",
     href: "/student",
-    device: "mobile",
+    device: "desktop",
     icon: "Sparkles",
     designRule: "The tutor helps you practise. It never replaces your teacher or coach.",
+  },
+  {
+    id: "curriculum",
+    label: "Curriculum",
+    person: "Dr. Vikram Iyer",
+    role: "Head of Curriculum",
+    tagline: "The map every class follows",
+    blurb: "Author and version the skill map for every grade — what each child should master, in what order, mapped to the board.",
+    href: "/curriculum",
+    device: "desktop",
+    icon: "Library",
+    designRule: "Change the map once; every class, worksheet and report follows.",
   },
 ];
 

@@ -5,7 +5,7 @@
    "filled in" or swapped for a real backend later.
    ========================================================================== */
 
-export type Persona = "teacher" | "coach" | "principal" | "parent" | "student";
+export type Persona = "teacher" | "coach" | "principal" | "parent" | "student" | "curriculum";
 
 /* ---- shared interface signals (Design Brief §12) ---- */
 export type Confidence = "high" | "medium" | "low" | "provisional";

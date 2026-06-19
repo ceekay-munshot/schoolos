@@ -4,6 +4,7 @@ import {
   Building2,
   Sprout,
   Sparkles,
+  Library,
   type LucideIcon,
 } from "lucide-react";
 
@@ -14,4 +15,5 @@ export const PERSONA_ICONS: Record<string, LucideIcon> = {
   Building2,
   Sprout,
   Sparkles,
+  Library,
 };

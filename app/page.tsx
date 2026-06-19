@@ -11,6 +11,7 @@ const ACCENT: Record<string, { fg: string; soft: string }> = {
   principal: { fg: "#1C1B19", soft: "bg-sand" },
   parent: { fg: "#C8802E", soft: "bg-saffron-soft" },
   student: { fg: "#37357A", soft: "bg-indigo-soft" },
+  curriculum: { fg: "#37357A", soft: "bg-indigo-soft" },
 };
 
 export default function Home() {

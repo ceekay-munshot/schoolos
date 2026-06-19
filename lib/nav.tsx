@@ -15,6 +15,9 @@ import {
   UsersRound,
   MessageSquare,
   TriangleAlert,
+  Library,
+  ClipboardCheck,
+  GitBranch,
   type LucideIcon,
 } from "lucide-react";
 import type { Persona } from "@/data/types";
@@ -28,11 +31,12 @@ export interface NavItem {
 export const NAV: Record<Persona, NavItem[]> = {
   teacher: [
     { label: "Today", href: "/teacher", icon: Sun },
+    { label: "Inbox", href: "/teacher/inbox", icon: Inbox },
     { label: "Week", href: "/teacher/week", icon: CalendarDays },
     { label: "Classes", href: "/teacher/classes", icon: BookOpen },
     { label: "Students", href: "/teacher/students", icon: GraduationCap },
     { label: "PATH blocks", href: "/teacher/path", icon: Drama },
-    { label: "Review queue", href: "/teacher/review", icon: Inbox },
+    { label: "Review queue", href: "/teacher/review", icon: ListChecks },
   ],
   coach: [
     { label: "Caseload", href: "/coach", icon: Users },
@@ -50,4 +54,9 @@ export const NAV: Record<Persona, NavItem[]> = {
   ],
   parent: [],
   student: [],
+  curriculum: [
+    { label: "Skill maps", href: "/curriculum", icon: Library },
+    { label: "Review", href: "/curriculum/review", icon: ClipboardCheck },
+    { label: "Versions", href: "/curriculum/versions", icon: GitBranch },
+  ],
 };
