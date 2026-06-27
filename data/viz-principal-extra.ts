@@ -37,11 +37,46 @@ export const gapTreemapRoot: TreeNode = {
       { id: "c5-english", label: "English", gapCount: 38 },
       { id: "c5-science", label: "Science", gapCount: 18 },
     ]},
-    { id: "c6", label: "Class 6", gapCount: 115 },
-    { id: "c7", label: "Class 7", gapCount: 108 },
-    { id: "c8", label: "Class 8", gapCount: 134 },
-    { id: "c9", label: "Class 9", gapCount: 96 },
-    { id: "c10", label: "Class 10", gapCount: 90 },
+    { id: "c6", label: "Class 6", gapCount: 115, children: [
+      { id: "c6-maths",   label: "Maths",   gapCount: 58, children: [
+        { id: "c6-algebra",  label: "Algebra",   gapCount: 34 },
+        { id: "c6-geom",     label: "Geometry",  gapCount: 24 },
+      ]},
+      { id: "c6-english", label: "English", gapCount: 38 },
+      { id: "c6-science", label: "Science", gapCount: 19 },
+    ]},
+    { id: "c7", label: "Class 7", gapCount: 108, children: [
+      { id: "c7-maths",   label: "Maths",   gapCount: 55, children: [
+        { id: "c7-algebra",  label: "Algebra",   gapCount: 32 },
+        { id: "c7-ratio",    label: "Ratio",     gapCount: 23 },
+      ]},
+      { id: "c7-english", label: "English", gapCount: 34 },
+      { id: "c7-science", label: "Science", gapCount: 19 },
+    ]},
+    { id: "c8", label: "Class 8", gapCount: 134, children: [
+      { id: "c8-maths",   label: "Maths",   gapCount: 68, children: [
+        { id: "c8-linear",   label: "Linear eq.", gapCount: 38 },
+        { id: "c8-poly",     label: "Polynomials",gapCount: 30 },
+      ]},
+      { id: "c8-english", label: "English", gapCount: 42 },
+      { id: "c8-science", label: "Science", gapCount: 24 },
+    ]},
+    { id: "c9", label: "Class 9", gapCount: 96, children: [
+      { id: "c9-maths",   label: "Maths",   gapCount: 48, children: [
+        { id: "c9-quad",     label: "Quadratics",gapCount: 28 },
+        { id: "c9-stats",    label: "Statistics",gapCount: 20 },
+      ]},
+      { id: "c9-english", label: "English", gapCount: 30 },
+      { id: "c9-science", label: "Science", gapCount: 18 },
+    ]},
+    { id: "c10", label: "Class 10", gapCount: 90, children: [
+      { id: "c10-maths",   label: "Maths",   gapCount: 45, children: [
+        { id: "c10-trig",    label: "Trigonometry", gapCount: 26 },
+        { id: "c10-coords",  label: "Coordinates",  gapCount: 19 },
+      ]},
+      { id: "c10-english", label: "English", gapCount: 28 },
+      { id: "c10-science", label: "Science", gapCount: 17 },
+    ]},
   ]
 };
 
@@ -51,22 +86,23 @@ export const masteryFlowData = {
   stateColors: ["#B8B4AB", "#8B88C4", "#C99A3F", "#5E7C6A", "#B25B43"],
   termStart: [5600, 3300, 2900, 2800, 400],
   termNow:   [900, 2700, 4700, 5700, 1000],
-  // flows[i] = from termStart state i, to termNow state j, n students
+  // flows[i][j] = students who started in state i, now in state j
+  // Row sums = termStart; column sums = termNow
   flows: [
-    { from: 0, to: 0, n: 900  },  // stayed not-taught
-    { from: 0, to: 1, n: 3100 },  // introduced
-    { from: 0, to: 2, n: 1500 },  // jumped to practising
-    { from: 0, to: 3, n: 100  },  // rare — straight to mastered
-    { from: 1, to: 1, n: 900  },  // stayed introduced
-    { from: 1, to: 2, n: 2000 },  // moved to practising
-    { from: 1, to: 3, n: 180  },  // moved to mastered
-    { from: 1, to: 4, n: 220  },  // fell to gap
-    { from: 2, to: 2, n: 300  },  // stayed practising
-    { from: 2, to: 3, n: 2220 },  // mastered
-    { from: 2, to: 4, n: 380  },  // fell to gap
-    { from: 3, to: 3, n: 2700 },  // stayed mastered
-    { from: 3, to: 4, n: 100  },  // faded
-    { from: 4, to: 4, n: 400  },  // gap unchanged
+    { from: 0, to: 0, n: 900  },  // stayed not-taught      col0: 900 ✓
+    { from: 0, to: 1, n: 1000 },  // introduced
+    { from: 1, to: 1, n: 1700 },  // stayed introduced      col1: 2700 ✓
+    { from: 0, to: 2, n: 2500 },  // jumped to practising
+    { from: 1, to: 2, n: 600  },  // moved to practising
+    { from: 2, to: 2, n: 1600 },  // stayed practising      col2: 4700 ✓
+    { from: 0, to: 3, n: 1200 },  // straight to mastered
+    { from: 1, to: 3, n: 800  },  // moved to mastered
+    { from: 2, to: 3, n: 1000 },  // mastered
+    { from: 3, to: 3, n: 2700 },  // stayed mastered        col3: 5700 ✓
+    { from: 1, to: 4, n: 200  },  // introduced → gap
+    { from: 2, to: 4, n: 300  },  // practising → gap
+    { from: 3, to: 4, n: 100  },  // mastered → faded to gap
+    { from: 4, to: 4, n: 400  },  // gap unchanged          col4: 1000 ✓
   ]
 };
 

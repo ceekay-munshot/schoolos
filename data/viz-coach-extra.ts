@@ -2,17 +2,17 @@
 // with Ebbinghaus decay estimates
 export const retentionSkills = [
   { nodeId: "MATH.FRAC.MEANING.01", label: "Fraction meaning",
-    daysSinceMastered: 68, decayDays: 50, atRisk: false },
+    daysSinceMastered: 8, decayDays: 50, atRisk: false },   // retention ≈ 85%
   { nodeId: "MATH.FRAC.EQUIV.01", label: "Equal fractions",
-    daysSinceMastered: 14, decayDays: 32, atRisk: false },
+    daysSinceMastered: 9, decayDays: 28, atRisk: false },   // retention ≈ 72%
   { nodeId: "ENG.TENSE.SIMPLE.02", label: "Simple past tense",
-    daysSinceMastered: 91, decayDays: 38, atRisk: true },
+    daysSinceMastered: 91, decayDays: 38, atRisk: true },   // retention ≈ 9%
   { nodeId: "SCI.LIVING.CELLS.01", label: "Cell structure",
-    daysSinceMastered: 52, decayDays: 28, atRisk: true },
+    daysSinceMastered: 52, decayDays: 28, atRisk: true },   // retention ≈ 16%
   { nodeId: "MATH.NUM.PLACE.03", label: "Place value — lakhs",
-    daysSinceMastered: 34, decayDays: 45, atRisk: false },
+    daysSinceMastered: 14, decayDays: 45, atRisk: false },  // retention ≈ 73%
   { nodeId: "SOC.HISTORY.MUGHAL.02", label: "Mughal empire",
-    daysSinceMastered: 110, decayDays: 30, atRisk: true },
+    daysSinceMastered: 110, decayDays: 30, atRisk: true },  // retention ≈ 3%
 ];
 // retention at a given day = Math.exp(-daysSinceMastered / decayDays)
 

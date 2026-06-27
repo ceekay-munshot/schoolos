@@ -90,7 +90,7 @@ export type MomentumData = {
 
 export const momentumByProfile: Record<string, MomentumData> = {
   riya:   { streak: 9,  maxStreak: 21, velocityThis: 2.3, velocityLast: 1.9, masteredCount: 2, totalCount: 6 },
-  mahira: { streak: 14, maxStreak: 21, velocityThis: 3.1, velocityLast: 2.8, masteredCount: 3, totalCount: 6 },
+  mahira: { streak: 14, maxStreak: 21, velocityThis: 3.1, velocityLast: 2.8, masteredCount: 2, totalCount: 6 },
   aditya: { streak: 6,  maxStreak: 14, velocityThis: 1.8, velocityLast: 2.1, masteredCount: 3, totalCount: 7 },
 };
 

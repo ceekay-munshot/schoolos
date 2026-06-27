@@ -415,7 +415,7 @@ export function ForceGraph({ className }: { className?: string }) {
             className="mt-3 flex items-center gap-1 text-[12px] font-medium text-indigo hover:underline"
             onClick={() => setActiveNode(null)}
           >
-            Open for editing →
+            View in Skill maps →
           </Link>
         </div>
       )}

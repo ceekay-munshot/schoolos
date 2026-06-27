@@ -95,7 +95,9 @@ export function CheckinGantt({ className }: { className?: string }) {
           {ganttStudents.map((student, rowIdx) => {
             const rowY = rowIdx * ROW_H;
             const isEven = rowIdx % 2 === 0;
-            const doneChekins = student.checkins.filter((c) => c.status === "done");
+            const sortedCheckins = [...student.checkins].sort(
+              (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+            );
 
             return (
               <g key={student.studentId}>
@@ -120,9 +122,9 @@ export function CheckinGantt({ className }: { className?: string }) {
                   {student.name}
                 </text>
 
-                {/* Gap highlights between consecutive done check-ins */}
-                {doneChekins.slice(0, -1).map((ci, i) => {
-                  const next = doneChekins[i + 1];
+                {/* Gap highlights between consecutive check-ins */}
+                {sortedCheckins.slice(0, -1).map((ci, i) => {
+                  const next = sortedCheckins[i + 1];
                   const gapMs =
                     new Date(next.date).getTime() - new Date(ci.date).getTime();
                   if (gapMs <= GAP_THRESHOLD_MS) return null;
