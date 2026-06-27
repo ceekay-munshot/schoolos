@@ -9,6 +9,7 @@ import { MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, Badge, Divider } from "@/components/ui/primitives";
 import { pct, relativeDays } from "@/lib/utils";
+import { MasteryFlowBands } from "@/components/viz/MasteryFlowBands";
 
 export default function EarlyWarning() {
   // The model surfaces the at-risk children; the operating detail (evidence,
@@ -38,6 +39,12 @@ export default function EarlyWarning() {
         <MetricTile label="Has someone on it" value={rows.length} foot="every warning has a person" />
         <MetricTile label="Next check-in" value={relativeDays(rows.reduce((min, r) => (r.followUpDate < min ? r.followUpDate : min), rows[0].followUpDate))} foot="soonest one planned" />
       </div>
+
+      <Section title="How skills have moved this term" description="From April to now — where children started, and where they are. The Gap band shows who fell behind.">
+        <Card className="p-5">
+          <MasteryFlowBands />
+        </Card>
+      </Section>
 
       <Section title="The watch-list" description="Tap any child for the full picture. None of this is a verdict — it is a head-start.">
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">

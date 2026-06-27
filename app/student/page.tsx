@@ -16,6 +16,16 @@ import { HomeworkUpload } from "@/components/student/HomeworkUpload";
 import { InsightCards } from "@/components/student/InsightCards";
 import { TutorPanel, TutorLocked } from "@/components/student/TutorPanel";
 import { MahiraDeepDive } from "@/components/student/MahiraDeepDive";
+import { PersonalLearningMap } from "@/components/viz/PersonalLearningMap";
+import { MomentumRings } from "@/components/viz/MomentumRings";
+import { skillGraphByProfile, momentumByProfile } from "@/data/viz-student-extra";
+
+// Map profile IDs to short keys used in viz data
+const PROFILE_KEY: Record<string, string> = {
+  "stu-riya":     "riya",
+  "stu-mahira":   "mahira",
+  "stu-aditya-v": "aditya",
+};
 
 /* The Student OS, as a desktop dashboard. A three-child toggle (Riya · Mahira ·
    Aditya, by stage) swaps the whole view. Everyone gets Today, their week, the
@@ -32,6 +42,9 @@ export default function StudentApp() {
   const [activeId, setActiveId] = React.useState(DEFAULT_PROFILE_ID);
   const profile = profileById(activeId);
   const isMahira = profile.id === "stu-mahira";
+  const profileKey = PROFILE_KEY[profile.id] ?? "mahira";
+  const skillGraph = skillGraphByProfile[profileKey];
+  const momentumData = momentumByProfile[profileKey];
 
   return (
     <AppShell
@@ -58,6 +71,17 @@ export default function StudentApp() {
           <Reveal>
             <TodayHero profile={profile} />
           </Reveal>
+          <Reveal>
+            <div className="mt-5">
+              {profile.hasTutor && momentumData ? (
+                <MomentumRings data={momentumData} />
+              ) : (
+                <div className="rounded-xl bg-surface p-4 text-[13px] text-muted">
+                  Your work goes on paper. Your teacher can see how you are getting on — right here.
+                </div>
+              )}
+            </div>
+          </Reveal>
         </Section>
 
         <Section>
@@ -81,6 +105,19 @@ export default function StudentApp() {
         <Section>
           <InsightCards items={profile.pastWork} />
         </Section>
+
+        {skillGraph && (
+          <Section
+            title="Your skill path"
+            description="The nodes you have secured are lit up. The one you are working on is highlighted. Tap any node to see the detail."
+          >
+            <Reveal>
+              <div className="relative rounded-xl border border-line bg-white p-4 shadow-soft">
+                <PersonalLearningMap graph={skillGraph} />
+              </div>
+            </Reveal>
+          </Section>
+        )}
 
         <Section
           title="Your AI tutor"

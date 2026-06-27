@@ -11,6 +11,8 @@ import { ConfidenceBadge } from "@/components/patterns/Signals";
 import { InfoDrawer } from "@/components/patterns/InfoDrawer";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { pct } from "@/lib/utils";
+import { GapTreemap } from "@/components/viz/GapTreemap";
+import { AttendanceMatrix } from "@/components/viz/AttendanceMatrix";
 
 function StandingBar() {
   const { ahead, onTrack, behind } = gradeMapStanding;
@@ -207,6 +209,19 @@ export default function PrincipalLearning() {
               size={300}
             />
           </div>
+        </Card>
+      </Section>
+
+      <Section title="Where the gaps live" description="Each block is a year group. Bigger = more children with a gap there. Click any group to see which subjects.">
+        <Card className="p-5">
+          <GapTreemap />
+        </Card>
+      </Section>
+
+      <Section title="Attendance and learning pace" description="The two are linked — but not always how you'd expect. Each circle is a group of children.">
+        <Card className="p-5">
+          <p className="mb-4 text-[12px] text-muted">Circle size = number of children in that box. Most children cluster in the middle.</p>
+          <AttendanceMatrix />
         </Card>
       </Section>
     </AppShell>
