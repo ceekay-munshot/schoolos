@@ -18,6 +18,8 @@ import { MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, Badge } from "@/components/ui/primitives";
 import { relativeDays } from "@/lib/utils";
+import { CheckinGantt } from "@/components/viz/CheckinGantt";
+import { RetentionCurves } from "@/components/viz/RetentionCurves";
 
 /* Each gentle reason has a quiet icon. None of these are alarming — they name
    what this round's conversation is for, not a verdict on the child. */
@@ -50,6 +52,12 @@ export default function CoachCaseload() {
         <MetricTile label="Needs attention" value={highCount} accent="#B25B43" foot="next two weeks, gently sorted" />
         <MetricTile label="Notes saved" value="92%" accent="#5E7C6A" foot="put back in as signal" />
       </div>
+
+      <Section title="Check-in rhythm" description="Each row is a student. Blocks show check-ins. A gap wider than four weeks lights up — it means someone may have slipped through.">
+        <Card className="overflow-x-auto p-5">
+          <CheckinGantt />
+        </Card>
+      </Section>
 
       <Section
         title="Next two weeks"
@@ -101,6 +109,11 @@ export default function CoachCaseload() {
             );
           })}
         </div>
+      </Section>
+      <Section title="Skills at risk of fading" description="Once a child masters something, they can still forget it. These curves show which mastered skills are at the edge of the safe zone.">
+        <Card className="p-5">
+          <RetentionCurves />
+        </Card>
       </Section>
     </AppShell>
   );

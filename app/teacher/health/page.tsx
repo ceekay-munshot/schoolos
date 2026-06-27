@@ -9,6 +9,9 @@ import { Delta, MetricTile } from "@/components/patterns/atoms";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, SectionLabel, Badge } from "@/components/ui/primitives";
 import { statusColor } from "@/lib/status";
+import { ClassConstellation } from "@/components/viz/ClassConstellation";
+import { SkillHeatCalendar } from "@/components/viz/SkillHeatCalendar";
+import { GapRadar } from "@/components/viz/GapRadar";
 
 function Chip({ id, name }: { id: string; name: string }) {
   return (
@@ -77,6 +80,12 @@ export default function ClassHealth() {
         </div>
       </Section>
 
+      <Section title="The class at a glance" description="Each dot is a child. Left and up means fast pace with few gaps. Down and right means the opposite.">
+        <Card className="p-5">
+          <ClassConstellation />
+        </Card>
+      </Section>
+
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <Section title="Missing basics" description="Where children share the same gap. A good small group to pull this week.">
@@ -111,6 +120,24 @@ export default function ClassHealth() {
             <Card className="p-5">
               <SectionLabel className="mb-4">Where the class sits on Fractions</SectionLabel>
               <DistributionBar counts={dist} />
+            </Card>
+          </Section>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        <div className="lg:col-span-2">
+          <Section title="Sub-skill picture">
+            <Card className="p-5">
+              <p className="mb-4 text-[12px] text-muted">Solid = class today. Dashed = where they should be.</p>
+              <GapRadar />
+            </Card>
+          </Section>
+        </div>
+        <div className="lg:col-span-3">
+          <Section title="How skills have moved" description="Week by week — which skills the class is working on and how many have it secure.">
+            <Card className="overflow-x-auto p-5">
+              <SkillHeatCalendar />
             </Card>
           </Section>
         </div>

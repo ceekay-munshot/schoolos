@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/primitives";
 import { CountUp } from "@/components/motion";
 import { gradeCurricula, allAuthoredNodes, mapVersions } from "@/data/curriculum-extra";
 import { SkillMaps } from "@/components/curriculum/SkillMaps";
+import { ForceGraph } from "@/components/viz/ForceGraph";
 
 export default function CurriculumSkillMaps() {
   const published = mapVersions.find((v) => v.status === "published");
@@ -59,6 +60,15 @@ export default function CurriculumSkillMaps() {
           </Card>
         ))}
       </div>
+
+      <Section
+        title="Skill network"
+        description="The full map — every skill and the skills that lead to it. Grouped by subject. Click any node to open it for editing."
+      >
+        <Card className="overflow-hidden p-0">
+          <ForceGraph />
+        </Card>
+      </Section>
 
       <Section>
         <SkillMaps />
